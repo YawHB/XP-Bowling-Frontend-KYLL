@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import NavHeader from "./components/NavHeader";
-import Footer from "./components/Footer";
+import NavHeader from "./components/standardLayout/NavHeader";
+import Footer from "./components/standardLayout/Footer";
 
 // Define Props type
 type LayoutProps = {
@@ -9,7 +9,7 @@ type LayoutProps = {
 
 export default function Layout({ children }: LayoutProps): JSX.Element {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-neutral-800">
       <header className="text-white w-full">
         <NavHeader />
       </header>
@@ -22,46 +22,3 @@ export default function Layout({ children }: LayoutProps): JSX.Element {
     </div>
   );
 }
-
-// import { ReactNode } from "react";
-// import NavHeader from "./components/NavHeader";
-// import Footer from "./components/Footer";
-
-// // Define Props type
-// type LayoutProps = {
-//   children: ReactNode;
-// };
-
-// export default function Layout({ children }: LayoutProps): JSX.Element {
-//   return (
-//     <div className="flex flex-col h-screen">
-//       <header className="text-white">
-//         <div className="container mx-auto">
-//           <NavHeader />
-//         </div>
-//       </header>
-//       <main className="flex-grow">
-//         <div className="container mx-auto">{children}</div>
-//       </main>
-//       <footer className="text-white">
-//         <div className="container mx-auto">
-//           <Footer />
-//         </div>
-//       </footer>
-//     </div>
-//   );
-// }
-
-// export default function Layout({ children }: LayoutProps): JSX.Element {
-//   return (
-//     <div className="flex flex-col h-screen">
-//       <header className="text-white">
-//         <NavHeader />
-//       </header>
-//       <main className="flex-grow">{children}</main>
-//       <footer className="text-white">
-//         <Footer />
-//       </footer>
-//     </div>
-//   );
-// }

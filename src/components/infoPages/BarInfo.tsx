@@ -2,12 +2,15 @@ import { Link } from "react-router-dom";
 
 export default function BarInfo() {
   return (
-    <div className=" mx-auto px-4 py-8 max-w-screen-full">
-      <div className=" mx-auto px-4 py-8 max-w-screen-full">
+    <div className=" mx-auto px-4 py-4 max-w-screen-full">
+      <div className=" mx-auto py-4 max-w-screen-full">
         <div className="flex flex-wrap">
           <h1 className="w-full text-3xl font-bold md:w-1/2 text-yellow-300">Velkommen til vores Bar!</h1>
           <Link to={`/barSale`} className="w-full md:w-1/2 md:pl-4 flex justify-center">
-            <button className="text-lg font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300" id="startSale">
+            <button
+              className="text-lg font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300"
+              id="startSale"
+            >
               Start Salg
             </button>
           </Link>
@@ -19,12 +22,13 @@ export default function BarInfo() {
         <div className="w-full md:w-1/2 md:pr-4 flex items-stretch mb-4">
           <div className="flex-grow">
             <p className="text-lg h-full">
-              Vi er glade for at præsentere vores brede udvalg af forfriskende og velsmagende drikkevarer. Uanset om du er på udkig efter en klassisk cocktail, en lokal håndværksøl eller en fin flaske vin, har vi noget for enhver smag.
+              Vi er glade for at præsentere vores brede udvalg af forfriskende og velsmagende drikkevarer. Uanset om du er på udkig efter en klassisk cocktail, en lokal håndværksøl eller en fin flaske
+              vin, har vi noget for enhver smag.
             </p>
           </div>
         </div>
-        <div className="w-full md:w-1/2 flex items-stretch h-48">
-          <img src="https://cdn2.picryl.com/photo/2019/12/07/children-and-families-enjoyed-time-together-all-day-d0e61f-1024.jpg" alt="Image 1" className="w-full h-auto" />
+        <div className="w-full md:w-1/2 flex items-stretch max-h-80">
+          <img src="https://cdn2.picryl.com/photo/2019/12/07/children-and-families-enjoyed-time-together-all-day-d0e61f-1024.jpg" alt="Image 1" className="w-full h-full object-cover" />
         </div>
       </div>
 
@@ -33,7 +37,7 @@ export default function BarInfo() {
         <div className="w-full md:pr-4 flex items-stretch mb-4">
           <div className="flex flex-col w-full">
             <div className="mb-4">
-              <div className="flex flex-wrap">
+              <div className="flex flex-wrap  pb-4">
                 <p className="w-full text-xl font-bold md:w-1/5 text-yellow-300">Med Alkohol</p>
                 <p className="w-full text-xl font-bold md:w-1/5"></p>
                 <p className="w-full text-xl font-bold md:w-1/5"></p>
@@ -100,15 +104,17 @@ export default function BarInfo() {
 
       {/* Third row: Additional content */}
       <div className="flex flex-wrap items-stretch">
-        <div className="w-full md:w-1/2 flex items-stretch h-48">
-          <img src="https://images.pexels.com/photos/5780930/pexels-photo-5780930.jpeg" alt="Image 2" className="w-full h-auto" />
+        <div className="w-full md:w-1/2 flex items-stretch max-h-80">
+          <img src="https://images.pexels.com/photos/5780930/pexels-photo-5780930.jpeg" alt="Image 2" className="w-full h-full object-cover " />
         </div>
         <div className="w-full md:w-1/2 md:pl-4 flex items-stretch">
           <div className="flex-grow">
             <div>
               <p className="text-lg h-full pb-2">Kom og udforsk vores udvalg af drikkevarer og lad vores erfarne bartendere guide dig gennem vores menu.</p>
-              <p className="text-lg h-full pb-2">Vi ser frem til at byde dig velkommen og skabe uforglemmelige drikkeoplevelser sammen. Kontakt os for at høre mere information om vores drikkevarer.</p>
-              <p className="text-lg h-full font-bold text-pink-300">Vi glæder os til at se dig i baren!</p>
+              <p className="text-lg h-full pb-2">
+                Vi ser frem til at byde dig velkommen og skabe uforglemmelige drikkeoplevelser sammen. Kontakt os for at høre mere information om vores drikkevarer.
+              </p>
+              <p className="text-xl h-full font-bold text-pink-300">Vi glæder os til at se dig i baren!</p>
             </div>
           </div>
         </div>
