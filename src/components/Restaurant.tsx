@@ -1,10 +1,21 @@
+import { Link } from "react-router-dom";
+
+
 export default function RestaurantInfo() {
+  
   return (
     <main className="container mx-auto px-4 py-8 max-w-screen-full">
+      <h1 className="text-3xl font-bold mb-4 text-pink-300">Restaurant</h1>
+
+      <Link to="/booking">
+        <button id="toBooking" className="bg-green-500 text-white">
+          Book Online
+        </button>
+      </Link>
+
       <section className="flex flex-wrap items-strech mb-8">
         <article className="w-full md:w-1/2 md:pr-4 flex item-strech mb-4">
           <div className="flex-grow">
-            <h2>Resturant</h2>
             <p>
               Vores restaurant er det perfekte sted at slappe af og nyde lækker
               mad og forfriskende drikkevarer efter en sjov dag med aktiviteter.
@@ -34,21 +45,27 @@ export default function RestaurantInfo() {
           <div title="flexDiv" className="flex-grow">
             <div title="gridContainer" className="grid grid-cols-2 gap-4">
               <div>
-                <h2>Forretter:</h2>
+                <p className="text-xl font-bold mb-4 text-pink-300">
+                  Forretter:
+                </p>
                 <p>Knækbrød: 10 kr.</p>
                 <p>Tangsalat: 22 kr.</p>
                 <p>Forårsruller: 39 kr.</p>
                 <p>Brød: 15 kr.</p>
               </div>
               <div>
-                <h2>Hovedretter: </h2>
+                <p className="text-xl font-bold mb-4 text-pink-300">
+                  Hovedretter:{" "}
+                </p>
                 <p>Burgermenu: 89 kr.</p>
                 <p>Pizza (stor): 99 kr.</p>
                 <p>Salat: 79 kr. </p>
                 <p>Sandwich: 69 kr.</p>
               </div>
               <div>
-                <h2>Deserter:</h2>
+                <p className="text-xl font-bold mb-4 text-pink-300">
+                  Deserter:
+                </p>
                 <p>Milkshake: 79 kr.</p>
                 <p>Brownie: 49 kr.</p>
                 <p>Regnbue is: 49 kr.</p>
@@ -58,7 +75,9 @@ export default function RestaurantInfo() {
               </div>
 
               <div>
-                <h2>Drikkevarer:</h2>
+                <p className="text-xl font-bold mb-4 text-pink-300">
+                  Drikkevarer:
+                </p>
                 <p>Øl (flaske): 35 kr.</p>
                 <p>Vin (glas): 45 kr.</p>
                 <p>Sodavand: 25 kr.</p>
