@@ -1,12 +1,12 @@
 import Layout from "./Layout";
 import { Routes, Route } from "react-router-dom";
-import Home from "./components/Home";
-import BowlingInfo from "./components/BowlingInfo";
-import AirhockeyInfo from "./components/AirhockeyInfo";
-import RestaurantInfo from "./components/Restaurant";
-import Booking from "./components/Onlinebooking";
-import BarInfo from "./components/BarInfo";
-import BarSale from "./components/BarSale";
+import Home from "./components/standardLayout/Home";
+import BowlingInfo from "./components/infoPages/BowlingInfo";
+import AirhockeyInfo from "./components/infoPages/AirhockeyInfo";
+import RestaurantInfo from "./components/infoPages/RestaurantInfo";
+import Booking from "./components/booking/Onlinebooking";
+import BarInfo from "./components/infoPages/BarInfo";
+import BarSale from "./components/sale/BarSale";
 
 export default function App() {
   return (
