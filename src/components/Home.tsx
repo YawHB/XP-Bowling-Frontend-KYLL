@@ -4,6 +4,10 @@ export default function Home() {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-4">Velkommen til XP Bowling!</h1>
       <div className="flex flex-wrap items-stretch mb-8">
+
+
+
+        
         <div className="w-full md:w-1/2 md:pr-4 flex items-stretch mb-4">
           <div className="flex-grow">
             <p className="text-lg h-full">
@@ -13,14 +17,18 @@ export default function Home() {
             </p>
           </div>
         </div>
+        
+        
         <div className="w-full md:w-1/2 flex items-stretch object-scale-down h-48 w-96">
           <img src="https://cdn2.picryl.com/photo/2019/12/07/children-and-families-enjoyed-time-together-all-day-d0e61f-1024.jpg" alt="Image 1" className="w-full h-auto" />
         </div>
       </div>
+
       <div className="flex flex-wrap items-stretch">
         <div className="w-full md:w-1/2 flex items-stretch object-scale-down h-48 w-96">
           <img src="https://images.pexels.com/photos/5780930/pexels-photo-5780930.jpeg" alt="Image 2" className="w-full h-auto" />
         </div>
+      
         <div className="w-full md:w-1/2 md:pl-4 flex items-stretch">
           <div className="flex-grow">
             <p className="text-lg h-full">
@@ -30,6 +38,7 @@ export default function Home() {
             </p>
           </div>
         </div>
+      
       </div>
     </div>
   );

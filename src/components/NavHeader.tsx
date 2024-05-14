@@ -22,7 +22,10 @@ export default function NavHeader()  {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/airHockeyInfo" className="text-white hover:text-gray-300">
+          <NavLink
+            to="/airHockeyInfo"
+            className="text-white hover:text-gray-300"
+          >
             AirHockey
           </NavLink>
         </li>
