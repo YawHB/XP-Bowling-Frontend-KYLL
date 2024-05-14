@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-screen-full">
-      <h1 className="text-3xl font-bold mb-4">Velkommen til XP Bowling!</h1>
+      <h1 className="text-3xl font-bold mb-4 text-pink-300">Velkommen til XP Bowling!</h1>
 
       <div className="flex flex-wrap items-stretch mb-8">
         <div className="w-full md:w-1/2 md:pr-4 flex items-stretch mb-4">
