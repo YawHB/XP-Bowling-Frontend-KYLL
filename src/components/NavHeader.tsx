@@ -32,7 +32,7 @@ export default function NavHeader()  {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/bar" className="text-white hover:text-gray-300">
+          <NavLink to="/barInfo" className="text-white hover:text-gray-300">
             Bar
           </NavLink>
         </li>
