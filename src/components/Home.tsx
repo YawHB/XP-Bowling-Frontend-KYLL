@@ -1,13 +1,9 @@
 export default function Home() {
   return (
-    <div className="container mx-auto px-4 py-8 max-w-screen-full">
+    <div className=" mx-auto px-4 py-8 max-w-screen-full">
       <h1 className="text-3xl font-bold mb-4 text-pink-300">Velkommen til XP Bowling!</h1>
 
       <div className="flex flex-wrap items-stretch mb-8">
-
-
-
-        
         <div className="w-full md:w-1/2 md:pr-4 flex items-stretch mb-4">
           <div className="flex-grow">
             <p className="text-lg h-full">
@@ -26,7 +22,7 @@ export default function Home() {
         <div className="w-full md:w-1/2 flex items-stretch h-48">
           <img src="https://images.pexels.com/photos/5780930/pexels-photo-5780930.jpeg" alt="Image 2" className="w-full h-auto" />
         </div>
-      
+
         <div className="w-full md:w-1/2 md:pl-4 flex items-stretch">
           <div className="flex-grow">
             <p className="text-lg h-full">
@@ -36,7 +32,6 @@ export default function Home() {
             </p>
           </div>
         </div>
-      
       </div>
     </div>
   );

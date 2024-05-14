@@ -1,7 +1,7 @@
 export default function Footer() {
     return (
       <footer className="bg-green-500">
-        <div className="flex justify-around container text-center p-4 text-white-500">
+        <div className="flex justify-around text-center p-4 text-white-500">
           <div>
             <p className="font-bold">Adresse</p>
             <p>Bådmandsgade 27</p>

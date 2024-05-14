@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 
 export default function BarInfo() {
   return (
-    <div className="container mx-auto px-4 py-8 max-w-screen-full">
-      <div className="container mx-auto px-4 py-8 max-w-screen-full">
+    <div className=" mx-auto px-4 py-8 max-w-screen-full">
+      <div className=" mx-auto px-4 py-8 max-w-screen-full">
         <div className="flex flex-wrap">
           <h1 className="w-full text-3xl font-bold md:w-1/2 text-yellow-300">Velkommen til vores Bar!</h1>
           <Link to={`/barSale`} className="w-full md:w-1/2 md:pl-4 flex justify-center">
-            <button className="text-xl font-bold bg-yellow-400 text-black whitespace-nowrap" id="startSale">
+            <button className="text-lg font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300" id="startSale">
               Start Salg
             </button>
           </Link>
