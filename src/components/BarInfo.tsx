@@ -1,7 +1,18 @@
+import { Link } from "react-router-dom";
+
 export default function BarInfo() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-screen-full">
-      <h1 className="text-3xl font-bold mb-4 text-pink-300">Velkommen til vores bar!</h1>
+      <div className="container mx-auto px-4 py-8 max-w-screen-full">
+        <div className="flex flex-wrap">
+          <h1 className="w-full text-3xl font-bold md:w-1/2 text-yellow-300">Velkommen til vores Bar!</h1>
+          <Link to={`/barSale`} className="w-full md:w-1/2 md:pl-4 flex justify-center">
+            <button className="text-xl font-bold bg-yellow-400 text-black whitespace-nowrap" id="startSale">
+              Start Salg
+            </button>
+          </Link>
+        </div>
+      </div>
 
       {/* First row: Info about the bar */}
       <div className="flex flex-wrap items-stretch mb-8">
@@ -17,7 +28,7 @@ export default function BarInfo() {
         </div>
       </div>
 
-        {/* Second row: List of drinks */}
+      {/* Second row: List of drinks */}
       <div className="flex flex-wrap items-stretch mb-8">
         <div className="w-full md:pr-4 flex items-stretch mb-4">
           <div className="flex flex-col w-full">
@@ -60,7 +71,7 @@ export default function BarInfo() {
                     <li>Prosecco</li>
                   </ul>
                 </div>
-             
+
                 <div className="w-1/5 md:pl-4">
                   <p className="text-xl font-bold">Sodavand:</p>
                   <ul className="list-disc list-inside">

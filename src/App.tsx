@@ -6,6 +6,7 @@ import AirhockeyInfo from "./components/AirhockeyInfo";
 import RestaurantInfo from "./components/Restaurant";
 import Booking from "./components/Onlinebooking";
 import BarInfo from "./components/BarInfo";
+import BarSale from "./components/BarSale";
 
 export default function App() {
   return (
@@ -20,6 +21,8 @@ export default function App() {
       <Route path="services" element={<Services />} />
       <Route path="contact" element={<Contact />} /> */}
         <Route path="/barInfo" element={<BarInfo />} />
+        <Route path="/barSale" element={<BarSale />} />
+
       </Routes>
     </Layout>
   );
