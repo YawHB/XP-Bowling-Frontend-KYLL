@@ -1,7 +1,20 @@
+import { Link } from "react-router-dom";
+
 export default function BowlingInfo() {
   return (
     <main className="containter mx-auto px-4 py-8 max-w-screen-full">
-      <h2 className="text-3xl font-bold mb-4"> Bowling</h2>
+      <section className="flex flex-wrap items-strech mb-8">
+        <div className="w-full md:w-1/2 md:pr-4 flex item-strech mb-1">
+          <h1 className="text-3xl font-bold mb-4 text-pink-300"> Bowling</h1>
+        </div>
+        <Link to="/booking">
+          <button id="toBooking" className="bg-green-500 text-white">
+            Book Online
+          </button>
+        </Link>
+      </section>
+
+
 
       <section className="flex flex-wrap items-strech mb-8">
         <article
@@ -11,11 +24,12 @@ export default function BowlingInfo() {
           <div className="flex-grow text-lg h-full">
             <p>
               Tag dine venner eller familie med og oplev spændingen ved bowling
-              på vores topmoderne baner. Vi tilbyder optil 2-timers bookingslots, hvor
-              du kan nyde ubegrænset bowling i den valgte periode.
+              på vores topmoderne baner. Vi tilbyder optil 2-timers
+              bookingslots, hvor du kan nyde ubegrænset bowling i den valgte
+              periode.
             </p>
             <p>
-              <h2> Priser:</h2>
+              <p className="text-xl font-bold mb-4 text-pink-300">Priser:</p>
               199 kr. per person for 1 timer.
             </p>
             <p>Bemærk: Priserne inkluderer skoleje af bowlingkugle og sko.</p>
@@ -45,7 +59,9 @@ export default function BowlingInfo() {
         >
           <div className="flex-grow text-lg h-full">
             <p className="pb-2">
-              <h2>Børnebowling:</h2>
+              <p className="text-xl font-bold mb-4 text-pink-300">
+                Børnebowling:
+              </p>
               Vi elsker at se de små have det sjovt, så vi har skræddersyet
               vores børnebowlingområde til at være sikkert og sjovt for alle
               børn. Hver bane er tilpasset til børns behov og har letvægtskugler
@@ -57,7 +73,7 @@ export default function BowlingInfo() {
               For børnebowling anbefaler vi en voksen ledsager til hvert barn.
             </p>
             <p className="pb-2">
-              <h2>Holdspil:</h2>
+              <p className="text-xl font-bold mb-4 text-pink-300">Holdspil:</p>
               Vi arrangerer også holdspil mandag og fredag fra kl. 10 til 17.
               Vær opmærksom på, at der i dette tidsrum er færre baner
               tilgængelige på grund af holdaktiviteter. Holdspil er en
