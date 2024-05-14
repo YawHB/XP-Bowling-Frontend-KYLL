@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function BarInfo() {
   return (
-    <div className=" mx-auto px-4 py-4 max-w-screen-full">
+    <div className=" mx-auto px-4 py-8 max-w-screen-full">
       <div className=" mx-auto py-4 max-w-screen-full">
         <div className="flex flex-wrap">
           <h1 className="w-full text-3xl font-bold md:w-1/2 text-yellow-300">Velkommen til vores Bar!</h1>
