@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { fetchBookingData } from "../services/bookingService";
 
+// IMPORTANT
+// Delete fetch, and get data from booking form submit in stead
+
+
+
 // how to check how many bowlong lanes are booked?
 interface BookingData {
   id?: number;
