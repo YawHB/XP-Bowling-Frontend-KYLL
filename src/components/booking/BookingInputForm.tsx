@@ -12,7 +12,8 @@ interface BookingData {
   activity: string;
   date: string;
   time: string;
-  lanes: number;
+  lanes?: number;
+  tables?: number;
 }
 
 export default function BookingInputForm({ addBooking }: BookingInputFormProps) {
@@ -20,9 +21,9 @@ export default function BookingInputForm({ addBooking }: BookingInputFormProps) 
     <div>
       <h1 className="text-2xl self-center font-semibold">Booking</h1>
       <BowlingForm addBooking={addBooking}/>
-      <KidsBowlingForm />
-      <AirhockeyForm />
-      <DinnertableForm />
+      <KidsBowlingForm addBooking={addBooking}/>
+      <AirhockeyForm addBooking={addBooking} />
+      <DinnertableForm addBooking={addBooking}/>
     </div>
   );
 }

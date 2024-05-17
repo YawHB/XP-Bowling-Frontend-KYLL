@@ -1,11 +1,32 @@
 import { useState } from "react";
 
-export default function DinnertableForm() {
+interface DinnertableFormProps {
+  addBooking: (newBooking: BookingData) => void;
+}
+
+interface BookingData {
+  id?: number;
+  activity: string;
+  date: string;
+  time: string;
+  tables: number;
+}
+
+export default function DinnertableForm({ addBooking }: DinnertableFormProps) {
   const [startTime, setStartTime] = useState<string>("08:00");
   const [tables, setLanes] = useState<number>(0);
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
+
+    const newBooking: BookingData = {
+      activity: "Dinner",
+      date: new Date().toISOString().split("T")[0],
+      time: startTime,
+      tables,
+    };
+    addBooking(newBooking);
+
     // handle form submission
   }
 
@@ -31,7 +52,7 @@ export default function DinnertableForm() {
             htmlFor="tableSelector"
             className="block mb-2 text-sm font-medium"
           >
-            Border
+            Borde
           </label>
           <select
             id="tableSelector"
