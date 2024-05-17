@@ -9,7 +9,7 @@ interface BookingData {
   activity: string;
   date: string;
   time: string;
-  lanes: number;
+  tables: number;
 }
 
 export default function AirhockeyForm({ addBooking }: AirhockeyFormProps) {
@@ -24,7 +24,7 @@ export default function AirhockeyForm({ addBooking }: AirhockeyFormProps) {
       activity: "Airhockey",
       date: new Date().toISOString().split("T")[0],
       time: startTime,
-      lanes: tables
+      tables: tables
     };
     addBooking(newBooking);
 

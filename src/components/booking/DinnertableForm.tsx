@@ -20,7 +20,7 @@ export default function DinnertableForm({ addBooking }: DinnertableFormProps) {
     event.preventDefault();
 
     const newBooking: BookingData = {
-      activity: "Dinner",
+      activity: "Restaurant",
       date: new Date().toISOString().split("T")[0],
       time: startTime,
       tables,
