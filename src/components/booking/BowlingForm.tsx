@@ -26,6 +26,7 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
     endTime.setMinutes(minuttes);
     return endTime.toTimeString().slice(0, 5);
   }
+  const [addNames, setAddNames] = useState<boolean>(false);
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -34,7 +35,7 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
       date: new Date().toISOString().split("T")[0],
       time: startTime,
       endTime: endTime,
-      lanes,
+      lanes
     };
     addBooking(newBooking);
   }
@@ -55,12 +56,19 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
     setEndTime(calculatedEndTime(newStartTime, playTime));
   }
 
+  function handleCheckboxChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setAddNames(event.target.checked);
+  }
+
   return (
     <form
       onSubmit={handleSubmit}
       className="container mx-auto px-4 py-8 max-w-screen-md"
     >
       <section className="flex flex-wrap -mx-2">
+        <div className="w-full px-2 mb-4">
+          <h2 className="text-2xl font-bold">Bowling</h2>
+        </div>
         <div className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0">
           <label
             htmlFor="laneSelector"
@@ -92,7 +100,7 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
             id="playTimeSelector"
             onChange={handlePlayTimeChange}
             value={playTime}
-            className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md text-black"
+            className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md"
           >
             <option value={1}>1</option>
             <option value={2}>2</option>
@@ -110,7 +118,7 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
             id="startTime"
             onChange={handleStartTimeChange}
             value={startTime}
-            className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md text-black"
+            className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md"
           >
             <option value={"08:00"}>08:00</option>
             <option value={"09:00"}>09:00</option>
@@ -128,30 +136,36 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
           </select>
         </div>
 
-        <button
-          type="submit"
-          className="w-full sm:w-1/4 p-2 mt-4 bg-green-500 text-white rounded-md"
-        >
-          Tilføj
-        </button>
+        <div className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0">
+          <label className="block mb-2 text-sm font-medium">Tilføj navne</label>
+          <input type="checkbox" onChange={handleCheckboxChange} />
+        </div>
       </section>
 
-      {Array.from({ length: lanes }, (_, laneIndex) => (
-        <section key={laneIndex} className="flex flex-wrap -mx-2 mt-4">
-          {[...Array(6)].map((_, index) => (
-            <div key={index} className="w-full sm:w-1/2 px-2 mb-4">
-              <label className="block mb-2 text-sm font-medium">
-                Navn {index + 1} (Bane {laneIndex + 1})
-              </label>
-              <input
+      {addNames && (
+        <div className="mt-4">
+          {Array.from({ length: lanes }, (_, laneIndex) => (
+            <section key={laneIndex} className="flex flex-wrap -mx-2 mt-4">
+              {[...Array(6)].map((_, index) => (
+                <div key={index} className="w-full sm:w-1/2 px-2 mb-4">
+                  <label className="block mb-2 text-sm font-medium">
+                    Navn {index + 1} (Bane {laneIndex + 1})
+                  </label>
+                  <input
                 type="text"
                 className="block w-full p-2 border border-gray-300 rounded-md text-black"
                 placeholder={`Enter name ${index + 1}`}
               />
-            </div>
+                </div>
+              ))}
+            </section>
           ))}
-        </section>
-      ))}
+        </div>
+      )}
+
+      <button type="submit" className="w-full sm:w-1/4 p-2 mt-4 bg-green-500 text-white rounded-md">
+        Tilføj
+      </button>
     </form>
   );
 }
