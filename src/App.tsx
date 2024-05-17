@@ -4,7 +4,7 @@ import Home from "./components/standardLayout/Home";
 import BowlingInfo from "./components/infoPages/BowlingInfo";
 import AirhockeyInfo from "./components/infoPages/AirhockeyInfo";
 import RestaurantInfo from "./components/infoPages/RestaurantInfo";
-import Booking from "./components/booking/Onlinebooking";
+import Booking from "./components/booking/OnlineBooking";
 import BarInfo from "./components/infoPages/BarInfo";
 import BarSale from "./components/sale/BarSale";
 
@@ -22,7 +22,6 @@ export default function App() {
       <Route path="contact" element={<Contact />} /> */}
         <Route path="/barInfo" element={<BarInfo />} />
         <Route path="/barSale" element={<BarSale />} />
-
       </Routes>
     </Layout>
   );

@@ -1,4 +1,4 @@
-import { BookingData } from "./Onlinebooking";
+import { BookingData } from "./OnlineBooking";
 
 interface BookingOverviewProps {
   bookingData: BookingData[];

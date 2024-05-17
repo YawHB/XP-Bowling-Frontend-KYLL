@@ -11,7 +11,7 @@ export interface BookingData {
   lanes: number;
 }
 
-export default function Booking() {
+export default function OnlineBooking() {
   const [bookingData, setBookingData] = useState<BookingData[]>([]);
 
   function addBooking(newBooking: BookingData) {
