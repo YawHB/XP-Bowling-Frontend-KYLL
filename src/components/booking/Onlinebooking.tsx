@@ -15,9 +15,9 @@ export default function Booking() {
       </div>
       <div>
         <BookingOverview />
-        <div>
-          <BookingInputForm />
-        </div>
+      </div>
+      <div>
+        <BookingInputForm />
       </div>
     </div>
   );
