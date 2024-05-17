@@ -9,26 +9,36 @@ interface BookingData {
   activity: string;
   date: string;
   time: string;
+  endTime: string;
   lanes: number;
 }
 
 export default function KidsBowlingForm({ addBooking }: KidsBowlingFormProps) {
   const [startTime, setStartTime] = useState<string>("08:00");
+    const [endTime, setEndTime] = useState<string>(
+      calculatedEndTime("08:00", 1)
+    );
   const [playTime, setPlayTime] = useState<number>(0);
   const [lanes, setLanes] = useState<number>(1);
 
+  function calculatedEndTime(startTime: string, playTime: number): string {
+    const [hours, minuttes] = startTime.split(":").map(Number);
+    const endTime = new Date();
+    endTime.setHours(hours + playTime);
+    endTime.setMinutes(minuttes);
+    return endTime.toTimeString().slice(0, 5);
+  }
+
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-
     const newBooking: BookingData = {
-      activity: "Kids Bowling",
+      activity: "Bowling",
       date: new Date().toISOString().split("T")[0],
       time: startTime,
-      lanes
+      endTime: endTime,
+      lanes,
     };
     addBooking(newBooking);
-
-    // handle form submission
   }
 
   function handleLaneSelectChange(event: React.ChangeEvent<HTMLSelectElement>) {
@@ -36,12 +46,17 @@ export default function KidsBowlingForm({ addBooking }: KidsBowlingFormProps) {
   }
 
   function handlePlayTimeChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    setPlayTime(Number(event.target.value));
+    const newPlayTime = Number(event.target.value);
+    setPlayTime(newPlayTime);
+    setEndTime(calculatedEndTime(startTime, newPlayTime));
   }
 
   function handleStartTimeChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    setStartTime(event.target.value);
+    const newStartTime = event.target.value;
+    setStartTime(newStartTime);
+    setEndTime(calculatedEndTime(newStartTime, playTime));
   }
+
 
   return (
     <form onSubmit={handleSubmit} className="container mx-auto px-4 py-8 max-w-screen-md">

@@ -8,6 +8,7 @@ export interface BookingData {
   activity: string;
   date: string;
   time: string;
+  endTime?: string;
   lanes?: number;
   tables?: number;
 }
@@ -16,8 +17,13 @@ export default function OnlineBooking() {
   const [bookingData, setBookingData] = useState<BookingData[]>([]);
 
   function addBooking(newBooking: BookingData) {
-    setBookingData([...bookingData, {... newBooking, id: bookingData.length + 1}]);
+    setBookingData([
+      ...bookingData,
+      { ...newBooking, id: bookingData.length + 1 },
+    ]);
   }
+
+  console.log(bookingData);
 
   return (
     <div className="flex w-screen">
