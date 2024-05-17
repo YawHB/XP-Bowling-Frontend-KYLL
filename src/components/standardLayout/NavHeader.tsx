@@ -39,6 +39,11 @@ export default function NavHeader()  {
             Bar
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/medarbejder" className="text-white hover:text-gray-300">
+            Medarbejder
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );
