@@ -46,24 +46,13 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="container mx-auto px-4 py-8 max-w-screen-md"
-    >
+    <form onSubmit={handleSubmit} className="container mx-auto px-4 py-8 max-w-screen-md">
       <section className="flex flex-wrap -mx-2">
         <div className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0">
-          <label
-            htmlFor="laneSelector"
-            className="block mb-2 text-sm font-medium"
-          >
+          <label htmlFor="laneSelector" className="block mb-2 text-sm font-medium">
             Baner
           </label>
-          <select
-            id="laneSelector"
-            onChange={handleLaneSelectChange}
-            value={lanes}
-            className="block w-full p-2 border border-gray-300 rounded-md text-black"
-          >
+          <select id="laneSelector" onChange={handleLaneSelectChange} value={lanes} className="block w-full p-2 border border-gray-300 rounded-md bg-black text-white">
             <option value={1}>1</option>
             <option value={2}>2</option>
             <option value={3}>3</option>
@@ -72,36 +61,20 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
         </div>
 
         <div className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0">
-          <label
-            htmlFor="playTimeSelector"
-            className="block mb-2 text-sm font-medium"
-          >
+          <label htmlFor="playTimeSelector" className="block mb-2 text-sm font-medium">
             Timer
           </label>
-          <select
-            id="playTimeSelector"
-            onChange={handlePlayTimeChange}
-            value={playTime}
-            className="block w-full p-2 border border-gray-300 rounded-md text-black"
-          >
+          <select id="playTimeSelector" onChange={handlePlayTimeChange} value={playTime} className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md text-black">
             <option value={1}>1</option>
             <option value={2}>2</option>
           </select>
         </div>
 
-        <div
-          title="selectStartTime"
-          className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0"
-        >
+        <div title="selectStartTime" className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0">
           <label htmlFor="startTime" className="block mb-2 text-sm font-medium">
             Start Tid
           </label>
-          <select
-            id="startTime"
-            onChange={handleStartTimeChange}
-            value={startTime}
-            className="block w-full p-2 border border-gray-300 rounded-md text-black"
-          >
+          <select id="startTime" onChange={handleStartTimeChange} value={startTime} className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md text-black">
             <option value={"08:00"}>08:00</option>
             <option value={"09:00"}>09:00</option>
             <option value={"10:00"}>10:00</option>
@@ -118,10 +91,7 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
           </select>
         </div>
 
-        <button
-          type="submit"
-          className="w-full sm:w-1/4 p-2 mt-4 bg-green-500 text-white rounded-md"
-        >
+        <button type="submit" className="w-full sm:w-1/4 p-2 mt-4 bg-green-500 text-white rounded-md">
           Tilføj
         </button>
       </section>
@@ -133,11 +103,7 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
               <label className="block mb-2 text-sm font-medium">
                 Navn {index + 1} (Bane {laneIndex + 1})
               </label>
-              <input
-                type="text"
-                className="block w-full p-2 border border-gray-300 rounded-md text-black"
-                placeholder={`Enter name ${index + 1}`}
-              />
+              <input type="text" className="block w-full p-2 border border-gray-300 rounded-md text-black" placeholder={`Enter name ${index + 1}`} />
             </div>
           ))}
         </section>

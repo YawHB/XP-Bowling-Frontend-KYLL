@@ -8,7 +8,8 @@ export interface BookingData {
   activity: string;
   date: string;
   time: string;
-  lanes: number;
+  lanes?: number;
+  tables?: number;
 }
 
 export default function OnlineBooking() {
