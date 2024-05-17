@@ -3,8 +3,9 @@ import { BookingData } from "./OnlineBooking";
 interface BookingOverviewProps {
   bookingData: BookingData[];
 }
+// TODO: implement delete functionality
+// TODO: implement 'antal timer' for bookings
 
-// show 'anatal timer' for bookings
 
 export default function BookingOverview({ bookingData }: BookingOverviewProps) {
   return (
