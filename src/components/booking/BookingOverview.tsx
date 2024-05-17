@@ -62,7 +62,6 @@ export default function BookingOverview() {
                 </div>
               </td>
               <td>
-                <button className="m-2 bg-green-300">Rediger</button>
                 <button className="mr-2 bg-red-400">Slet</button>
               </td>
             </tr>
@@ -84,7 +83,6 @@ export default function BookingOverview() {
                 </div>
               </td>
               <td>
-                <button className="m-2 bg-green-300">Rediger</button>
                 <button className="mr-2 bg-red-400">Slet</button>
               </td>
             </tr>
