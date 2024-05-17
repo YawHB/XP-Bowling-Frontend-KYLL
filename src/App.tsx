@@ -4,7 +4,7 @@ import Home from "./components/standardLayout/Home";
 import BowlingInfo from "./components/infoPages/BowlingInfo";
 import AirhockeyInfo from "./components/infoPages/AirhockeyInfo";
 import RestaurantInfo from "./components/infoPages/RestaurantInfo";
-import OnlineBooking from "./components/booking/OnlineBooking";
+import OnlineBooking from "./components/booking/OnlineBookings";
 import BarInfo from "./components/infoPages/BarInfo";
 import BarSale from "./components/sale/BarSale";
 

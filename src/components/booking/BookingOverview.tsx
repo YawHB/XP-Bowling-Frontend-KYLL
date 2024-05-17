@@ -1,11 +1,10 @@
-import { BookingData } from "./OnlineBooking";
+import { BookingData } from "./OnlineBookings";
 
 interface BookingOverviewProps {
   bookingData: BookingData[];
 }
 // TODO: implement delete functionality
 // TODO: implement 'antal timer' for bookings
-
 
 export default function BookingOverview({ bookingData }: BookingOverviewProps) {
   return (
@@ -22,7 +21,10 @@ export default function BookingOverview({ bookingData }: BookingOverviewProps) {
         </thead>
         <tbody className="">
           {bookingData.map((booking) => (
-            <tr key={booking.id} className=" bg-blue-300 border-4 border-blue-600">
+            <tr
+              key={booking.id}
+              className=" bg-blue-300 border-4 border-blue-600"
+            >
               <td className="p-3 ">
                 <div>
                   <p className="font-bold text-lg">{booking.activity}</p>
