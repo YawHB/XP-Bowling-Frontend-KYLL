@@ -4,6 +4,8 @@ interface BookingOverviewProps {
   bookingData: BookingData[];
 }
 
+// show 'anatal timer' for bookings
+
 export default function BookingOverview({ bookingData }: BookingOverviewProps) {
   return (
     <div className="bg-blue-500 p-2">
