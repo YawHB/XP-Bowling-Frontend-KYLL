@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-
 interface BowlingFormProps {
   addBooking: (newBooking: BookingData) => void;
 }
@@ -13,11 +12,11 @@ interface BookingData {
   lanes: number;
 }
 
-
 export default function BowlingForm({ addBooking }: BowlingFormProps) {
   const [startTime, setStartTime] = useState<string>("08:00");
   const [playTime, setPlayTime] = useState<number>(0);
   const [lanes, setLanes] = useState<number>(1);
+  const [addNames, setAddNames] = useState<boolean>(false);
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -25,12 +24,9 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
       activity: "Bowling",
       date: new Date().toISOString().split("T")[0],
       time: startTime,
-      lanes,
+      lanes
     };
     addBooking(newBooking);
-
-
-    // handle form submission
   }
 
   function handleLaneSelectChange(event: React.ChangeEvent<HTMLSelectElement>) {
@@ -45,9 +41,16 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
     setStartTime(event.target.value);
   }
 
+  function handleCheckboxChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setAddNames(event.target.checked);
+  }
+
   return (
     <form onSubmit={handleSubmit} className="container mx-auto px-4 py-8 max-w-screen-md">
       <section className="flex flex-wrap -mx-2">
+        <div className="w-full px-2 mb-4">
+          <h2 className="text-2xl font-bold">Bowling</h2>
+        </div>
         <div className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0">
           <label htmlFor="laneSelector" className="block mb-2 text-sm font-medium">
             Baner
@@ -64,7 +67,7 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
           <label htmlFor="playTimeSelector" className="block mb-2 text-sm font-medium">
             Timer
           </label>
-          <select id="playTimeSelector" onChange={handlePlayTimeChange} value={playTime} className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md text-black">
+          <select id="playTimeSelector" onChange={handlePlayTimeChange} value={playTime} className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md">
             <option value={1}>1</option>
             <option value={2}>2</option>
           </select>
@@ -74,7 +77,7 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
           <label htmlFor="startTime" className="block mb-2 text-sm font-medium">
             Start Tid
           </label>
-          <select id="startTime" onChange={handleStartTimeChange} value={startTime} className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md text-black">
+          <select id="startTime" onChange={handleStartTimeChange} value={startTime} className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md">
             <option value={"08:00"}>08:00</option>
             <option value={"09:00"}>09:00</option>
             <option value={"10:00"}>10:00</option>
@@ -91,23 +94,32 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
           </select>
         </div>
 
-        <button type="submit" className="w-full sm:w-1/4 p-2 mt-4 bg-green-500 text-white rounded-md">
-          Tilføj
-        </button>
+        <div className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0">
+          <label className="block mb-2 text-sm font-medium">Tilføj navne</label>
+          <input type="checkbox" onChange={handleCheckboxChange} />
+        </div>
       </section>
 
-      {Array.from({ length: lanes }, (_, laneIndex) => (
-        <section key={laneIndex} className="flex flex-wrap -mx-2 mt-4">
-          {[...Array(6)].map((_, index) => (
-            <div key={index} className="w-full sm:w-1/2 px-2 mb-4">
-              <label className="block mb-2 text-sm font-medium">
-                Navn {index + 1} (Bane {laneIndex + 1})
-              </label>
-              <input type="text" className="block w-full p-2 border border-gray-300 rounded-md text-black" placeholder={`Enter name ${index + 1}`} />
-            </div>
+      {addNames && (
+        <div className="mt-4">
+          {Array.from({ length: lanes }, (_, laneIndex) => (
+            <section key={laneIndex} className="flex flex-wrap -mx-2 mt-4">
+              {[...Array(6)].map((_, index) => (
+                <div key={index} className="w-full sm:w-1/2 px-2 mb-4">
+                  <label className="block mb-2 text-sm font-medium">
+                    Navn {index + 1} (Bane {laneIndex + 1})
+                  </label>
+                  <input type="text" className="block w-full p-2 border border-gray-300 rounded-md text-black" placeholder={`Enter name ${index + 1}`} />
+                </div>
+              ))}
+            </section>
           ))}
-        </section>
-      ))}
+        </div>
+      )}
+
+      <button type="submit" className="w-full sm:w-1/4 p-2 mt-4 bg-green-500 text-white rounded-md">
+        Tilføj
+      </button>
     </form>
   );
 }

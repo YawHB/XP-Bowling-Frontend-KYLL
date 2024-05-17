@@ -19,6 +19,9 @@ export default function OnlineBooking() {
     setBookingData([...bookingData, {... newBooking, id: bookingData.length + 1}]);
   }
 
+  console.log(bookingData);
+  
+
   return (
     <div className="flex w-screen">
       <div className="">
