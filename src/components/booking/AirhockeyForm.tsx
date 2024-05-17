@@ -48,7 +48,7 @@ export default function AirhockeyForm({ addBooking }: AirhockeyFormProps) {
       <section className="flex flex-wrap -mx-2">
         <div className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0">
           <label htmlFor="tableSelector" className="block mb-2 text-sm font-medium">
-            Border
+            Borde
           </label>
           <select id="tableSelector" onChange={handleTableSelectChange} value={tables} className="block w-full p-2 border border-gray-300 rounded-md text-black">
             <option value={1}>1</option>
