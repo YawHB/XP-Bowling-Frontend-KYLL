@@ -1,8 +1,23 @@
 import BookingOverview from "./BookingOverview";
 import BookingSelectActivity from "./BookingSelectActivity";
 import BookingInputForm from "./BookingInputForm";
+import { useState } from "react";
+
+export interface BookingData {
+  id?: number;
+  activity: string;
+  date: string;
+  time: string;
+  lanes: number;
+}
 
 export default function Booking() {
+  const [bookingData, setBookingData] = useState<BookingData[]>([]);
+
+  function addBooking(newBooking: BookingData) {
+    setBookingData([...bookingData, {... newBooking, id: bookingData.length + 1}]);
+  }
+
   return (
     <div className="flex w-screen">
       <div className="">
@@ -14,10 +29,10 @@ export default function Booking() {
         <BookingSelectActivity />
       </div>
       <div>
-        <BookingOverview />
+        <BookingOverview bookingData={bookingData} />
       </div>
       <div>
-        <BookingInputForm />
+        <BookingInputForm addBooking={addBooking} />
       </div>
     </div>
   );

@@ -1,11 +1,35 @@
 import { useState } from "react";
-export default function BowlingForm() {
+
+
+interface BowlingFormProps {
+  addBooking: (newBooking: BookingData) => void;
+}
+
+interface BookingData {
+  id?: number;
+  activity: string;
+  date: string;
+  time: string;
+  lanes: number;
+}
+
+
+export default function BowlingForm({ addBooking }: BowlingFormProps) {
   const [startTime, setStartTime] = useState<string>("08:00");
   const [playTime, setPlayTime] = useState<number>(0);
   const [lanes, setLanes] = useState<number>(1);
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
+    const newBooking: BookingData = {
+      activity: "Bowling",
+      date: new Date().toISOString().split("T")[0],
+      time: startTime,
+      lanes,
+    };
+    addBooking(newBooking);
+
+
     // handle form submission
   }
 
