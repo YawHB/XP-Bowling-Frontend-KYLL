@@ -1,4 +1,4 @@
-import StockOrder from "./stockOrder";
+import StockOverview from "./StockOverview";
 
 export default function StockPage() {
     return (
@@ -7,7 +7,7 @@ export default function StockPage() {
             <h1 className="text-4xl self-center font-bold text-pink-300">Lager</h1>
         </div>
         <div>
-            <StockOrder />
+            <StockOverview />
         </div>
         </div>
     );

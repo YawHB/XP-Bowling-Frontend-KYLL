@@ -90,6 +90,18 @@ export default function StockOrder() {
     };
 
     console.log(order);
+
+    fetch("http://localhost:8080/replacementorders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(order),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
   }
 
   return (
