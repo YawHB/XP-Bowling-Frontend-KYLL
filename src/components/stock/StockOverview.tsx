@@ -19,8 +19,8 @@ export default function StockOverview() {
   }, []);
 
   return (
-    <div>
-      <table className="table-auto">
+    <div >
+      <table >
         <thead>
           <tr>
             <th className="px-4 py-2">Vare</th>
@@ -28,18 +28,15 @@ export default function StockOverview() {
             <th className="px-4 py-2">Pris pr. stk.</th>
           </tr>
         </thead>
-        {stockItems &&
-          stockItems.map((stockItem) => {
-            return (
-              <tbody>
-                <tr>
-                  <td className="border px-4 py-2">{stockItem.name}</td>
-                  <td className="border px-4 py-2">{stockItem.amountInCentre}</td>
-                  <td className="border px-4 py-2">{stockItem.price},00 Kr.</td>
-                </tr>
-              </tbody>
-            );
-          })}
+        <tbody>
+          {stockItems.map((stockItem) => (
+            <tr key={stockItem.name}>
+              <td className="border px-4 py-2">{stockItem.name}</td>
+              <td className="border px-4 py-2">{stockItem.amountInCentre}</td>
+              <td className="border px-4 py-2">{stockItem.price},00 Kr.</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );
