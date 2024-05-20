@@ -39,6 +39,12 @@ export default function NavHeader()  {
             Bar
           </NavLink>
         </li>
+        {/* make a drop down menu */}
+        <li>
+          <NavLink to="/lager" className="text-white hover:text-gray-300">
+            Lager
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );
