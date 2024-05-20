@@ -42,11 +42,11 @@ export default function NavHeader()  {
             Lager
           </NavLink>
         </li>
-        <li>
+        {/* <li>
           <NavLink to="/lagerBestilling" className="text-white hover:text-gray-300">
             Bestil Reservedele
           </NavLink>
-        </li>
+        </li> */}
       </ul>
     </nav>
   );
