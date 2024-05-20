@@ -1,33 +1,46 @@
-export default function StockOverview() {
-    return (
+import { useEffect, useState } from "react";
 
-        <div>
-            <table className="table-auto">
-                <thead>
-                    <tr>
-                        <th className="px-4 py-2">Vare</th>
-                        <th className="px-4 py-2">Antal</th>
-                        <th className="px-4 py-2">Pris</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td className="border px-4 py-2">Biljardkø</td>
-                        <td className="border px-4 py-2">5</td>
-                        <td className="border px-4 py-2">200</td>
-                    </tr>
-                    <tr>
-                        <td className="border px-4 py-2">Bowlingkugle</td>
-                        <td className="border px-4 py-2">10</td>
-                        <td className="border px-4 py-2">100</td>
-                    </tr>
-                    <tr>
-                        <td className="border px-4 py-2">Airhockey puck</td>
-                        <td className="border px-4 py-2">20</td>
-                        <td className="border px-4 py-2">10</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    )
+interface StockItem {
+  name: string;
+  amountInCentre: number;
+  price: number;
+}
+
+export default function StockOverview() {
+  const [stockItems, setStockItems] = useState<StockItem[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/stockitems")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setStockItems(data);
+      });
+  }, []);
+
+  return (
+    <div>
+      <table className="table-auto">
+        <thead>
+          <tr>
+            <th className="px-4 py-2">Vare</th>
+            <th className="px-4 py-2">Antal i centeret</th>
+            <th className="px-4 py-2">Pris pr. stk.</th>
+          </tr>
+        </thead>
+        {stockItems &&
+          stockItems.map((stockItem) => {
+            return (
+              <tbody>
+                <tr>
+                  <td className="border px-4 py-2">{stockItem.name}</td>
+                  <td className="border px-4 py-2">{stockItem.amountInCentre}</td>
+                  <td className="border px-4 py-2">{stockItem.price},00 Kr.</td>
+                </tr>
+              </tbody>
+            );
+          })}
+      </table>
+    </div>
+  );
 }
