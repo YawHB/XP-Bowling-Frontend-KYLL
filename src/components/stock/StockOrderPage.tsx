@@ -1,4 +1,4 @@
-import StockOrder from "./StockOrder";
+import StockOrder from "./StockOrders";
 import StockOrderOverview from "./StockOrderOverview";
 
 export default function StockOrderPage() {
