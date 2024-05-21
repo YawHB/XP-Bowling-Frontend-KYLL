@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 interface CustomerInterface {
   id?: number;
@@ -7,46 +7,105 @@ interface CustomerInterface {
 }
 
 export default function CustomerForm() {
-  //const [customerPhone, setCustomerName] = useState<string>("00000000");
+  const [customerIsExisting, setCusomerIsExisting] = useState<boolean>(false);
+  const [thisCustomer, setThisCustomer] = useState<CustomerInterface>();
+  const [customerPhone, setCustomerPhone] = useState<string>("");
   const [cusomersList, setCustomersList] = useState<CustomerInterface[]>([]);
-  //const [customerName, setCustomerName] = useState<string>("firstname lastname");
+  const [customerName, setCustomerName] = useState<string>("");
+  const [customerFirstName, setCustomerFirstName] = useState<string>("");
+  const [customerLastName, setCustomerLastName] = useState<string>("");
 
-  // fetch all those damn users!
-
-  // have a function that looks it.
   useEffect(() => {
-    const fetchCustomers = async () => {
-      try {
-        const response = await fetch("http://localhost:8080/customers");
-        const data = await response.json();
-        console.log("This is all the customer data: ", data);
+    fetch("http://localhost:8080/customers")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
         setCustomersList(data);
-      } catch (error) {
-        console.error("Error fetching data when creating show", error);
-      }
-    };
-    fetchCustomers();
+      });
   }, []);
 
-  function searchForNumber() {
-    console.log("here we get the number input and searches for it!");
-    console.log(cusomersList);
+  // Checks if the phone input maches the customer data
+  function searchForNumber(event: FormEvent<HTMLInputElement>) {
+    const inputNumber = (event.target as HTMLInputElement).value;
+    const matchingCustomer = cusomersList.find(
+      (customer) => inputNumber === customer.phone
+    );
+    if (!matchingCustomer) {
+      setCusomerIsExisting(false);
+      console.log(customerIsExisting);
+    } else {
+      setCusomerIsExisting(true);
+      console.log(customerIsExisting);
+      splitNames(matchingCustomer.name);
+      setThisCustomer(matchingCustomer);
+    }
+    setCustomerPhone(inputNumber);
   }
 
-  // function setFullName(){}
+  // splits the customer fullName and inserts it in the name first- and lastname input fields
+  function splitNames(fullName: string) {
+    const nameArray = fullName.split(" ");
+    const firstname = nameArray[0];
+    const lastname = nameArray[1];
+    setCustomerFirstName(firstname);
+    setCustomerLastName(lastname);
+  }
+
+  function setFullName(firstname: string, lastname: string) {
+    const fullName = firstname + " " + lastname;
+    setCustomerName(fullName);
+    console.log(customerName);
+  }
+
+  function confirmUser(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setFullName(customerFirstName, customerLastName);
+    setActiveCustomer();
+  }
+
+  function setActiveCustomer() {
+    if (customerIsExisting === true) {
+      console.log("this is the existing customer id", thisCustomer);
+    } else {
+      console.log("we need to post a new customer!");
+      const newCustomer = {
+        name: customerName,
+        phone: customerPhone,
+      };
+      console.log(newCustomer);
+    }
+  }
 
   return (
-    <form>
+    <form onSubmit={confirmUser}>
       <label htmlFor="phonenumber">Telefon nr</label>
-      <input type="text" id="phonenumber" onInput={searchForNumber} />
+      <input
+        type="text"
+        id="phonenumber"
+        onInput={searchForNumber}
+        value={customerPhone}
+        className="bg-black"
+      />
 
       <label htmlFor="customerFirstname">Fornavn</label>
-      <input type="text" id="customerFirstname" />
+      <input
+        type="text"
+        id="customerFirstname"
+        onChange={(e) => setCustomerFirstName(e.target.value)}
+        value={customerFirstName}
+        className="bg-black"
+      />
 
       <label htmlFor="customerLastname">Efternavn</label>
-      <input type="text" id="customerLastname" />
+      <input
+        type="text"
+        id="customerLastname"
+        onChange={(e) => setCustomerLastName(e.target.value)}
+        value={customerLastName}
+        className="bg-black"
+      />
 
-      <button> Bekræfr</button>
+      <button type="submit">Bekræft</button>
     </form>
   );
 }
