@@ -7,6 +7,8 @@ import RestaurantInfo from "./components/infoPages/RestaurantInfo";
 import OnlineBooking from "./components/booking/OnlineBookings";
 import BarInfo from "./components/infoPages/BarInfo";
 import BarSale from "./components/sale/BarSale";
+import StockPage from "./components/stock/StockPage";
+import StockOrderPage from "./components/stock/StockOrderPage";
 
 export default function App() {
   return (
@@ -22,6 +24,9 @@ export default function App() {
       <Route path="contact" element={<Contact />} /> */}
         <Route path="/barInfo" element={<BarInfo />} />
         <Route path="/barSale" element={<BarSale />} />
+        <Route path="/lager" element={<StockPage />} />
+        <Route path="/lagerBestilling" element={<StockOrderPage />} />
+
       </Routes>
     </Layout>
   );

@@ -22,10 +22,7 @@ export default function NavHeader()  {
           </NavLink>
         </li>
         <li>
-          <NavLink
-            to="/airHockeyInfo"
-            className="text-white hover:text-gray-300"
-          >
+          <NavLink to="/airHockeyInfo" className="text-white hover:text-gray-300">
             AirHockey
           </NavLink>
         </li>
@@ -39,6 +36,17 @@ export default function NavHeader()  {
             Bar
           </NavLink>
         </li>
+        {/* make a drop down menu */}
+        <li>
+          <NavLink to="/lager" className="text-white hover:text-gray-300">
+            Lager
+          </NavLink>
+        </li>
+        {/* <li>
+          <NavLink to="/lagerBestilling" className="text-white hover:text-gray-300">
+            Bestil Reservedele
+          </NavLink>
+        </li> */}
       </ul>
     </nav>
   );
