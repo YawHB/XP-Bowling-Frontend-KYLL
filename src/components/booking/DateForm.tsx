@@ -11,6 +11,6 @@ export default function DateForm() {
   return (
     <div>
       <DatePicker onChange={setBookingDate} value={bookingDate} />
-4    </div>
+    </div>
   );
 }

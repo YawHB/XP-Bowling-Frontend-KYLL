@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
+import { postCustomer } from "../services/customerService";
 
 interface CustomerInterface {
   id?: number;
@@ -16,13 +17,17 @@ export default function CustomerForm() {
   const [customerLastName, setCustomerLastName] = useState<string>("");
 
   useEffect(() => {
+    fetchCustomers();
+  }, []);
+
+  function fetchCustomers() {
     fetch("http://localhost:8080/customers")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
         setCustomersList(data);
       });
-  }, []);
+  }
 
   // Checks if the phone input maches the customer data
   function searchForNumber(event: FormEvent<HTMLInputElement>) {
@@ -54,7 +59,6 @@ export default function CustomerForm() {
   function setFullName(firstname: string, lastname: string) {
     const fullName = firstname + " " + lastname;
     setCustomerName(fullName);
-    console.log(customerName);
   }
 
   function confirmUser(event: FormEvent<HTMLFormElement>) {
@@ -63,7 +67,7 @@ export default function CustomerForm() {
     setActiveCustomer();
   }
 
-  function setActiveCustomer() {
+  async function setActiveCustomer() {
     if (customerIsExisting === true) {
       console.log("this is the existing customer id", thisCustomer);
     } else {
@@ -73,6 +77,8 @@ export default function CustomerForm() {
         phone: customerPhone,
       };
       console.log(newCustomer);
+      const postResponse = await postCustomer(newCustomer);
+      setThisCustomer(postResponse);
     }
   }
 
