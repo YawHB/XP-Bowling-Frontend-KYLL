@@ -23,6 +23,12 @@ export default function BarSale() {
             });
     }, []);
 
+    //This useEffect hook updates the CheckoutSummary component. When a consumable's amount is greater than 0, it is added to the checkoutItems state.
+    useEffect(() => {
+        const itemsToCheckout = consumables.filter((consumable) => consumable.amount > 0);
+        setCheckoutItems(itemsToCheckout);
+    }, [consumables]);
+
     const handleAddOne = (id: number) => {
         setConsumables(
             consumables.map((consumable) => {
@@ -41,7 +47,6 @@ export default function BarSale() {
         setConsumables(
             consumables.map((consumable) => {
                 //Same logic as AddOne, but Math.max(0, consumable.quantity - 1) returns the larges number between 0 and the new quantity.
-
                 if (consumable.id === id) {
                     return { ...consumable, amount: Math.max(0, consumable.amount - 1) };
                 } else {
@@ -51,15 +56,10 @@ export default function BarSale() {
         );
     };
 
-    // const handleCheckout = () => {
-    //     const itemsToCheckout = consumables.filter((consumable) => consumable.quantity > 0);
-    //     setCheckoutItems(itemsToCheckout);
-    // };
-
     const handleCheckout = () => {
-        const itemsToCheckout = consumables.filter((consumable) => consumable.amount > 0);
-        setCheckoutItems(itemsToCheckout);
-        postCheckoutItems(itemsToCheckout); // Call the postCheckoutItems function with the items to checkout
+        postCheckoutItems(checkoutItems); //Makes a POST request to the server with the checkout items
+        setCheckoutItems([]); // Clears the checkout summary list after the items have been posted
+        setConsumables(consumables.map((consumable) => ({ ...consumable, amount: 0 }))); // Reset the amount of each consumable to 0
     };
     return (
         <div className="w-screen">
@@ -88,7 +88,9 @@ export default function BarSale() {
                         ))}
                     </tbody>
                 </table>
-                <button onClick={handleCheckout}>Bekræft</button>
+                <button className="bg-green-500" onClick={handleCheckout}>
+                    Bekræft
+                </button>
             </div>
             <CheckoutSummary items={checkoutItems} />
         </div>
