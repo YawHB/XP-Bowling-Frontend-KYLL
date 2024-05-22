@@ -1,8 +1,6 @@
-import BookingOverview from "./BookingOverview";
-import BookingSelectActivity from "./BookingSelectActivity";
+import { useState } from "react";
 import BookingInputForm from "./BookingInputForm";
 import DateForm from "./DateForm";
-import { useState } from "react";
 import CustomerForm from "./CustomerForm";
 
 export interface BookingData {
@@ -15,39 +13,38 @@ export interface BookingData {
   tables?: number;
 }
 
+const components = [CustomerForm, DateForm, BookingInputForm];
+
 export default function OnlineBooking() {
   const [bookingData, setBookingData] = useState<BookingData[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0); 
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % components.length);
+  };
+
+  function handleReset() {
+    setCurrentIndex(0);
+    setBookingData([]);
+  }
 
   function addBooking(newBooking: BookingData) {
-    setBookingData([
-      ...bookingData,
-      { ...newBooking, id: bookingData.length + 1 },
-    ]);
+    setBookingData([...bookingData, { ...newBooking, id: bookingData.length + 1 }]);
   }
+
+  const CurrentComponent = components[currentIndex];
 
   console.log(bookingData);
 
   return (
     <div className="flex w-screen">
-      <div className="">
-        <h1 className="text-4xl self-center font-bold text-pink-300">
-          Book en aktivitet her!!
-        </h1>
+      <div>
+        <h1 className="text-4xl self-center font-bold text-pink-300">Book en aktivitet her!!</h1>
       </div>
       <div>
-        <CustomerForm />
-      </div>
-      <div>
-        <DateForm />
-      </div>
-      <div>
-        <BookingSelectActivity />
-      </div>
-      <div>
-        <BookingOverview bookingData={bookingData} />
-      </div>
-      <div>
-        <BookingInputForm addBooking={addBooking} />
+        <CurrentComponent addBooking={addBooking} bookingData={bookingData} />
+        <button onClick={handleNext}>Next</button>
+        <button onClick={handleReset}>Reset</button>
       </div>
     </div>
   );
