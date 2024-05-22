@@ -17,11 +17,11 @@ const components = [CustomerForm, DateForm, BookingInputForm];
 
 export default function OnlineBooking() {
   const [bookingData, setBookingData] = useState<BookingData[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0); 
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handleNext = () => {
+  function handleNext() {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % components.length);
-  };
+  }
 
   function handleReset() {
     setCurrentIndex(0);

@@ -4,6 +4,14 @@ import AirhockeyForm from "./AirhockeyForm";
 import DinnertableForm from "./DinnertableForm";
 import BookingSelectActivity from "./BookingSelectActivity";
 import BookingOverview from "./BookingOverview";
+import { useState } from "react";
+
+interface FormProps {
+  addBooking: (newBooking: BookingData) => void;
+}
+type FormComponents = {
+  [key: string]: React.ComponentType<FormProps>;
+};
 
 interface BookingInputFormProps {
   addBooking: (newBooking: BookingData) => void;
@@ -19,16 +27,23 @@ interface BookingData {
   tables?: number;
 }
 
+const forms: FormComponents = { bowling: BowlingForm, kidsBowling: KidsBowlingForm, airHockey: AirhockeyForm, restaurant: DinnertableForm };
+
 export default function BookingInputForm({ addBooking, bookingData }: BookingInputFormProps) {
-  
+  const [currentFormName, setCurrentFormName] = useState<string>("bowling");
+
+  function chooseInputForm(formName: string) {
+    setCurrentFormName(formName);
+    console.log(formName);
+  }
+
+  const CurrentForm = forms[currentFormName];
+
   return (
     <div>
-      <BookingSelectActivity />
+      <BookingSelectActivity chosenForm={chooseInputForm} />
       <h1 className="text-2xl self-center font-semibold">Booking</h1>
-      <BowlingForm addBooking={addBooking}/>
-      <KidsBowlingForm addBooking={addBooking}/>
-      <AirhockeyForm addBooking={addBooking} />
-      <DinnertableForm addBooking={addBooking}/>
+      <CurrentForm addBooking={addBooking} />
       <BookingOverview bookingData={bookingData} />
     </div>
   );

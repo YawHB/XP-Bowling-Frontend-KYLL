@@ -1,12 +1,17 @@
 import React from "react";
 
+interface BookingSelectActivityProps {
+  chosenForm: (formName: string) => void;
+}
 
-
-function BookingSelectActivity(): React.ReactElement {
+function BookingSelectActivity({chosenForm}: BookingSelectActivityProps): React.ReactElement {
   const handleClick = (value: string) => {
     console.log("You clicked me!");
     console.log(value);
+    chosenForm(value);
   };
+
+
 
   return (
     <div>
