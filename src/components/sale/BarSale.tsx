@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { CheckoutSummary } from './CheckOutSummary';
 import { postCheckoutItems } from '../../api/sale/PostConsumableApi';
+import { CreateProduct } from './CreateProduct';
+import UpdateProductPrice from './UpdateProductPrice';
 
 export interface Consumable {
     id: number;
@@ -62,37 +64,45 @@ export default function BarSale() {
         setConsumables(consumables.map((consumable) => ({ ...consumable, amount: 0 }))); // Reset the amount of each consumable to 0
     };
     return (
-        <div className="w-screen">
-            <div className="container mx-auto px-4 py-8">
-                <h1 className="font-bold text-red-500">Lad os sælge øller møller!</h1>
-                <table className="table-auto bg-blue-400">
-                    <thead>
-                        <tr>
-                            <th className="px-4 py-2">Vare</th>
-                            <th className="px-4 py-2">Pris</th>
-                            <th className="px-4 py-2">Antal</th>
-                            <th className="px-4 py-2">Hej</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {consumables.map((consumable) => (
-                            <tr key={consumable.id}>
-                                <td>{consumable.title}</td>
-                                <td>{consumable.price}</td>
-                                <td>{consumable.amount}</td>
-                                <td>
-                                    <button onClick={() => handleAddOne(consumable.id)}>+</button>
-                                    <button onClick={() => handleSubtractOne(consumable.id)}>-</button>
-                                </td>
+        <div className="w-screen flex flex-wrap">
+            <div className="w-full md:w-1/2 p-4">
+                <div className="container mx-auto px-4 py-8">
+                    <h1 className="font-bold text-white-500">Barsalg</h1>
+                    <table className="table-auto bg-blue-400">
+                        <thead>
+                            <tr>
+                                <th className="px-4 py-2">Vare</th>
+                                <th className="px-4 py-2">Pris</th>
+                                <th className="px-4 py-2">Antal</th>
+                                <th className="px-4 py-2"></th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-                <button className="bg-green-500" onClick={handleCheckout}>
-                    Bekræft
-                </button>
+                        </thead>
+                        <tbody>
+                            {consumables.map((consumable) => (
+                                <tr key={consumable.id}>
+                                    <td>{consumable.title}</td>
+                                    <td>{consumable.price}</td>
+                                    <td>{consumable.amount}</td>
+                                    <td>
+                                        <button onClick={() => handleAddOne(consumable.id)}>+</button>
+                                        <button onClick={() => handleSubtractOne(consumable.id)}>-</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit" onClick={handleCheckout}>
+                        Bekræft
+                    </button>
+                    <CheckoutSummary items={checkoutItems} />
+                </div>
+                <div className="w-full md:w-1/2 p-4">
+                    <div className="flex flex-col items-start px-4 py-8">
+                        <CreateProduct />
+                        <UpdateProductPrice />
+                    </div>
+                </div>
             </div>
-            <CheckoutSummary items={checkoutItems} />
         </div>
     );
 }
