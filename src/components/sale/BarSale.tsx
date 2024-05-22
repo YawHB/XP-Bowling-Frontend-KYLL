@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { CheckoutSummary } from './CheckOutSummary';
 import { postCheckoutItems } from '../../api/sale/PostConsumableApi';
 import { CreateProduct } from './CreateProduct';
-import UpdateProductPrice from './UpdateProductPrice';
+import { UpdateProductPrice } from './UpdateProductPrice';
 
 export interface Consumable {
     id: number;
