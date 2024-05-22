@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { CheckoutSummary } from './CheckOutSummary';
+import { postCheckoutItems } from '../../api/sale/PostConsumableApi';
 
-interface Consumable {
+export interface Consumable {
     id: number;
     title: string;
     price: number;
-    quantity: number;
+    amount: number;
 }
 
 export default function BarSale() {
@@ -17,7 +18,7 @@ export default function BarSale() {
             .then((response) => response.json())
             .then((data) => {
                 // Add a quantity property to each consumable
-                const consumablesWithQuantity = data.map((consumable: Consumable) => ({ ...consumable, quantity: 0 }));
+                const consumablesWithQuantity = data.map((consumable: Consumable) => ({ ...consumable, amount: 0 }));
                 setConsumables(consumablesWithQuantity);
             });
     }, []);
@@ -27,7 +28,7 @@ export default function BarSale() {
             consumables.map((consumable) => {
                 //if the id matches the consumable we map over, make a shallow copy of the consumable and set the quantity value to quantity + 1
                 if (consumable.id === id) {
-                    return { ...consumable, quantity: consumable.quantity + 1 };
+                    return { ...consumable, amount: consumable.amount + 1 };
                 } else {
                     //Else just return the consumable as it is
                     return consumable;
@@ -42,7 +43,7 @@ export default function BarSale() {
                 //Same logic as AddOne, but Math.max(0, consumable.quantity - 1) returns the larges number between 0 and the new quantity.
 
                 if (consumable.id === id) {
-                    return { ...consumable, quantity: Math.max(0, consumable.quantity - 1) };
+                    return { ...consumable, amount: Math.max(0, consumable.amount - 1) };
                 } else {
                     return consumable;
                 }
@@ -50,14 +51,18 @@ export default function BarSale() {
         );
     };
 
-    const handleCheckout = () => {
-        const itemsToCheckout = consumables.filter((consumable) => consumable.quantity > 0);
-        setCheckoutItems(itemsToCheckout);
-    };
+    // const handleCheckout = () => {
+    //     const itemsToCheckout = consumables.filter((consumable) => consumable.quantity > 0);
+    //     setCheckoutItems(itemsToCheckout);
+    // };
 
+    const handleCheckout = () => {
+        const itemsToCheckout = consumables.filter((consumable) => consumable.amount > 0);
+        setCheckoutItems(itemsToCheckout);
+        postCheckoutItems(itemsToCheckout); // Call the postCheckoutItems function with the items to checkout
+    };
     return (
         <div className="w-screen">
-            <CheckoutSummary items={checkoutItems} />
             <div className="container mx-auto px-4 py-8">
                 <h1 className="font-bold text-red-500">Lad os sælge øller møller!</h1>
                 <table className="table-auto bg-blue-400">
@@ -74,7 +79,7 @@ export default function BarSale() {
                             <tr key={consumable.id}>
                                 <td>{consumable.title}</td>
                                 <td>{consumable.price}</td>
-                                <td>{consumable.quantity}</td>
+                                <td>{consumable.amount}</td>
                                 <td>
                                     <button onClick={() => handleAddOne(consumable.id)}>+</button>
                                     <button onClick={() => handleSubtractOne(consumable.id)}>-</button>
@@ -85,6 +90,7 @@ export default function BarSale() {
                 </table>
                 <button onClick={handleCheckout}>Bekræft</button>
             </div>
+            <CheckoutSummary items={checkoutItems} />
         </div>
     );
 }
