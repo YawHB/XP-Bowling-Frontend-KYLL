@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { CheckoutSummary } from './CheckOutSummary';
-import { postCheckoutItems } from '../../api/sale/PostConsumableApi';
+import { postCheckoutItems } from '../../api/sale/PostSaleConsumablesApi';
 import { CreateProduct } from './CreateProduct';
 import { UpdateProductPrice } from './UpdateProductPrice';
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { postNewConsumable } from '../../api/PostNewConsumable';
+import { postNewConsumable } from '../../api/sale/PostNewConsumableApi';
 
 interface Consumable {
     title: string;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getAllConsumables } from '../../api/sale/getAllConsumables';
-import { putConsumablePrice } from '../../api/sale/putConsumablePrice';
+import { getAllConsumables } from '../../api/sale/getAllConsumablesApi';
+import { putConsumablePrice } from '../../api/sale/putConsumablePriceApi';
 
 interface Consumable {
     id: number;
