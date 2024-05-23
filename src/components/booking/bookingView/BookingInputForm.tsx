@@ -1,11 +1,11 @@
-import BowlingForm from "./activityForms/BowlingForm";
-import KidsBowlingForm from "./activityForms/KidsBowlingForm";
-import AirhockeyForm from "./activityForms/AirhockeyForm";
-import DinnertableForm from "./activityForms/DinnertableForm";
+import BowlingForm from "../activityForms/BowlingForm";
+import KidsBowlingForm from "../activityForms/KidsBowlingForm";
+import AirhockeyForm from "../activityForms/AirhockeyForm";
+import DinnertableForm from "../activityForms/DinnertableForm";
 import BookingSelectActivity from "./BookingSelectActivity";
 import BookingOverview from "./BookingOverview";
 import { useState } from "react";
-import { CustomerInterface } from "./CustomerForm";
+import { CustomerInterface } from "../CustomerForm";
 
 interface FormProps {
   addBooking: (newBooking: BookingData) => void;
