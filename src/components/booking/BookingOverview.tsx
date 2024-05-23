@@ -1,4 +1,4 @@
-import { BookingData } from "./OnlineBookings-WRONG";
+import { BookingData } from "./OnlineBooking";
 
 interface BookingOverviewProps {
   bookingData: BookingData[];
