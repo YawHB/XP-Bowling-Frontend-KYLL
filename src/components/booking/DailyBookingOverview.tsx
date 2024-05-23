@@ -5,6 +5,15 @@ import React from 'react';
 export default function DailyBookingOverview() {
     return (
         <div className="w-screen mx-auto px-4 py-8 max-w-screen-full px-56">
+            <div>
+                <div>
+                    <button className="mx-2">dag</button>
+                    <button className="mx-2">Uge</button>
+                    <button className="mx-2">Måned</button>
+                </div>
+            </div>
+            <h1 className="text-3xl font-semibold">Dagens booking oversigt</h1>
+
             <table className=" w-full table-auto">
                 <thead>
                     <tr>

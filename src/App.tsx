@@ -9,7 +9,7 @@ import BarInfo from './components/infoPages/BarInfo';
 import BarSale from './components/sale/BarSale';
 import StockPage from './components/stock/StockPage';
 import StockOrderPage from './components/stock/StockOrderPage';
-import BookingOverview from './components/booking/BookingOverview';
+import BookingOverview from './components/booking/DailyBookingOverview';
 
 export default function App() {
     return (
