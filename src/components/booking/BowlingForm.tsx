@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface BowlingFormProps {
   addBooking: (newBooking: BookingData) => void;
@@ -13,20 +13,40 @@ interface BookingData {
   lanes: number;
 }
 
+interface LaneInput {
+  laneNumber: number;
+  textInputValues: string[];
+}
+
 export default function BowlingForm({ addBooking }: BowlingFormProps) {
   const [startTime, setStartTime] = useState<string>("08:00");
   const [playTime, setPlayTime] = useState<number>(1);
   const [endTime, setEndTime] = useState<string>(calculatedEndTime("08:00", 1));
   const [lanes, setLanes] = useState<number>(1);
+  const [laneInputs, setLaneInputs] = useState<LaneInput[]>(
+    Array.from({ length: lanes }, (_, laneIndex) => ({
+      laneNumber: laneIndex + 1,
+      textInputValues: Array(6).fill(""), // Assuming 6 inputs per lane
+    }))
+  );
+  const [addNames, setAddNames] = useState<boolean>(false);
+
+  useEffect(() => {
+    setLaneInputs(
+      Array.from({ length: lanes }, (_, laneIndex) => ({
+        laneNumber: laneIndex + 1,
+        textInputValues: Array(6).fill(""), // Assuming 6 inputs per lane
+      }))
+    );
+  }, [lanes]);
 
   function calculatedEndTime(startTime: string, playTime: number): string {
-    const [hours, minuttes] = startTime.split(":").map(Number);
+    const [hours, minutes] = startTime.split(":").map(Number);
     const endTime = new Date();
     endTime.setHours(hours + playTime);
-    endTime.setMinutes(minuttes);
+    endTime.setMinutes(minutes);
     return endTime.toTimeString().slice(0, 5);
   }
-  const [addNames, setAddNames] = useState<boolean>(false);
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -35,7 +55,7 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
       date: new Date().toISOString().split("T")[0],
       time: startTime,
       endTime: endTime,
-      lanes
+      lanes,
     };
     addBooking(newBooking);
   }
@@ -59,6 +79,32 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
   function handleCheckboxChange(event: React.ChangeEvent<HTMLInputElement>) {
     setAddNames(event.target.checked);
   }
+
+  const handleInputChange = (
+    laneIndex: number,
+    inputIndex: number,
+    value: string
+  ) => {
+    const updatedLaneInputs = laneInputs.map((lane, lIndex) => {
+      if (lIndex === laneIndex) {
+        const updatedTextInputValues = lane.textInputValues.map(
+          (input, iIndex) => {
+            if (iIndex === inputIndex) {
+              return value;
+            }
+            return input;
+          }
+        );
+        return { ...lane, textInputValues: updatedTextInputValues };
+      }
+      return lane;
+    });
+
+    setLaneInputs(updatedLaneInputs);
+  };
+
+  console.log("This is laneInputs:");
+  console.log(laneInputs);
 
   return (
     <form
@@ -144,18 +190,22 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
 
       {addNames && (
         <div className="mt-4">
-          {Array.from({ length: lanes }, (_, laneIndex) => (
+          {laneInputs.map((lane, laneIndex) => (
             <section key={laneIndex} className="flex flex-wrap -mx-2 mt-4">
-              {[...Array(6)].map((_, index) => (
+              {lane.textInputValues.map((inputValue, index) => (
                 <div key={index} className="w-full sm:w-1/2 px-2 mb-4">
                   <label className="block mb-2 text-sm font-medium">
-                    Navn {index + 1} (Bane {laneIndex + 1})
+                    Navn {index + 1} (Bane {lane.laneNumber})
                   </label>
                   <input
-                type="text"
-                className="block w-full p-2 border border-gray-300 rounded-md text-black"
-                placeholder={`Enter name ${index + 1}`}
-              />
+                    type="text"
+                    className="block w-full p-2 border border-gray-300 rounded-md text-black"
+                    placeholder={`Enter name ${index + 1}`}
+                    value={inputValue}
+                    onChange={(e) =>
+                      handleInputChange(laneIndex, index, e.target.value)
+                    }
+                  />
                 </div>
               ))}
             </section>
@@ -163,7 +213,10 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
         </div>
       )}
 
-      <button type="submit" className="w-full sm:w-1/4 p-2 mt-4 bg-green-500 text-white rounded-md">
+      <button
+        type="submit"
+        className="w-full sm:w-1/4 p-2 mt-4 bg-green-500 text-white rounded-md"
+      >
         Tilføj
       </button>
     </form>
