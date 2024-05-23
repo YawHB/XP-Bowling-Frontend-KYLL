@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { postCustomer } from "../services/customerService";
+import { testSubmitBooking } from "./BookingPostRoutes/BookingSubmitHandler";
 
 interface CustomerInterface {
   id?: number;
@@ -80,6 +81,9 @@ export default function CustomerForm() {
       const postResponse = await postCustomer(newCustomer);
       setThisCustomer(postResponse);
     }
+
+    console.log("Test SubmitBookingHandler!");
+    testSubmitBooking();
   }
 
   return (
