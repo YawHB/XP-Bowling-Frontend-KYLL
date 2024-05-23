@@ -11,6 +11,9 @@ export default async function getAllShiftsApi() {
                 return;
             }
             const shifts: Shift[] = await response.json();
+            console.log('OBS: WRONG ENDPOINT');
+            console.log("Change from 'Sales' to 'Shifts'");
+
             console.log(shifts);
             return shifts;
         };

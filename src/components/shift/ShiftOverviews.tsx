@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import ShiftTable from './ShiftTable';
+import getAllShiftsApi from '../../api/shift/getAllShiftsApi';
 export interface Shift {
     id: number;
     date: string;
@@ -20,19 +21,10 @@ export default function ShiftOverview() {
     const [shifts, setShifts] = useState<Shift[]>([]);
 
     useEffect(() => {
-        try {
-            const getShifts = async () => {
-                const response = await fetch('http://localhost:8080/sales');
-                const data = await response.json();
-                console.log(data);
-                setShifts(data);
-            };
-            console.log(shifts);
-            getShifts();
-        } catch (error) {
-            console.log('Error ' + error);
-        }
-    }, []);
+        getAllShiftsApi().then(() => {
+            setShifts(shifts || []);
+        });
+    }, [shifts]);
 
     return (
         <div className="w-screen px-4">
