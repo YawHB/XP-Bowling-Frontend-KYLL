@@ -15,9 +15,9 @@ interface BookingData {
 
 export default function AirhockeyForm({ addBooking }: AirhockeyFormProps) {
   const [startTime, setStartTime] = useState<string>("08:00");
-  const [playTime, setPlayTime] = useState<number>(0);
+  const [playTime, setPlayTime] = useState<number>(1);
   const [endTime, setEndTime] = useState<string>(calculatedEndTime("08:00", 1));
-  const [tables, setLanes] = useState<number>(0);
+  const [tables, setLanes] = useState<number>(1);
 
   function calculatedEndTime(startTime: string, playTime: number): string {
     const [hours, minuttes] = startTime.split(":").map(Number);

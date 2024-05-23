@@ -1,15 +1,15 @@
 import { FormEvent, useEffect, useState } from "react";
 import { postCustomer } from "../services/customerService";
 
-interface CustomerInterface {
+export interface CustomerInterface {
   id?: number;
   name: string;
   phone: string;
 }
 
-export default function CustomerForm() {
+export default function CustomerForm({ setThisCustomer }: { setThisCustomer: (customer: CustomerInterface) => void }){
   const [customerIsExisting, setCusomerIsExisting] = useState<boolean>(false);
-  const [thisCustomer, setThisCustomer] = useState<CustomerInterface>();
+  // const [thisCustomer, setThisCustomer] = useState<CustomerInterface>();
   const [customerPhone, setCustomerPhone] = useState<string>("");
   const [customersList, setCustomersList] = useState<CustomerInterface[]>([]);
   const [customerFirstName, setCustomerFirstName] = useState<string>("");
@@ -65,7 +65,7 @@ export default function CustomerForm() {
 
   async function setActiveCustomer() {
     if (customerIsExisting === true) {
-      console.log("this is the existing customer id", thisCustomer);
+      // console.log("this is the existing customer id", thisCustomer);
     } else {
       console.log("we need to post a new customer!");
       const newCustomer = {
