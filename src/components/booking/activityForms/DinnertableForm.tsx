@@ -14,7 +14,7 @@ interface BookingData {
 
 export default function DinnertableForm({ addBooking }: DinnertableFormProps) {
   const [startTime, setStartTime] = useState<string>("08:00");
-  const [tables, setLanes] = useState<number>(0);
+  const [tables, setLanes] = useState<number>(1);
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();

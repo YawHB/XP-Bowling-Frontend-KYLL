@@ -1,10 +1,11 @@
-import BowlingForm from "./BowlingForm";
-import KidsBowlingForm from "./KidsBowlingForm";
-import AirhockeyForm from "./AirhockeyForm";
-import DinnertableForm from "./DinnertableForm";
+import BowlingForm from "./activityForms/BowlingForm";
+import KidsBowlingForm from "./activityForms/KidsBowlingForm";
+import AirhockeyForm from "./activityForms/AirhockeyForm";
+import DinnertableForm from "./activityForms/DinnertableForm";
 import BookingSelectActivity from "./BookingSelectActivity";
 import BookingOverview from "./BookingOverview";
 import { useState } from "react";
+import { CustomerInterface } from "./CustomerForm";
 
 interface FormProps {
   addBooking: (newBooking: BookingData) => void;
@@ -16,6 +17,8 @@ type FormComponents = {
 interface BookingInputFormProps {
   addBooking: (newBooking: BookingData) => void;
   bookingData: BookingData[];
+  thisCustomer: CustomerInterface | undefined;
+
 }
 
 interface BookingData {

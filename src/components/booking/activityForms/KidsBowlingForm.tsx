@@ -51,7 +51,7 @@ export default function KidsBowlingForm({ addBooking }: KidsBowlingFormProps) {
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     const newBooking: BookingData = {
-      activity: "Bowling",
+      activity: "Børne Bowling",
       date: new Date().toISOString().split("T")[0],
       time: startTime,
       endTime: endTime,
@@ -113,7 +113,7 @@ export default function KidsBowlingForm({ addBooking }: KidsBowlingFormProps) {
     >
       <section className="flex flex-wrap -mx-2">
         <div className="w-full px-2 mb-4">
-          <h2 className="text-2xl font-bold">Bowling</h2>
+          <h2 className="text-2xl font-bold">Børne Bowling</h2>
         </div>
         <div className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0">
           <label
