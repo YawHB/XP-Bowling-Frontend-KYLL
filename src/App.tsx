@@ -4,7 +4,7 @@ import Home from "./components/standardLayout/Home";
 import BowlingInfo from "./components/infoPages/BowlingInfo";
 import AirhockeyInfo from "./components/infoPages/AirhockeyInfo";
 import RestaurantInfo from "./components/infoPages/RestaurantInfo";
-import OnlineBooking from "./components/booking/OnlineBookings";
+import OnlineBooking from "./components/booking/OnlineBookings-WRONG";
 import BarInfo from "./components/infoPages/BarInfo";
 import BarSale from "./components/sale/BarSale";
 import StockPage from "./components/stock/StockPage";
@@ -26,7 +26,6 @@ export default function App() {
         <Route path="/barSale" element={<BarSale />} />
         <Route path="/lager" element={<StockPage />} />
         <Route path="/lagerBestilling" element={<StockOrderPage />} />
-
       </Routes>
     </Layout>
   );

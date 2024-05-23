@@ -1,4 +1,4 @@
-import { BookingData } from "./OnlineBookings";
+import { BookingData } from "./OnlineBookings-WRONG";
 
 interface BookingOverviewProps {
   bookingData: BookingData[];
@@ -21,10 +21,7 @@ export default function BookingOverview({ bookingData }: BookingOverviewProps) {
         </thead>
         <tbody className="">
           {bookingData.map((booking) => (
-            <tr
-              key={booking.id}
-              className=" bg-blue-300 border-4 border-blue-600"
-            >
+            <tr key={booking.id} className=" bg-blue-300 border-4 border-blue-600">
               <td className="p-3 ">
                 <div>
                   <p className="font-bold text-lg">{booking.activity}</p>
