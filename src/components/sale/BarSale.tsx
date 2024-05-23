@@ -99,7 +99,7 @@ export default function BarSale() {
                 <div className="w-full md:w-1/2 p-4">
                     <div className="flex flex-col items-start px-4 py-8">
                         <CreateProduct />
-                        <UpdateProductPrice />
+                        <UpdateProductPrice setConsumablesInBarSale={setConsumables} />
                     </div>
                 </div>
             </div>
