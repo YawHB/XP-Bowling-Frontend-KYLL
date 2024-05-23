@@ -18,7 +18,7 @@ export default function DailyBookingOverview() {
     const [bookings, setBookings] = useState<Booking[]>([]);
     const [days, setDays] = useState<string[]>([]);
     const [selectedDay, setSelectedDay] = useState<string>('');
-    const [hourlyBookings, setHourlyBookings] = useState<Array<number>>(Array.from({ length: 13 }, () => 0));
+    //const [hourlyBookings, setHourlyBookings] = useState<Array<number>>(Array.from({ length: 13 }, () => 0));
 
     useEffect(() => {
         // data:Booking[] | undefined is part of the Promise when using async/await. It is a type assertion that tells TypeScript that the data is of type Booking[] or undefined.
@@ -41,6 +41,20 @@ export default function DailyBookingOverview() {
         handleShowDay();
     }, [selectedDay]);
 
+    function countHourlyBookings(bookings: Booking[]) {
+        const hourlyBookings = Array.from({ length: 13 }, () => 0);
+
+        bookings.forEach((booking) => {
+            const startHour = Math.max(parseInt(booking.startTime.split(':')[0]), 10);
+            const endHour = Math.min(parseInt(booking.endTime.split(':')[0]), 21);
+            for (let hour = startHour; hour < endHour; hour++) {
+                hourlyBookings[hour - 10]++;
+            }
+        });
+
+        return hourlyBookings;
+    }
+
     function handleShowDay() {
         console.log('Show bookings for day:', selectedDay);
 
@@ -51,21 +65,38 @@ export default function DailyBookingOverview() {
         });
         console.log('Bookings by day:', bookingsByDay);
 
-        const hourlyBookings = Array.from({ length: 12 }, () => 0);
+        //const hourlyBookings = Array.from({ length: 12 }, () => 0);
 
         // Increment the counter for each booking
-        bookingsByDay.forEach((booking) => {
-            const startHour = Math.max(parseInt(booking.startTime.split(':')[0]), 10);
-            const endHour = Math.min(parseInt(booking.endTime.split(':')[0]), 21);
-            for (let hour = startHour; hour < endHour; hour++) {
-                hourlyBookings[hour - 10]++;
-            }
+        // bookingsByDay.forEach((booking) => {
+        //     const startHour = Math.max(parseInt(booking.startTime.split(':')[0]), 10);
+        //     const endHour = Math.min(parseInt(booking.endTime.split(':')[0]), 21);
+        //     for (let hour = startHour; hour < endHour; hour++) {
+        //         hourlyBookings[hour - 10]++;
+        //     }
+        // });
+
+        const bowlingAdultBookings = bookingsByDay.filter((booking) => booking.activity.activityType.type === 'BOWLING_ADULT');
+        const bowlingChildrenBookings = bookingsByDay.filter((booking) => booking.activity.activityType.type === 'BOWLING_CHILDREN');
+        const airHockeyBookings = bookingsByDay.filter((booking) => booking.activity.activityType.type === 'AIR_HOCKEY');
+        const restaurantBookings = bookingsByDay.filter((booking) => booking.activity.activityType.type === 'RESTAURANT');
+
+        const hourlyBowlingAdultBookings = countHourlyBookings(bowlingAdultBookings);
+        const hourlyBowlingChildrenBookings = countHourlyBookings(bowlingChildrenBookings);
+        const hourlyAirHockeyBookings = countHourlyBookings(airHockeyBookings);
+        const hourlyRestaurantBookings = countHourlyBookings(restaurantBookings);
+
+        console.log('Hourly bookings for each activity:', {
+            bowlingAdult: hourlyBowlingAdultBookings,
+            bowlingChildren: hourlyBowlingChildrenBookings,
+            airHockey: hourlyAirHockeyBookings,
+            restaurant: hourlyRestaurantBookings,
         });
 
-        console.log(hourlyBookings);
-        setHourlyBookings(hourlyBookings);
+        //console.log(hourlyBookings);
+        //setHourlyBookings(hourlyBookings);
 
-        return bookingsByDay;
+        //return bookingsByDay;
     }
 
     function handleDayChange(event: React.ChangeEvent<HTMLSelectElement>) {
@@ -112,7 +143,8 @@ export default function DailyBookingOverview() {
                                     <div>Fuld booket </div>
                                     <div>Delvis booket </div>
                                     <div>Ledigr</div>
-                                    <div>{`Antal bookinger: ${hourlyBookings[i]}`}</div>
+                                    {/* //TODO Fix hourlyBowlingAdultBookings dynamiske opdatering */}
+                                    {/* <div>{`Antal baner booket: ${hourlyBowlingAdultBookings[i]}`}</div> */}
                                 </div>
                             </td>
                             <td className="border px-4 py-2">
