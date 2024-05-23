@@ -1,59 +1,46 @@
+import { postReservation } from "../../services/reservationServie";
 
-  import { postReservation } from "../../services/reservationServie";
+interface activity {
+  id: number;
+}
 
+interface reservation {
+  id: number;
+}
 
+interface activityBookings {
+  startTime: string;
+  endTime: string;
+  numberParticipants: number;
+  activity: activity;
+  reservation: reservation;
+}
 
-  interface activity {
-    id: number;
-  }
+// Activity Participant
 
-  interface reservation {
-    id: number;
-  }
+interface activityBooking {
+  id: number;
+}
 
+interface activityParticipants {
+  name: string;
+  activityBooking: activityBooking;
+}
 
+// Reservation Interface
 
-  interface activityBookings {
-    startTime: string;
-    endTime: string;
-    numberParticipants: number;
-    activity: activity;
-    reservation: reservation;
-  }
+interface Customer {
+  id: number;
+}
 
-
-
-
-
-  // Activity Participant
-
-  interface activityBooking {
-    id: number;
-  }
-
-  interface activityParticipants {
-    name: string;
-    activityBooking: activityBooking;
-  }
-
-  // Reservation Interface
-
-  interface Customer {
-    id: number;
-  }
-
-  interface ReservationData {
-    totalPrice: number;
-    customer: Customer;
-    reservationDate: Date;
-  }
-
-
-
+interface ReservationData {
+  totalPrice: number;
+  customer: Customer;
+  reservationDate: Date;
+}
 
 function testSubmitBooking() {
   // Booking Interface
-
 
   const newBooking: activityBookings = {
     startTime: "21:00",
@@ -66,8 +53,6 @@ function testSubmitBooking() {
       id: 1,
     },
   };
-
-
 
   const newParticipant: activityParticipants = {
     name: "Lasse Odder",
@@ -85,11 +70,12 @@ function testSubmitBooking() {
     reservationDate: new Date("2024-05-22"),
   };
 
-SubmitBookingEvent(newReservation);
+  SubmitBookingEvent(newReservation);
 }
 
-function SubmitBookingEvent(newReservation: ReservationData) {
-  const newReservationData = postReservation(newReservation);
+async function SubmitBookingEvent(newReservation: ReservationData) {
+  const newReservationData = await postReservation(newReservation);
+  console.log("Ny reservation posted:");
   console.log(newReservationData);
 }
 
