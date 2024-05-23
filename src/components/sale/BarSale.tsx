@@ -3,7 +3,7 @@ import { CheckoutSummary } from './CheckOutSummary';
 import { postCheckoutItems } from '../../api/sale/PostSaleConsumablesApi';
 import { CreateProduct } from './CreateProduct';
 import { UpdateProductPrice } from './UpdateProductPrice';
-import { getAllConsumables } from '../../api/sale/GetAllConsumablesApi';
+import { getAllConsumables } from '../../api/sale/getAllConsumablesApi';
 
 export interface Consumable {
     id: number;
