@@ -3,6 +3,7 @@ import BookingInputForm from "./BookingInputForm";
 import DateForm from "./DateForm";
 import CustomerForm from "./CustomerForm";
 import { CustomerInterface } from "./CustomerForm";
+import { Value } from "./DateForm";
 
 
 export interface BookingData {
@@ -21,6 +22,7 @@ export default function OnlineBooking() {
   const [bookingData, setBookingData] = useState<BookingData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [thisCustomer, setThisCustomer] = useState<CustomerInterface>();
+  const [bookingDate, setBookingDate] = useState<Value>(new Date());
 
 
   function handleNext() {
@@ -37,8 +39,11 @@ export default function OnlineBooking() {
   }
 
   function handleSuperSubmit() {
-    console.log(bookingData);
-    console.log(thisCustomer);
+    // console.log("SuperSubmit: ", "Aktiviteter: ", bookingData, " Customer: ", thisCustomer, " Date: ", bookingDate);
+    console.log("SuperSubmit: ");
+    console.log("Aktiviteter: ", bookingData);
+    console.log("Kunde: ", thisCustomer);
+    console.log("Dato: ", bookingDate);
     
   }
 
@@ -51,7 +56,7 @@ export default function OnlineBooking() {
         <h1 className="text-4xl self-center font-bold text-pink-300">Book en aktivitet her!!</h1>
       </div>
       <div>
-        <CurrentComponent addBooking={addBooking} bookingData={bookingData} thisCustomer={thisCustomer} setThisCustomer={setThisCustomer} />
+        <CurrentComponent addBooking={addBooking} bookingData={bookingData} thisCustomer={thisCustomer} setThisCustomer={setThisCustomer} bookingDate={bookingDate} setBookingDate={setBookingDate} />
         <button onClick={handleNext}>Next</button>
         <button onClick={handleReset}>Reset</button>
       </div>
