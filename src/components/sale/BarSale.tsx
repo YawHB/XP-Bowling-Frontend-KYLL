@@ -3,6 +3,7 @@ import { CheckoutSummary } from './CheckOutSummary';
 import { postCheckoutItems } from '../../api/sale/PostSaleConsumablesApi';
 import { CreateProduct } from './CreateProduct';
 import { UpdateProductPrice } from './UpdateProductPrice';
+import { getAllConsumables } from '../../api/sale/GetAllConsumablesApi';
 
 export interface Consumable {
     id: number;
@@ -16,13 +17,12 @@ export default function BarSale() {
     const [checkoutItems, setCheckoutItems] = useState<Consumable[]>([]);
 
     useEffect(() => {
-        fetch('http://localhost:8080/consumables')
-            .then((response) => response.json())
-            .then((data) => {
-                // Add a quantity property to each consumable
-                const consumablesWithQuantity = data.map((consumable: Consumable) => ({ ...consumable, amount: 0 }));
-                setConsumables(consumablesWithQuantity);
-            });
+        // data:Consumable[] | undefined is part of the Promise when using async/await. It is a type assertion that tells TypeScript that the data is of type Consumable[] or undefined.
+        getAllConsumables().then((data: Consumable[] | undefined) => {
+            // Add a quantity property to each consumable
+            const consumablesWithQuantity = (data || []).map((consumable: Consumable) => ({ ...consumable, amount: 0 }));
+            setConsumables(consumablesWithQuantity);
+        });
     }, []);
 
     //This useEffect hook updates the CheckoutSummary component. When a consumable's amount is greater than 0, it is added to the checkoutItems state.
