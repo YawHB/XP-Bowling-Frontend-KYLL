@@ -1,5 +1,5 @@
 import { useState } from "react";
-import BookingInputForm from "./BookingInputForm";
+import BookingInputForm from "./bookingView/BookingInputForm";
 import DateForm from "./DateForm";
 import CustomerForm from "./CustomerForm";
 import { CustomerInterface } from "./CustomerForm";
