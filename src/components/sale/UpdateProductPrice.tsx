@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import { getAllConsumables } from '../../api/sale/GetAllConsumablesApi';
 import { putConsumablePrice } from '../../api/sale/PutConsumablePriceApi';
 
