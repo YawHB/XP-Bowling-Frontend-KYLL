@@ -11,10 +11,11 @@ export default function CustomerForm() {
   const [customerIsExisting, setCusomerIsExisting] = useState<boolean>(false);
   const [thisCustomer, setThisCustomer] = useState<CustomerInterface>();
   const [customerPhone, setCustomerPhone] = useState<string>("");
-  const [cusomersList, setCustomersList] = useState<CustomerInterface[]>([]);
-  const [customerName, setCustomerName] = useState<string>("");
+  const [customersList, setCustomersList] = useState<CustomerInterface[]>([]);
   const [customerFirstName, setCustomerFirstName] = useState<string>("");
   const [customerLastName, setCustomerLastName] = useState<string>("");
+
+  const fullName = customerFirstName + " " + customerLastName;
 
   useEffect(() => {
     fetchCustomers();
@@ -32,18 +33,18 @@ export default function CustomerForm() {
   // Checks if the phone input maches the customer data
   function searchForNumber(event: FormEvent<HTMLInputElement>) {
     const inputNumber = (event.target as HTMLInputElement).value;
-    const matchingCustomer = cusomersList.find(
-      (customer) => inputNumber === customer.phone
-    );
+    const matchingCustomer = customersList.find((customer) => inputNumber === customer.phone);
     if (!matchingCustomer) {
       setCusomerIsExisting(false);
-      console.log(customerIsExisting);
+      // console.log(customerIsExisting);
     } else {
       setCusomerIsExisting(true);
-      console.log(customerIsExisting);
+      // console.log(customerIsExisting);
       splitNames(matchingCustomer.name);
       setThisCustomer(matchingCustomer);
+      console.log(matchingCustomer);
     }
+
     setCustomerPhone(inputNumber);
   }
 
@@ -56,14 +57,9 @@ export default function CustomerForm() {
     setCustomerLastName(lastname);
   }
 
-  function setFullName(firstname: string, lastname: string) {
-    const fullName = firstname + " " + lastname;
-    setCustomerName(fullName);
-  }
 
   function confirmUser(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setFullName(customerFirstName, customerLastName);
     setActiveCustomer();
   }
 
@@ -73,11 +69,13 @@ export default function CustomerForm() {
     } else {
       console.log("we need to post a new customer!");
       const newCustomer = {
-        name: customerName,
+        name: fullName,
         phone: customerPhone,
       };
       console.log(newCustomer);
       const postResponse = await postCustomer(newCustomer);
+      console.log("this is the customer: ", postResponse);
+
       setThisCustomer(postResponse);
     }
   }
@@ -85,31 +83,13 @@ export default function CustomerForm() {
   return (
     <form onSubmit={confirmUser}>
       <label htmlFor="phonenumber">Telefon nr</label>
-      <input
-        type="text"
-        id="phonenumber"
-        onInput={searchForNumber}
-        value={customerPhone}
-        className="bg-black"
-      />
+      <input type="text" id="phonenumber" onInput={searchForNumber} value={customerPhone} className="bg-black" />
 
       <label htmlFor="customerFirstname">Fornavn</label>
-      <input
-        type="text"
-        id="customerFirstname"
-        onChange={(e) => setCustomerFirstName(e.target.value)}
-        value={customerFirstName}
-        className="bg-black"
-      />
+      <input type="text" id="customerFirstname" onChange={(e) => setCustomerFirstName(e.target.value)} value={customerFirstName} className="bg-black" />
 
       <label htmlFor="customerLastname">Efternavn</label>
-      <input
-        type="text"
-        id="customerLastname"
-        onChange={(e) => setCustomerLastName(e.target.value)}
-        value={customerLastName}
-        className="bg-black"
-      />
+      <input type="text" id="customerLastname" onChange={(e) => setCustomerLastName(e.target.value)} value={customerLastName} className="bg-black" />
 
       <button type="submit">Bekræft</button>
     </form>
