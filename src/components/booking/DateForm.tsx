@@ -1,19 +1,18 @@
-import { useState } from "react";
+// import { useState } from "react";
 import DatePicker from "react-date-picker";
 import "./DateForm.css";
 
 type ValuePiece = Date | null;
-type Value = ValuePiece | [ValuePiece, ValuePiece];
+export type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-export default function DateForm() {
-  const [bookingDate, setBookingDate] = useState<Value>(new Date());
+export default function DateForm({bookingDate, setBookingDate}: {bookingDate: Value, setBookingDate: (value: Value) => void})  {
+  // const [bookingDate, setBookingDate] = useState<Value>(new Date());
 
   function checkDate(event: React.FormEvent<HTMLButtonElement>) {
     event.preventDefault();
     console.log(bookingDate);
   }
 
-  // checkDate();
 
   return (
     <div>
