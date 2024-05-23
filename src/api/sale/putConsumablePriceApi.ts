@@ -1,6 +1,4 @@
-import { Consumable } from "../../components/sale/BarSale";
-
-
+import { Consumable } from '../../components/sale/BarSale';
 
 export const putConsumablePrice = async (id: number, newPrice: number) => {
     try {
