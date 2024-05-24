@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import ShiftTable from './ShiftTable';
 import getAllShiftsApi from '../../api/shift/getAllShiftsApi';
+import getAllEmployeesApi from '../../api/shift/getAllEmployeesApi';
+
 export interface Shift {
     id: number;
     date: string;
@@ -17,18 +19,35 @@ export interface Shift {
     };
 }
 
+export interface Employee {
+    id: number;
+    firstName: string;
+    lastName: string;
+    employeeRole: {
+        id: number;
+        employeeRole: string;
+    };
+}
+
+// While select OPERATOR -> employeeRole.Find by roleID
 export default function ShiftOverview() {
     const [shifts, setShifts] = useState<Shift[]>([]);
+    const [employees, setEmployees] = useState<Employee[]>([]);
 
     useEffect(() => {
-        getAllShiftsApi().then((data) => {
-            setShifts(data || []);
+        getAllShiftsApi().then((shifts) => {
+            setShifts(shifts || []);
         });
     }, []); // empty dependency array to run only once on mount
 
+    useEffect(() => {
+        getAllEmployeesApi().then((employees) => {
+            setEmployees(employees || []);
+        });
+    }, []);
+
     const handlePlaceNameSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
         console.log(event.target.value);
-        console.log(shifts);
     };
     return (
         <div className="w-screen px-4">
@@ -42,22 +61,28 @@ export default function ShiftOverview() {
                 {/* Form med  2 dropdowns */}
                 <label>
                     {' '}
-                    Vælg placename
+                    HEJ
                     <select onChange={handlePlaceNameSelect}>
                         <option value=""></option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                        <option value="Reception1">Reception 1</option>
+                        <option value="Reception2">Reception 2</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Operator">Operator</option>
+                        <option value="Cleaning1">Cleaning 1</option>
+                        <option value="Cleaning2">Cleaning 2</option>
                     </select>
                 </label>
                 <label>
                     Medarbejder
                     <select>
-                        {shifts.map((shift) => (
-                            <option key={shift.id} value={shift.saleDate}>
-                                {shift.saleDate} {shift.saleDate}
-                            </option>
-                        ))}
+                        {employees
+                            .filter((employee) => employee.employeeRole.employeeRole === 'OPERATOR')
+                            .map((operator) => (
+                                <option key={operator.id}>
+                                    {operator.firstName + ' '}
+                                    {operator.lastName}{' '}
+                                </option>
+                            ))}
                     </select>
                 </label>
                 <button>Tilføj vagt</button>

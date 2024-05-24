@@ -3,7 +3,7 @@ import { Shift } from '../../components/shift/ShiftOverviews';
 export default async function getAllShiftsApi() {
     try {
         const getShifts = async () => {
-            const response = await fetch('http://localhost:8080/sales');
+            const response = await fetch('http://localhost:8080/shifts');
 
             if (!response.ok) {
                 const errorMessage = await response.text();
@@ -11,8 +11,6 @@ export default async function getAllShiftsApi() {
                 return;
             }
             const shifts: Shift[] = await response.json();
-            console.log('OBS: WRONG ENDPOINT');
-            console.log("Change from 'Sales' to 'Shifts'");
 
             console.log(shifts);
             return shifts;
