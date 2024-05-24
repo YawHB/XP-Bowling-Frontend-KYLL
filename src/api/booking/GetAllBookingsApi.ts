@@ -9,7 +9,6 @@ export const getAllBookings = async () => {
             return;
         }
         const bookings: Booking[] = await response.json();
-        console.log('Bookings:', bookings);
         return bookings;
     } catch (error) {
         console.error('Error:', error, 'Failed to fetch consumables');
