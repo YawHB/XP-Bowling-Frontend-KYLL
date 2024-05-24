@@ -18,7 +18,7 @@ export default async function getAllShiftsApi() {
             return shifts;
         };
 
-        getShifts();
+        return getShifts();
     } catch (error) {
         console.log('Error ' + error);
     }
