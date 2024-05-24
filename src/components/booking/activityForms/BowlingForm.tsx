@@ -51,7 +51,7 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     const newBooking: BookingData = {
-      activity: "Bowling",
+      activity: "BOWLING_ADULT",
       date: new Date().toISOString().split("T")[0],
       time: startTime,
       endTime: endTime,

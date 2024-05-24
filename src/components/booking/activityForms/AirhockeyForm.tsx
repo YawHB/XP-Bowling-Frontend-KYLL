@@ -31,7 +31,7 @@ export default function AirhockeyForm({ addBooking }: AirhockeyFormProps) {
     event.preventDefault();
 
     const newBooking: BookingData = {
-      activity: "Airhockey",
+      activity: "AIR_HOCKEY",
       date: new Date().toISOString().split("T")[0],
       time: startTime,
       endTime: endTime,
