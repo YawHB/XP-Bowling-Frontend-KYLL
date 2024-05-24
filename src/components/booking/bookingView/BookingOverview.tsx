@@ -1,11 +1,24 @@
 import { BookingData } from "../OnlineBooking";
+import fetchActivityTypes from "../../services/activityTypeService";
 
 interface BookingOverviewProps {
   bookingData: BookingData[];
   removeBooking: (id: number) => void;
 }
-// TODO: implement delete functionality
-// TODO: implement 'antal timer' for bookings
+
+// interface activityTypeInterface {
+//   id: number;
+//   type: string;
+//   hourPrice: number;
+//   maxCapacity: number;
+// }
+
+
+
+// TODO: implement 'antal timer' for bookings??
+
+fetchActivityTypes()
+
 
 
 export default function BookingOverview({ bookingData, removeBooking }: BookingOverviewProps) {
@@ -15,11 +28,41 @@ export default function BookingOverview({ bookingData, removeBooking }: BookingO
     removeBooking(id);
   }
 
+  console.log(bookingData);
+
+  // function acticityPrice(activityType: activityTypeInterface[]) {
+  //   console.log("activityType: ", activityType);
+
+  //   // console.log("bookingData: ", bookindData);
+    
+    
+  //   //  console.log("hey", activityType);
+  // }
+
+  // function calculateTotalPrice(orderItems: OrderItem[]) {
+  //   return orderItems.reduce((total, item) => {
+  //     const itemPrice = item.stockItem.price || 0;
+  //     return total + itemPrice * item.amountToOrder;
+  //   }, 0);
+  // }
+
+  
+
+  
+  
+  
+ 
+
+ 
+
   return (
     <div className="bg-blue-500 p-2">
       <div className="">
         <h1 className="text-2xl font-bold">Booking Oversigt</h1>
       </div>
+      {/* <div>
+        <h2 className="text-lg font-bold">Totalpris: {getTotalprice(bookingData[0])}</h2>
+      </div> */}
       <table>
         <thead className="flex">
           <tr>
