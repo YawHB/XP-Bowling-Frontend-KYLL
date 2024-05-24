@@ -18,7 +18,6 @@ interface BookingInputFormProps {
   addBooking: (newBooking: BookingData) => void;
   bookingData: BookingData[];
   thisCustomer: CustomerInterface | undefined;
-
 }
 
 interface BookingData {
@@ -26,13 +25,22 @@ interface BookingData {
   activity: string;
   date: string;
   time: string;
+  endTime: string;
   lanes?: number;
   tables?: number;
 }
 
-const forms: FormComponents = { bowling: BowlingForm, kidsBowling: KidsBowlingForm, airHockey: AirhockeyForm, restaurant: DinnertableForm };
+const forms: FormComponents = {
+  bowling: BowlingForm,
+  kidsBowling: KidsBowlingForm,
+  airHockey: AirhockeyForm,
+  restaurant: DinnertableForm,
+};
 
-export default function BookingInputForm({ addBooking, bookingData }: BookingInputFormProps) {
+export default function BookingInputForm({
+  addBooking,
+  bookingData,
+}: BookingInputFormProps) {
   const [currentFormName, setCurrentFormName] = useState<string>("bowling");
 
   function chooseInputForm(formName: string) {

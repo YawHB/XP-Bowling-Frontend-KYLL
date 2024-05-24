@@ -11,45 +11,39 @@ async function fetchBookingData() {
   }
 }
 
-interface activity {
+
+interface CustomerInterface {
+  id: number;
+  name?: string;
+  phone?: string;
+}
+
+
+interface Activity {
   id: number;
 }
 
-interface reservation {
-  id: number;
+interface Reservation {
+  id?: number;
+  totalPrice: number;
+  customer: CustomerInterface;
+  reservationDate: Date;
 }
 
-interface activityBookings {
+interface ActivityBookingsInterface {
   startTime: string;
   endTime: string;
   numberParticipants: number;
-  activity: activity;
-  reservation: reservation;
+  activity: Activity;
+  reservation: Reservation;
 }
 
-/*
-activityBookings
-{
-        "startTime": "21:00:00",
-        "endTime": "22:00:00",
-        "numberParticipants": 5,
-        "activity": {
-            "id": 1
-            }
-        },
-        "reservation": {
-            "id": 1
-            },
-            "reservationDate": "2024-05-22"
-        }
-    }
-*/
 
 async function postBooking(
-  newActivityBooking: activityBookings
-): Promise<activityBookings> {
+  newActivityBooking: ActivityBookingsInterface
+): Promise<ActivityBookingsInterface> {
   console.log("post-route-data", newActivityBooking);
-  const response = await fetch(`http://localhost:8080/activityParticipants`, {
+  const response = await fetch(`http://localhost:8080/activityBookings`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -59,7 +53,7 @@ async function postBooking(
   if (!response.ok) {
     throw new Error("An error occured while updating the movie");
   }
-  return await (response.json() as Promise<activityBookings>);
+  return await(response.json() as Promise<ActivityBookingsInterface>);
 }
 
 export { fetchBookingData, postBooking };

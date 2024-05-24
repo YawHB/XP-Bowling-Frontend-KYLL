@@ -3,6 +3,7 @@ import BookingInputForm from "./bookingView/BookingInputForm";
 import DateForm, { Value } from "./DateForm";
 import CustomerForm from "./CustomerForm";
 import { postReservation } from "../services/reservationServie";
+import { postBooking } from "../services/activityBookingService";
 //import { postBooking } from "../services/activityBookingService";
 
 export interface BookingData {
@@ -10,7 +11,7 @@ export interface BookingData {
   activity: string;
   date: string;
   time: string;
-  endTime?: string;
+  endTime: string;
   lanes?: number;
   tables?: number;
 }
@@ -39,8 +40,8 @@ interface ActivityBookingsInterface {
 
 interface CustomerInterface {
   id: number;
-  name: string;
-  phone: string;
+  name?: string;
+  phone?: string;
 }
 
 interface ReservationInterface {
@@ -122,53 +123,61 @@ export default function OnlineBooking() {
 
     const reservationData = await postReservation(newReservation);
 
+    console.log("Here is the posted reservation!");
+    console.log(reservationData);
+
     for (const activityData of bookingData) {
       if (activityData.lanes != null) {
         console.log("We have lanes!");
         createActivityObject("lanes", activityData, reservationData);
       } else if (activityData.tables != null) {
         console.log("We have tables");
-        createActivityObject("lanes", activityData, reservationData);
+        createActivityObject("tables", activityData, reservationData);
       }
-
-      console.log("this is the data");
-      console.log(activityData);
-
       //const activityData = await postBooking(newActivity);
     }
-
-    console.log(reservationData);
   }
 
-  function createActivityObject(
-    tablesOrLanes: string,
+  async function createActivityObject(
+    tablesOrLanes: "tables" | "lanes",
     activityData: BookingData,
     reservationData: ReservationInterface
   ) {
-    let activityAmount;
+    // sets activity amount as number or undefined so it matches the bookindData interface.
+    let activityAmount: number | undefined;
+
     if (tablesOrLanes === "lanes") {
       activityAmount = activityData.lanes;
     } else if (tablesOrLanes === "tables") {
       activityAmount = activityData.tables;
     }
 
-    // Jeg har problemer med at tables og lanes kan være undefined, selv om jeg ved 1 af delene ikke er undefined.
-    // Det samme gælder ID'et fra min activity... selvom jeg ved den ikke kan være null...
-    // så kan jeg putte de der DELTAGERE PÅ...
+    if (activityAmount === undefined) {
+      console.error(`No valid ${tablesOrLanes} found in activityData`);
+      return;
+    }
 
-    for (let i = 0; i <= activityAmount; i++) {
+    for (let i = 0; i < activityAmount; i++) {
       const newActivity: ActivityBookingsInterface = {
         startTime: activityData.time,
         endTime: activityData.endTime,
         numberParticipants: activityAmount,
         activity: {
-          id: activityData.id,
+          id: activityData.id!,
         },
         reservation: reservationData,
       };
 
+      console.log("This is my new activity:");
       console.log(newActivity);
+
+      const newActivityData = await sendActivtyToPost(newActivity);
+      console.log(newActivityData);
     }
+  }
+
+  async function sendActivtyToPost(activity: ActivityBookingsInterface) {
+    return await postBooking(activity);
   }
 
   const CurrentComponent = components[currentIndex];
