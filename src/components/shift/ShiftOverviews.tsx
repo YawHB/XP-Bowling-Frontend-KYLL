@@ -29,10 +29,18 @@ export interface Employee {
     };
 }
 
+export interface EmployeeWithId {
+    id: number;
+    firstName: string;
+    lastName: string;
+}
+
 // While select OPERATOR -> employeeRole.Find by roleID
 export default function ShiftOverview() {
     const [shifts, setShifts] = useState<Shift[]>([]);
     const [employees, setEmployees] = useState<Employee[]>([]);
+    const [placeName, setPlaceName] = useState<string>('');
+    const [employee, setEmployee] = useState<string | ''>('');
 
     useEffect(() => {
         getAllShiftsApi().then((shifts) => {
@@ -48,7 +56,22 @@ export default function ShiftOverview() {
 
     const handlePlaceNameSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
         console.log(event.target.value);
+        setPlaceName(event.target.value);
     };
+
+    const handleEmployeeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        console.log(event.target.value);
+        setEmployee(event.target.value);
+
+        // Add code to set the selected employee
+    };
+
+    const handleSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+        console.log('Submit');
+        console.log(employee);
+    };
+
     return (
         <div className="w-screen px-4">
             <h1 className="mb-4">ShiftOverview</h1>
@@ -56,27 +79,27 @@ export default function ShiftOverview() {
             {/* Send shifts som prop i Shifts component */}
             <ShiftTable setShifts={setShifts} />
             <h3 className="text-white mb.4"></h3>
-            <form>
-                Tilføj vagt: Role-dropdown medarbejder-dropdown
-                {/* Form med  2 dropdowns */}
-                <label>
-                    {' '}
-                    HEJ
-                    <select onChange={handlePlaceNameSelect}>
-                        <option value=""></option>
-                        <option value="Reception1">Reception 1</option>
-                        <option value="Reception2">Reception 2</option>
-                        <option value="Manager">Manager</option>
-                        <option value="Operator">Operator</option>
-                        <option value="Cleaning1">Cleaning 1</option>
-                        <option value="Cleaning2">Cleaning 2</option>
-                    </select>
-                </label>
+            {/* Form med  2 dropdowns */}
+            <label>
+                {' '}
+                Placename
+                <select onChange={handlePlaceNameSelect}>
+                    <option value=""></option>
+                    <option value="RECEPTIONIST">Reception 1</option>
+                    <option value="RECEPTIONIST">Reception 2</option>
+                    <option value="MANAGER">Manager</option>
+                    <option value="OPERATOR">Operator</option>
+                    <option value="CLEANER">Cleaning 1</option>
+                    <option value="CLEANER">Cleaning 2</option>
+                </select>
+            </label>
+            <form onSubmit={handleSubmit}>
                 <label>
                     Medarbejder
-                    <select>
+                    <select onChange={handleEmployeeChange} value={employee}>
+                        <option value="">Vælg</option>
                         {employees
-                            .filter((employee) => employee.employeeRole.employeeRole === 'OPERATOR')
+                            .filter((employee) => employee.employeeRole.employeeRole === placeName)
                             .map((operator) => (
                                 <option key={operator.id}>
                                     {operator.firstName + ' '}
@@ -85,7 +108,7 @@ export default function ShiftOverview() {
                             ))}
                     </select>
                 </label>
-                <button>Tilføj vagt</button>
+                <button type="submit">Tilføj vagt</button>
             </form>
         </div>
     );
