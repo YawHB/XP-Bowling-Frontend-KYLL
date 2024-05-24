@@ -29,18 +29,12 @@ export interface Employee {
     };
 }
 
-export interface EmployeeWithId {
-    id: number;
-    firstName: string;
-    lastName: string;
-}
-
 // While select OPERATOR -> employeeRole.Find by roleID
 export default function ShiftOverview() {
     const [shifts, setShifts] = useState<Shift[]>([]);
     const [employees, setEmployees] = useState<Employee[]>([]);
     const [placeName, setPlaceName] = useState<string>('');
-    const [employee, setEmployee] = useState<EmployeeWithId | undefined>(undefined);
+    const [employee, setEmployee] = useState<Employee | undefined>(undefined);
 
     useEffect(() => {
         getAllShiftsApi().then((shifts) => {
@@ -70,10 +64,31 @@ export default function ShiftOverview() {
         // Add code to set the selected employee
     };
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         console.log('Submit');
         console.log(employee);
+
+        const response = await fetch('http://localhost:8080/shifts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                date: '2024-05-24',
+                startTime: 10,
+                placeName: 'Do not',
+                employee: {
+                    id: employee?.employeeRole.id,
+                },
+            }),
+        });
+
+        if (!response.ok) {
+            console.error('Failed to create shift', await response.text());
+        } else {
+            console.log('Shift created successfully');
+        }
     };
 
     return (
