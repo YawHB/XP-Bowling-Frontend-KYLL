@@ -40,7 +40,7 @@ export default function ShiftOverview() {
     const [shifts, setShifts] = useState<Shift[]>([]);
     const [employees, setEmployees] = useState<Employee[]>([]);
     const [placeName, setPlaceName] = useState<string>('');
-    const [employee, setEmployee] = useState<string | ''>('');
+    const [employee, setEmployee] = useState<EmployeeWithId | undefined>(undefined);
 
     useEffect(() => {
         getAllShiftsApi().then((shifts) => {
@@ -61,7 +61,11 @@ export default function ShiftOverview() {
 
     const handleEmployeeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         console.log(event.target.value);
-        setEmployee(event.target.value);
+
+        const selectedEmployeeId = parseInt(event.target.value);
+        const selectedEmployee = employees.find((employee) => employee.id === selectedEmployeeId);
+        setEmployee(selectedEmployee);
+        //setEmployee(event.target.value);
 
         // Add code to set the selected employee
     };
@@ -96,14 +100,13 @@ export default function ShiftOverview() {
             <form onSubmit={handleSubmit}>
                 <label>
                     Medarbejder
-                    <select onChange={handleEmployeeChange} value={employee}>
+                    <select onChange={handleEmployeeChange} value={employee?.id || ''}>
                         <option value="">Vælg</option>
                         {employees
                             .filter((employee) => employee.employeeRole.employeeRole === placeName)
                             .map((operator) => (
-                                <option key={operator.id}>
-                                    {operator.firstName + ' '}
-                                    {operator.lastName}{' '}
+                                <option key={operator.id} value={operator.id}>
+                                    {operator.firstName + ' '} {operator.lastName}
                                 </option>
                             ))}
                     </select>
