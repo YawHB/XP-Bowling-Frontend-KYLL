@@ -52,6 +52,7 @@ interface ReservationInterface {
 export interface OnlineBookingProps {
   addBooking: (newBooking: BookingData) => void;
   bookingData: BookingData[];
+  setBookingData: (bookingData: BookingData[]) => void;
   thisCustomer: CustomerInterface;
   setThisCustomer: (customer: CustomerInterface) => void;
   bookingDate: Value;
@@ -120,6 +121,8 @@ export default function OnlineBooking() {
       reservationDate: formattedDate,
     };
 
+    
+
     const reservationData = await postReservation(newReservation);
 
     for (const activityData of bookingData) {
@@ -184,6 +187,7 @@ export default function OnlineBooking() {
         <CurrentComponent
           addBooking={addBooking}
           bookingData={bookingData}
+          setBookingData={setBookingData}
           thisCustomer={thisCustomer}
           setThisCustomer={setThisCustomer}
           bookingDate={bookingDate}
