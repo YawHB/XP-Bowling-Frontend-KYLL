@@ -41,16 +41,6 @@ export default function StockOrderOverview() {
       });
   }, []);
 
-//    function formatDate(dateString: string) {
-//      const date = new Date(dateString);
-//      return date.toLocaleString("da-DK", {
-//        day: "2-digit",
-//        month: "2-digit",
-//        year: "numeric",
-//        hour: "2-digit",
-//        minute: "2-digit",
-//      });
-//    }
 
   function formatDate(dateString: string) {
     const date = new Date(dateString);
@@ -84,9 +74,9 @@ export default function StockOrderOverview() {
             <tbody>
               {orderItems
                 .filter((orderItem) => orderItem.replacementOrder.id === replacementOrder.id)
-                .map((orderItem) => {
+                .map((orderItem, index) => {
                   return (
-                    <tr>
+                    <tr key={index}>
                       <td className="border px-4 py-2">{orderItem.stockItem.name}</td>
                       <td className="border px-4 py-2">{orderItem.amountToOrder}</td>
                       <td className="border px-4 py-2">{orderItem.stockItem.price}</td>
@@ -99,30 +89,4 @@ export default function StockOrderOverview() {
       ))}
     </div>
   );
-}
-
-{
-  /* <div>
-      <table className="table-auto">
-        <thead>
-          <tr>
-            <th className="px-4 py-2">Vare</th>
-            <th className="px-4 py-2">Antal</th>
-            <th className="px-4 py-2">Pris</th>
-          </tr>
-        </thead>
-        {orderItems &&
-          orderItems.map((orderItem) => {
-            return (
-              <tbody>
-                <tr>
-                  <td className="border px-4 py-2">{orderItem.name}</td>
-                  <td className="border px-4 py-2">{orderItem.amountInCentre}</td>
-                  <td className="border px-4 py-2">{orderItem.price}</td>
-                </tr>
-              </tbody>
-            );
-          })}
-      </table>
-    </div> */
 }
