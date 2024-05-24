@@ -14,6 +14,12 @@ export interface BookingData {
   endTime: string;
   lanes?: number;
   tables?: number;
+  bowlingParticipants?: LaneInput[];
+}
+
+interface LaneInput {
+  laneNumber: number;
+  textInputValues: string[];
 }
 
 //------------------------------------------------------
@@ -122,8 +128,6 @@ export default function OnlineBooking() {
       reservationDate: formattedDate,
     };
 
-    
-
     const reservationData = await postReservation(newReservation);
 
     console.log("Here is the posted reservation!");
@@ -177,12 +181,11 @@ export default function OnlineBooking() {
       const newActivityData = await sendActivtyToPost(newActivity);
       console.log(newActivityData);
     }
-  }
 
-  async function sendActivtyToPost(activity: ActivityBookingsInterface) {
-    return await postBooking(activity);
+    async function sendActivtyToPost(activity: ActivityBookingsInterface) {
+      return await postBooking(activity);
+    }
   }
-
   const CurrentComponent = components[currentIndex];
 
   return (
