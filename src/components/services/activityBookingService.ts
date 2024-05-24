@@ -51,7 +51,7 @@ async function postBooking(
     body: JSON.stringify(newActivityBooking),
   });
   if (!response.ok) {
-    throw new Error("An error occured while updating the movie");
+    throw new Error("An error occured when posting the booking");
   }
   return await(response.json() as Promise<ActivityBookingsInterface>);
 }

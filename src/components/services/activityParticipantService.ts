@@ -22,7 +22,7 @@ async function postParticipant (
     body: JSON.stringify(newParticipant),
   });
   if (!response.ok) {
-    throw new Error("An error occured while updating the movie");
+    throw new Error("An error occured when posting participants");
   }
   return await(response.json() as Promise<activityParticipants>);
 }

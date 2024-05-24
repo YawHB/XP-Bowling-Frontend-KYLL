@@ -22,7 +22,7 @@ async function postReservation(
     body: JSON.stringify(newReservation),
   });
   if (!response.ok) {
-    throw new Error("An error occured while updating the movie");
+    throw new Error("An error occured when posting the reservation");
   }
   return await (response.json() as Promise<ReservationData>);
 }
