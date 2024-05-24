@@ -96,7 +96,7 @@ export default function ShiftOverview() {
             <h1 className="mb-4">ShiftOverview</h1>
             <h3 className="mb.4 text-white">Vælg dato: Kalender</h3>
             {/* Send shifts som prop i Shifts component */}
-            <ShiftTable setShifts={setShifts} />
+            <ShiftTable shifts={shifts} />
             <h3 className="text-white mb.4"></h3>
             {/* Form med  2 dropdowns */}
             <label>
