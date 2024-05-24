@@ -1,48 +1,50 @@
 import { postReservation } from "../../services/reservationServie";
 
-interface activity {
+interface Activity {
   id: number;
 }
 
-interface reservation {
+interface Reservation {
   id: number;
 }
 
-interface activityBookings {
+interface ActivityBookingsInterface {
   startTime: string;
   endTime: string;
   numberParticipants: number;
-  activity: activity;
-  reservation: reservation;
+  activity: Activity;
+  reservation: Reservation;
 }
 
 // Activity Participant
 
-interface activityBooking {
+interface ActivityBooking {
   id: number;
 }
 
-interface activityParticipants {
+interface ActivityParticipantsInterface {
   name: string;
-  activityBooking: activityBooking;
+  activityBooking: ActivityBooking;
 }
 
 // Reservation Interface
 
-interface Customer {
+interface CustomerInterface {
   id: number;
+  name: string;
+  phone: string;
 }
 
-interface ReservationData {
+interface ReservationInterface {
   totalPrice: number;
-  customer: Customer;
+  customer: CustomerInterface;
   reservationDate: Date;
 }
 
 function testSubmitBooking() {
   // Booking Interface
 
-  const newBooking: activityBookings = {
+  const newBooking: ActivityBookingsInterface = {
     startTime: "21:00",
     endTime: "22:00",
     numberParticipants: 5,
@@ -54,14 +56,14 @@ function testSubmitBooking() {
     },
   };
 
-  const newParticipant: activityParticipants = {
+  const newParticipant: ActivityParticipantsInterface = {
     name: "Lasse Odder",
     activityBooking: {
       id: 5,
     },
   };
 
-  const newReservation: ReservationData = {
+  const newReservation: ReservationInterface = {
     totalPrice: 400.0,
     customer: {
       id: 1,
@@ -73,11 +75,20 @@ function testSubmitBooking() {
   SubmitBookingEvent(newReservation);
 }
 
-async function SubmitBookingEvent(newReservation: ReservationData) {
+async function SubmitBookingEvent(newReservation: ReservationInterface) {
   const newReservationData = await postReservation(newReservation);
   console.log("Ny reservation posted:");
   console.log(newReservationData);
 }
+
+export type {
+  Customer,
+  Reservation,
+  Activity,
+  ActivityBooking,
+  ActivityBookingsInterface,
+  ReservationInterface,
+};
 
 export { testSubmitBooking };
 

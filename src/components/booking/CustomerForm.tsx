@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { postCustomer } from "../services/customerService";
-import { testSubmitBooking } from "./BookingPostRoutes/BookingSubmitHandler";
+
 
 export interface CustomerInterface {
   id?: number;
@@ -10,7 +10,6 @@ export interface CustomerInterface {
 
 export default function CustomerForm({ setThisCustomer }: { setThisCustomer: (customer: CustomerInterface) => void }){
   const [customerIsExisting, setCusomerIsExisting] = useState<boolean>(false);
-  // const [thisCustomer, setThisCustomer] = useState<CustomerInterface>();
   const [customerPhone, setCustomerPhone] = useState<string>("");
   const [customersList, setCustomersList] = useState<CustomerInterface[]>([]);
   const [customerFirstName, setCustomerFirstName] = useState<string>("");
@@ -80,22 +79,42 @@ export default function CustomerForm({ setThisCustomer }: { setThisCustomer: (cu
       setThisCustomer(postResponse);
     }
 
-    console.log("Test SubmitBookingHandler!");
-    testSubmitBooking();
+    // console.log("Test SubmitBookingHandler!");
+    // testSubmitBooking();
   }
 
   return (
     <form onSubmit={confirmUser}>
       <label htmlFor="phonenumber">Telefon nr</label>
-      <input type="text" id="phonenumber" onInput={searchForNumber} value={customerPhone} className="bg-black" />
+      <input
+        type="text"
+        id="phonenumber"
+        onInput={searchForNumber}
+        value={customerPhone}
+        className="bg-black"
+      />
 
       <label htmlFor="customerFirstname">Fornavn</label>
-      <input type="text" id="customerFirstname" onChange={(e) => setCustomerFirstName(e.target.value)} value={customerFirstName} className="bg-black" />
+      <input
+        type="text"
+        id="customerFirstname"
+        onChange={(e) => setCustomerFirstName(e.target.value)}
+        value={customerFirstName}
+        className="bg-black"
+      />
 
       <label htmlFor="customerLastname">Efternavn</label>
-      <input type="text" id="customerLastname" onChange={(e) => setCustomerLastName(e.target.value)} value={customerLastName} className="bg-black" />
+      <input
+        type="text"
+        id="customerLastname"
+        onChange={(e) => setCustomerLastName(e.target.value)}
+        value={customerLastName}
+        className="bg-black"
+      />
 
-      <button type="submit">Bekræft</button>
+      <button className="bg-black" type="submit">
+        Bekræft
+      </button>
     </form>
   );
 }
