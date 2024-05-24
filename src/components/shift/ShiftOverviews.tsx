@@ -35,6 +35,7 @@ export default function ShiftOverview() {
     const [employees, setEmployees] = useState<Employee[]>([]);
     const [placeName, setPlaceName] = useState<string>('');
     const [employee, setEmployee] = useState<Employee | undefined>(undefined);
+    const [dataId, setDataId] = useState<string>('');
 
     useEffect(() => {
         getAllShiftsApi().then((shifts) => {
@@ -50,6 +51,11 @@ export default function ShiftOverview() {
 
     const handlePlaceNameSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
         console.log(event.target.value);
+
+        const selectedIndex = event.target.selectedIndex;
+        const dataId = event.target.options[selectedIndex].getAttribute('data-id');
+        console.log(dataId);
+        setDataId(dataId || '');
         setPlaceName(event.target.value);
     };
 
@@ -77,7 +83,7 @@ export default function ShiftOverview() {
             body: JSON.stringify({
                 date: '2024-05-24',
                 startTime: 10,
-                placeName: 'Do not',
+                placeName: dataId,
                 employee: {
                     id: employee?.employeeRole.id,
                 },
@@ -104,12 +110,24 @@ export default function ShiftOverview() {
                 Placename
                 <select onChange={handlePlaceNameSelect}>
                     <option value=""></option>
-                    <option value="RECEPTIONIST">Reception 1</option>
-                    <option value="RECEPTIONIST">Reception 2</option>
-                    <option value="MANAGER">Manager</option>
-                    <option value="OPERATOR">Operator</option>
-                    <option value="CLEANER">Cleaning 1</option>
-                    <option value="CLEANER">Cleaning 2</option>
+                    <option value="RECEPTIONIST" data-id="Reception1">
+                        Reception 1
+                    </option>
+                    <option value="RECEPTIONIST" data-id="Reception2">
+                        Reception 2
+                    </option>
+                    <option value="MANAGER" data-id="Manager">
+                        Manager
+                    </option>
+                    <option value="OPERATOR" data-id="Operator">
+                        Operator
+                    </option>
+                    <option value="CLEANER" data-id="Cleaning1">
+                        Cleaning 1
+                    </option>
+                    <option value="CLEANER" data-id="Cleaning2">
+                        Cleaning 2
+                    </option>
                 </select>
             </label>
             <form onSubmit={handleSubmit}>
