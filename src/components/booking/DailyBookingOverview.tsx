@@ -91,12 +91,15 @@ export default function DailyBookingOverview() {
     const bowlingChildrenBookings = todaysBookings.filter((booking) => booking.activity.activityType.type === 'BOWLING_CHILDREN');
     const airHockeyBookings = todaysBookings.filter((booking) => booking.activity.activityType.type === 'AIR_HOCKEY');
     const restaurantBookings = todaysBookings.filter((booking) => booking.activity.activityType.type === 'RESTAURANT');
-    // console.log('Todays bookings:', todaysBookings);
 
-    // console.log('Bowling adult bookings:', bowlingAdultBookings);
-    // console.log('Bowling children bookings:', bowlingChildrenBookings);
-    // console.log('Air hockey bookings:', airHockeyBookings);
-    // console.log('Restaurant bookings:', restaurantBookings);
+    console.log('Yaaaww');
+
+    console.log('Todays bookings:', todaysBookings);
+
+    console.log('Bowling adult bookings:', bowlingAdultBookings);
+    console.log('Bowling children bookings:', bowlingChildrenBookings);
+    console.log('Air hockey bookings:', airHockeyBookings);
+    console.log('Restaurant bookings:', restaurantBookings);
 
     // const hourlyBowlingAdultBookings = countHourlyBookings(bowlingAdultBookings);
     // const hourlyBowlingChildrenBookings = countHourlyBookings(bowlingChildrenBookings);
@@ -122,14 +125,8 @@ export default function DailyBookingOverview() {
 
     function handleFilterBookings(date: string) {
         const todaysBookings = bookings.filter((booking) => {
-            booking.reservation.reservationDate === date;
-            console.log('inside handleFilterBookings');
-
-            console.log('----------------------------');
-
             console.log('------Booking date:', booking.reservation.reservationDate);
             console.log('-------Selected date:', date);
-            console.log('----------------------------');
 
             return booking.reservation.reservationDate === date;
         });
