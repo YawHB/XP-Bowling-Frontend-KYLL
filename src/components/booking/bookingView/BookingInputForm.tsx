@@ -27,13 +27,22 @@ interface BookingData {
   activity: string;
   date: string;
   time: string;
+  endTime: string;
   lanes?: number;
   tables?: number;
 }
 
-const forms: FormComponents = { bowling: BowlingForm, kidsBowling: KidsBowlingForm, airHockey: AirhockeyForm, restaurant: DinnertableForm };
+const forms: FormComponents = {
+  bowling: BowlingForm,
+  kidsBowling: KidsBowlingForm,
+  airHockey: AirhockeyForm,
+  restaurant: DinnertableForm,
+};
 
-export default function BookingInputForm({ addBooking, bookingData, setBookingData }: BookingInputFormProps) {
+export default function BookingInputForm({
+  addBooking,
+  bookingData, setBookingData,
+}: BookingInputFormProps) {
   const [currentFormName, setCurrentFormName] = useState<string>("bowling");
 
   function chooseInputForm(formName: string) {
