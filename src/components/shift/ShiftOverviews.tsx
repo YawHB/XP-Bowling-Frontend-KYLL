@@ -132,47 +132,55 @@ export default function ShiftOverview() {
             <ShiftTable shifts={shifts} />
             <h3 className="text-white mb.4"></h3>
             {/* Form med  2 dropdowns */}
-            <label>
-                {' '}
-                Placename
-                <select onChange={handlePlaceNameSelect} value={placeName}>
-                    <option value=""></option>
-                    <option value="RECEPTIONIST" data-id="Reception1">
-                        Reception 1
-                    </option>
-                    <option value="RECEPTIONIST" data-id="Reception2">
-                        Reception 2
-                    </option>
-                    <option value="MANAGER" data-id="Manager">
-                        Manager
-                    </option>
-                    <option value="OPERATOR" data-id="Operator">
-                        Operator
-                    </option>
-                    <option value="CLEANER" data-id="Cleaning1">
-                        Cleaning 1
-                    </option>
-                    <option value="CLEANER" data-id="Cleaning2">
-                        Cleaning 2
-                    </option>
-                </select>
-            </label>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Medarbejder
-                    <select onChange={handleEmployeeChange} value={employee?.id || ''}>
-                        <option value="">Vælg</option>
-                        {employees
-                            .filter((employee) => employee.employeeRole.employeeRole === placeName)
-                            .map((employee) => (
-                                <option key={employee.id} value={employee.id}>
-                                    {employee.firstName + ' '} {employee.lastName}
-                                </option>
-                            ))}
-                    </select>
-                </label>
-                <button type="submit">Tilføj vagt</button>
-            </form>
+            <div className="">
+                <div className="py-1.5">
+                    <label className=" ">
+                        {' '}
+                        Jobfunktion: &nbsp;
+                        <select className="border-white border" onChange={handlePlaceNameSelect} value={placeName}>
+                            <option value=""></option>
+                            <option value="RECEPTIONIST" data-id="Reception1">
+                                Reception 1
+                            </option>
+                            <option value="RECEPTIONIST" data-id="Reception2">
+                                Reception 2
+                            </option>
+                            <option value="MANAGER" data-id="Manager">
+                                Manager
+                            </option>
+                            <option value="OPERATOR" data-id="Operator">
+                                Operator
+                            </option>
+                            <option value="CLEANER" data-id="Cleaning1">
+                                Cleaning 1
+                            </option>
+                            <option value="CLEANER" data-id="Cleaning2">
+                                Cleaning 2
+                            </option>
+                        </select>
+                    </label>
+                </div>
+                <form onSubmit={handleSubmit}>
+                    <label>
+                        Medarbejder:
+                        <select className="border-white border" onChange={handleEmployeeChange} value={employee?.id || ''}>
+                            <option value="">Vælg</option>
+                            {employees
+                                .filter((employee) => employee.employeeRole.employeeRole === placeName)
+                                .map((employee) => (
+                                    <option key={employee.id} value={employee.id}>
+                                        {employee.firstName + ' '} {employee.lastName}
+                                    </option>
+                                ))}
+                        </select>
+                    </label>
+                    <div className="py-1.5">
+                        <button className="bg-green-500" type="submit">
+                            Tilføj vagt
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 }
