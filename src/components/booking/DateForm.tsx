@@ -1,7 +1,7 @@
-import DatePicker from "react-date-picker";
+import React from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import "./DateForm.css";
-//import { Value } from "./DateForm";
-//import { OnlineBookingProps } from "./OnlineBooking";
 
 type ValuePiece = Date | null;
 export type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -39,7 +39,11 @@ export default function DateForm({
 
   return (
     <div>
-      <DatePicker onChange={setBookingDate} value={bookingDate} />
+      <DatePicker
+        selected={convertToDate(bookingDate)}
+        onChange={(date) => setBookingDate(date as Date)}
+        className="bg-black"
+      />
       <button type="submit" className="bg-black" onClick={checkDate}>
         Bekræft Dato
       </button>
