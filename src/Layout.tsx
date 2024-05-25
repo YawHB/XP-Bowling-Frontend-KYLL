@@ -9,7 +9,7 @@ type LayoutProps = {
 
 export default function Layout({ children }: LayoutProps): JSX.Element {
   return (
-    <div className="flex flex-col min-h-screen bg-neutral-800">
+    <div className="flex flex-col min-h-screen bg-neutral-800 text-white">
       <header className="text-white w-full">
         <NavHeader />
       </header>
