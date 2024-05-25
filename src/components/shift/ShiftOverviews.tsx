@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import ShiftTable from './ShiftTable';
 import getAllShiftsApi from '../../api/shift/getAllShiftsApi';
 import getAllEmployeesApi from '../../api/shift/getAllEmployeesApi';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { set } from 'firebase/database';
 
 export interface Shift {
     id: number;
@@ -36,6 +39,9 @@ export default function ShiftOverview() {
     const [placeName, setPlaceName] = useState<string>('');
     const [employee, setEmployee] = useState<Employee | undefined>(undefined);
     const [dataId, setDataId] = useState<string>('');
+    const [startDate, setStartDate] = useState(new Date());
+    const [selectedDay, setSelectedDay] = useState('');
+    const [localDate, setLocalDate] = useState('');
 
     useEffect(() => {
         getAllShiftsApi().then((shifts) => {
@@ -70,6 +76,12 @@ export default function ShiftOverview() {
         // Add code to set the selected employee
     };
 
+    function handleFilterShiftsByDate(date: string) {
+        const filteredShifts = shifts.filter((shift) => shift.date === date);
+        setShifts(filteredShifts);
+        console.log(filteredShifts);
+    }
+
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         console.log('Submit');
@@ -81,11 +93,11 @@ export default function ShiftOverview() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                date: '2024-05-24',
+                date: localDate,
                 startTime: 10,
                 placeName: dataId,
                 employee: {
-                    id: employee?.employeeRole.id,
+                    id: employee?.id,
                 },
             }),
         });
@@ -101,6 +113,16 @@ export default function ShiftOverview() {
         <div className="w-screen px-4">
             <h1 className="mb-4">ShiftOverview</h1>
             <h3 className="mb.4 text-white">Vælg dato: Kalender</h3>
+            <DatePicker
+                selected={startDate}
+                onChange={(date: Date) => {
+                    setStartDate(date);
+                    setSelectedDay(date.getDate().toString());
+                    const localDate = date.toISOString().split('T')[0];
+                    setLocalDate(localDate);
+                    handleFilterShiftsByDate(localDate);
+                }}
+            />
             {/* Send shifts som prop i Shifts component */}
             <ShiftTable shifts={shifts} />
             <h3 className="text-white mb.4"></h3>

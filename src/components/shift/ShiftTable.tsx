@@ -12,7 +12,7 @@ export function ShiftTable({ shifts }: ShiftTableProps) {
 
     const findShift = (placeName: string) => {
         const shift = shifts.find((shift) => shift.placeName === placeName);
-        console.log(shift);
+        //console.log(shift);
 
         return shift ? `${shift.employee.firstName} ${shift.employee.lastName}` : '';
     };
