@@ -11,6 +11,7 @@ interface BookingData {
   time: string;
   endTime: string;
   lanes: number;
+  bowlingParticipants?: LaneInput[];
 }
 
 interface LaneInput {
@@ -55,7 +56,8 @@ export default function KidsBowlingForm({ addBooking }: KidsBowlingFormProps) {
       date: new Date().toISOString().split("T")[0],
       time: startTime,
       endTime: endTime,
-      lanes,
+      lanes: lanes,
+      bowlingParticipants: laneInputs,
     };
     addBooking(newBooking);
   }

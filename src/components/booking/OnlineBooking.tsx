@@ -4,6 +4,12 @@ import DateForm, { Value } from "./DateForm";
 import CustomerForm from "./CustomerForm";
 import { postReservation } from "../services/reservationServie";
 import { postBooking } from "../services/activityBookingService";
+import {
+  LaneInput,
+  ReservationInterface,
+  ActivityBookingsInterface,
+  CustomerInterface,
+} from "./bookingInterfaces";
 //import { postBooking } from "../services/activityBookingService";
 
 export interface BookingData {
@@ -15,45 +21,6 @@ export interface BookingData {
   lanes?: number;
   tables?: number;
   bowlingParticipants?: LaneInput[];
-}
-
-interface LaneInput {
-  laneNumber: number;
-  textInputValues: string[];
-}
-
-//------------------------------------------------------
-interface Activity {
-  id: number;
-}
-
-interface Reservation {
-  id?: number;
-  totalPrice: number;
-  customer: CustomerInterface;
-  reservationDate: Date;
-}
-
-interface ActivityBookingsInterface {
-  startTime: string;
-  endTime: string;
-  numberParticipants: number;
-  activity: Activity;
-  reservation: Reservation;
-}
-
-//-------------------------------------------------------
-
-interface CustomerInterface {
-  id: number;
-  name?: string;
-  phone?: string;
-}
-
-interface ReservationInterface {
-  totalPrice: number;
-  customer: CustomerInterface;
-  reservationDate: Date;
 }
 
 export interface OnlineBookingProps {
@@ -136,23 +103,89 @@ export default function OnlineBooking() {
     for (const activityData of bookingData) {
       if (activityData.lanes != null) {
         console.log("We have lanes!");
-        createActivityObject("lanes", activityData, reservationData);
+        const laneBookingsArray = await createActivityObject(
+          "lanes",
+          activityData,
+          reservationData
+        );
+
+        if (!laneBookingsArray) {
+          console.log(
+            "laneBookingsArray ot acitivityData.bowlingParticiapnts are null"
+          );
+          return;
+        }
+        // ----------------------------------- where we will make activity participants ----------------
+        console.log("this is the activity data");
+        console.log(activityData);
+
+        laneBookingsArray.forEach((laneBooking, index) => {
+          if (!laneBookingsArray || !activityData.bowlingParticipants) {
+            console.log(
+              "laneBookingsArray ot acitivityData.bowlingParticiapnts are null"
+            );
+            return;
+          }
+
+          // NÆSTS STORE PROBLEM: laneBooking.id "findes ikke" pga id kan være null i dens interface! Men id'et ER DER!
+
+          const lanesInputData = activityData.bowlingParticipants[index];
+          const paricipantNamesArray = lanesInputData.textInputValues;
+
+          console.log("Participants:", paricipantNamesArray);
+          console.log("ActivityBooking:", laneBooking);
+
+          if (paricipantNamesArray) {
+            console.log("Lane input index", index);
+            console.log("Participants:", paricipantNamesArray);
+            paricipantNamesArray.forEach((participant) => {
+              console.log("This is a participant", participant);
+              //prepareActivityParticipantsForPosting(laneBooking, participant);
+            });
+          }
+        });
+        //we have to send the lanes ID AND thelaneBookingsArray tied to the ACTIVITY DATA? which means we have to do it in the loop.
+        // prepateaActivityParticipantsForPosting(laneBookingsArray, activityData);
+        console.log(laneBookingsArray);
+
+        //--------------------------------------------------------------------------------------------------
       } else if (activityData.tables != null) {
         console.log("We have tables");
         createActivityObject("tables", activityData, reservationData);
       }
-      //const activityData = await postBooking(newActivity);
     }
   }
+
+  // interface activityBooking {
+  //   id: number;
+  // }
+
+  // interface activityParticipants {
+  //   name: string;
+  //   activityBooking: activityBooking;
+  // }
+
+  // function prepareActivityParticipantsForPosting( laneBooking: ActivityBookingsInterface, textInput: participant) {
+  //   const newParticipantObject: participant {
+  //     activity:{
+  //       id: laneBooking.id,
+  //     },
+  //     name: textInput
+  //   };
+  //   postParticipant(newParticipantObject);
+  // }
 
   async function createActivityObject(
     tablesOrLanes: "tables" | "lanes",
     activityData: BookingData,
     reservationData: ReservationInterface
   ) {
+    const activityPostDataArray: ActivityBookingsInterface[] = [];
+
     // sets activity amount as number or undefined so it matches the bookindData interface.
     let activityAmount: number | undefined;
 
+    // checks if the activity incluces lanes or tables, sets activityAmount equal to the given type
     if (tablesOrLanes === "lanes") {
       activityAmount = activityData.lanes;
     } else if (tablesOrLanes === "tables") {
@@ -164,28 +197,27 @@ export default function OnlineBooking() {
       return;
     }
 
+    // sets an activity object and posts it for every lane selected on the activity booking
     for (let i = 0; i < activityAmount; i++) {
       const newActivity: ActivityBookingsInterface = {
         startTime: activityData.time,
         endTime: activityData.endTime,
-        numberParticipants: activityAmount,
+        numberParticipants: 0,
         activity: {
           id: activityData.id!,
         },
         reservation: reservationData,
       };
-
-      console.log("This is my new activity:");
-      console.log(newActivity);
-
       const newActivityData = await sendActivtyToPost(newActivity);
-      console.log(newActivityData);
+      activityPostDataArray.push(newActivityData);
     }
-
-    async function sendActivtyToPost(activity: ActivityBookingsInterface) {
-      return await postBooking(activity);
-    }
+    return activityPostDataArray;
   }
+
+  async function sendActivtyToPost(activity: ActivityBookingsInterface) {
+    return await postBooking(activity);
+  }
+
   const CurrentComponent = components[currentIndex];
 
   return (
