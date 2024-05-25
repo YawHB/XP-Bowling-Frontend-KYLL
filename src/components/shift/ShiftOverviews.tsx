@@ -41,7 +41,6 @@ export default function ShiftOverview() {
     const [startDate, setStartDate] = useState(new Date());
     const [selectedDay, setSelectedDay] = useState('');
     const [localDate, setLocalDate] = useState('');
-    const [filteredShifts, setFilteredShifts] = useState<Shift[]>([]);
 
     useEffect(() => {
         getAllShiftsApi().then((shifts) => {
@@ -106,6 +105,7 @@ export default function ShiftOverview() {
             console.error('Failed to create shift', await response.text());
         } else {
             console.log('Shift created successfully');
+            setPlaceName('');
             getAllShiftsApi().then((shifts) => {
                 const filteredShifts = shifts?.filter((shift) => shift.date === localDate);
                 setShifts(filteredShifts || []);
@@ -118,6 +118,7 @@ export default function ShiftOverview() {
             <h1 className="mb-4">ShiftOverview</h1>
             <h3 className="mb.4 text-white">Vælg dato: Kalender</h3>
             <DatePicker
+                dateFormat={'dd-MM-yyyy'}
                 selected={startDate}
                 onChange={(date: Date) => {
                     setStartDate(date);
@@ -134,7 +135,7 @@ export default function ShiftOverview() {
             <label>
                 {' '}
                 Placename
-                <select onChange={handlePlaceNameSelect}>
+                <select onChange={handlePlaceNameSelect} value={placeName}>
                     <option value=""></option>
                     <option value="RECEPTIONIST" data-id="Reception1">
                         Reception 1
