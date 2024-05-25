@@ -4,7 +4,6 @@ import getAllShiftsApi from '../../api/shift/getAllShiftsApi';
 import getAllEmployeesApi from '../../api/shift/getAllEmployeesApi';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { set } from 'firebase/database';
 
 export interface Shift {
     id: number;
@@ -42,6 +41,7 @@ export default function ShiftOverview() {
     const [startDate, setStartDate] = useState(new Date());
     const [selectedDay, setSelectedDay] = useState('');
     const [localDate, setLocalDate] = useState('');
+    const [filteredShifts, setFilteredShifts] = useState<Shift[]>([]);
 
     useEffect(() => {
         getAllShiftsApi().then((shifts) => {
@@ -106,6 +106,10 @@ export default function ShiftOverview() {
             console.error('Failed to create shift', await response.text());
         } else {
             console.log('Shift created successfully');
+            getAllShiftsApi().then((shifts) => {
+                const filteredShifts = shifts?.filter((shift) => shift.date === localDate);
+                setShifts(filteredShifts || []);
+            });
         }
     };
 
@@ -159,9 +163,9 @@ export default function ShiftOverview() {
                         <option value="">Vælg</option>
                         {employees
                             .filter((employee) => employee.employeeRole.employeeRole === placeName)
-                            .map((operator) => (
-                                <option key={operator.id} value={operator.id}>
-                                    {operator.firstName + ' '} {operator.lastName}
+                            .map((employee) => (
+                                <option key={employee.id} value={employee.id}>
+                                    {employee.firstName + ' '} {employee.lastName}
                                 </option>
                             ))}
                     </select>
