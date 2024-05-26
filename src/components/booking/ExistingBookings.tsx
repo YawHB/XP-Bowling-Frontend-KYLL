@@ -10,24 +10,28 @@ export default function ExistingBookings({
     ActivitiesBookingEntityInterface[] | null
   >(null);
 
+  const [filteredBookings, setFilteredBookings] = useState<
+    ActivitiesBookingEntityInterface[] | null
+  >(null);
+
   useEffect(() => {
     fetchActivityBookings();
   }, []);
 
   const filterDataByDate = useCallback(() => {
     if (existingBookings && filterDate) {
-      const filteredBookings = existingBookings.filter(
+      const filtered = existingBookings.filter(
         (booking) =>
-          new Date(booking.date).toDateString() === filterDate.toDateString()
+          new Date(booking.reservation.reservationDate).toDateString() === filterDate.toDateString()
       );
-      setExistingBookings(filteredBookings);
+      setFilteredBookings(filtered);
+    } else {
+      setFilteredBookings(existingBookings);
     }
   }, [existingBookings, filterDate]);
 
   useEffect(() => {
-    if (filterDate) {
-      filterDataByDate();
-    }
+    filterDataByDate();
   }, [filterDate, filterDataByDate]);
 
   function fetchActivityBookings() {
@@ -36,24 +40,22 @@ export default function ExistingBookings({
       .then((data) => {
         console.log(data);
         setExistingBookings(data);
-        // Automatically filter by date after fetching if filterDate is available
         if (filterDate) {
-          const filteredBookings = data.filter(
+          console.log("FilteredDate");
+          console.log(filterDate.toDateString());
+          const filtered = data.filter(
             (booking: ActivitiesBookingEntityInterface) =>
-              new Date(booking.date).toDateString() ===
+              new Date(booking.reservation.reservationDate).toDateString() ===
               filterDate.toDateString()
           );
-          setExistingBookings(filteredBookings);
+          setFilteredBookings(filtered);
         } else {
-          setExistingBookings(data);
+          setFilteredBookings(data);
         }
       });
   }
 
-  console.log(existingBookings);
+  console.log("This is the filtered bookings", filteredBookings);
 
-  return (
-    <div>
-    </div>
-  );
+  return <div></div>;
 }
