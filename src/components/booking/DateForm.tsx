@@ -17,24 +17,24 @@ export default function DateForm({
   function checkDate(event: React.FormEvent<HTMLButtonElement>) {
     event.preventDefault();
 
-        const date = convertToDate(bookingDate);
-        setFormattedDate(date);
+    const date = convertToDate(bookingDate);
+    setFormattedDate(date);
 
-        if (date) {
-            console.log(date.toISOString()); // or any other format you need
-        } else {
-            console.log('No valid date selected');
-        }
+    if (date) {
+      console.log(date.toISOString()); // or any other format you need
+    } else {
+      console.log("No valid date selected");
     }
+  }
 
-    function convertToDate(value: Value): Date | null {
-        if (value instanceof Date) {
-            return value;
-        } else if (Array.isArray(value)) {
-            return value[0] instanceof Date ? value[0] : null;
-        }
-        return null;
+  function convertToDate(value: Value): Date | null {
+    if (value instanceof Date) {
+      return value;
+    } else if (Array.isArray(value)) {
+      return value[0] instanceof Date ? value[0] : null;
     }
+    return null;
+  }
 
   return (
     <div>
