@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-import { getAllBookings } from '../../api/booking/GetAllBookingsApi';
+//import { getAllBookings } from '../../api/booking/GetAllBookingsApi';
+import { getBookingsForADay } from '../../api/booking/GetBookingsForADayApi';
 export interface Booking {
     startTime: string;
     endTime: string;
@@ -29,7 +30,7 @@ export default function DailyBookingOverview() {
 
     useEffect(() => {
         // data:Booking[] | undefined is part of the Promise when using async/await. It is a type assertion that tells TypeScript that the data is of type Booking[] or undefined.
-        getAllBookings().then((bookings: Booking[] | undefined) => {
+        getBookingsForADay(selectedDay).then((bookings: Booking[] | undefined) => {
             // setBookings(data || []);
 
             // const days: string[] = [];
@@ -43,7 +44,7 @@ export default function DailyBookingOverview() {
             // setDays(days);
 
             setBookings(bookings || []);
-            console.log('Bookings:', bookings);
+            console.log('Bookings for selected day:', bookings);
         });
     }, []);
 
@@ -92,14 +93,12 @@ export default function DailyBookingOverview() {
     const airHockeyBookings = todaysBookings.filter((booking) => booking.activity.activityType.type === 'AIR_HOCKEY');
     const restaurantBookings = todaysBookings.filter((booking) => booking.activity.activityType.type === 'RESTAURANT');
 
-    console.log('Yaaaww');
+    // console.log('Todays bookings:', todaysBookings);
 
-    console.log('Todays bookings:', todaysBookings);
-
-    console.log('Bowling adult bookings:', bowlingAdultBookings);
-    console.log('Bowling children bookings:', bowlingChildrenBookings);
-    console.log('Air hockey bookings:', airHockeyBookings);
-    console.log('Restaurant bookings:', restaurantBookings);
+    // console.log('Bowling adult bookings:', bowlingAdultBookings);
+    // console.log('Bowling children bookings:', bowlingChildrenBookings);
+    // console.log('Air hockey bookings:', airHockeyBookings);
+    // console.log('Restaurant bookings:', restaurantBookings);
 
     // const hourlyBowlingAdultBookings = countHourlyBookings(bowlingAdultBookings);
     // const hourlyBowlingChildrenBookings = countHourlyBookings(bowlingChildrenBookings);
@@ -143,6 +142,7 @@ export default function DailyBookingOverview() {
                     <label>
                         Dag
                         <DatePicker
+                            timeFormat="dd:MM:yyyy"
                             selected={startDate}
                             onChange={(date: Date) => {
                                 setStartDate(date);
