@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BookingInputForm from "./bookingView/BookingInputForm";
 import DateForm, { Value } from "./DateForm";
 import CustomerForm from "./CustomerForm";
 import { postReservation } from "../services/reservationServie";
 import { postBooking } from "../services/activityBookingService";
 //import { postBooking } from "../services/activityBookingService";
+import fetchActivityType from "../services/activityTypeService";
+import { ActivityType } from "../services/activityTypeService";
 
 export interface BookingData {
   id?: number;
@@ -14,6 +16,14 @@ export interface BookingData {
   endTime: string;
   lanes?: number;
   tables?: number;
+  price?: number;
+  bowlingParticipants?: LaneInput[];
+  duration?: number;
+}
+
+interface LaneInput {
+  laneNumber: number;
+  textInputValues: string[];
 }
 
 //------------------------------------------------------
@@ -59,6 +69,7 @@ export interface OnlineBookingProps {
   bookingDate: Value;
   setBookingDate: (value: Value) => void;
   setFormattedDate: (date: Date | null) => void;
+  activityType: ActivityType[];
 }
 
 // (2) [{…}, {…}]
@@ -67,9 +78,7 @@ export interface OnlineBookingProps {
 // length: 2
 // [[Prototype]]: Array(0)
 
-const components = [CustomerForm, DateForm, BookingInputForm] as ((
-  props: OnlineBookingProps
-) => JSX.Element)[];
+const components = [CustomerForm, DateForm, BookingInputForm] as ((props: OnlineBookingProps) => JSX.Element)[];
 
 export default function OnlineBooking() {
   const [bookingData, setBookingData] = useState<BookingData[]>([]);
@@ -77,10 +86,19 @@ export default function OnlineBooking() {
   const [thisCustomer, setThisCustomer] = useState<CustomerInterface>({
     id: 0,
     name: "",
-    phone: "",
+    phone: ""
   });
   const [bookingDate, setBookingDate] = useState<Value>(new Date());
   const [formattedDate, setFormattedDate] = useState<Date | null>(null);
+  const [ActivityType, setActivityType] = useState<ActivityType[]>([]);
+
+  useEffect(() => {
+    async function getActivityType() {
+      const data = await fetchActivityType();
+      setActivityType(data);
+    }
+    getActivityType();
+  }, []);
 
   function handleNext() {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % components.length);
@@ -94,10 +112,7 @@ export default function OnlineBooking() {
   }
 
   function addBooking(newBooking: BookingData) {
-    setBookingData([
-      ...bookingData,
-      { ...newBooking, id: bookingData.length + 1 },
-    ]);
+    setBookingData([...bookingData, { ...newBooking, id: bookingData.length + 1 }]);
   }
 
   async function handleSuperSubmit() {
@@ -116,12 +131,17 @@ export default function OnlineBooking() {
       return;
     }
 
-    const newReservation: ReservationInterface = {
-      totalPrice: 0,
-      customer: thisCustomer,
-      reservationDate: formattedDate,
-    };
+    let price = 0;
+    bookingData.forEach((activity) => {
+      price += activity.price ?? 0;
+    });
 
+    const newReservation: ReservationInterface = {
+      totalPrice: price,
+      customer: thisCustomer,
+      reservationDate: formattedDate
+    };
+    // console.log("newRESERVATION                             ", newReservation);
     
 
     const reservationData = await postReservation(newReservation);
@@ -141,11 +161,7 @@ export default function OnlineBooking() {
     }
   }
 
-  async function createActivityObject(
-    tablesOrLanes: "tables" | "lanes",
-    activityData: BookingData,
-    reservationData: ReservationInterface
-  ) {
+  async function createActivityObject(tablesOrLanes: "tables" | "lanes", activityData: BookingData, reservationData: ReservationInterface) {
     // sets activity amount as number or undefined so it matches the bookindData interface.
     let activityAmount: number | undefined;
 
@@ -166,9 +182,9 @@ export default function OnlineBooking() {
         endTime: activityData.endTime,
         numberParticipants: activityAmount,
         activity: {
-          id: activityData.id!,
+          id: activityData.id!
         },
-        reservation: reservationData,
+        reservation: reservationData
       };
 
       console.log("This is my new activity:");
@@ -177,20 +193,17 @@ export default function OnlineBooking() {
       const newActivityData = await sendActivtyToPost(newActivity);
       console.log(newActivityData);
     }
-  }
 
-  async function sendActivtyToPost(activity: ActivityBookingsInterface) {
-    return await postBooking(activity);
+    async function sendActivtyToPost(activity: ActivityBookingsInterface) {
+      return await postBooking(activity);
+    }
   }
-
   const CurrentComponent = components[currentIndex];
 
   return (
     <div className="flex w-screen">
       <div>
-        <h1 className="text-4xl self-center font-bold text-pink-300">
-          Book en aktivitet her!!
-        </h1>
+        <h1 className="text-4xl self-center font-bold text-pink-300">Book en aktivitet her!!</h1>
       </div>
       <div>
         <CurrentComponent
@@ -202,6 +215,7 @@ export default function OnlineBooking() {
           bookingDate={bookingDate}
           setBookingDate={setBookingDate}
           setFormattedDate={setFormattedDate}
+          activityType={ActivityType}
         />
         <button className="bg-black" onClick={handleNext}>
           Next

@@ -31,8 +31,8 @@ interface ActivityParticipantsInterface {
 
 interface CustomerInterface {
   id: number;
-  name: string;
-  phone: string;
+  name?: string;
+  phone?: string;
 }
 
 interface ReservationInterface {
@@ -56,12 +56,18 @@ function testSubmitBooking() {
     },
   };
 
+  console.log(newBooking);
+  
+
   const newParticipant: ActivityParticipantsInterface = {
     name: "Lasse Odder",
     activityBooking: {
       id: 5,
     },
   };
+
+  console.log(newParticipant);
+  
 
   const newReservation: ReservationInterface = {
     totalPrice: 400.0,
@@ -82,7 +88,7 @@ async function SubmitBookingEvent(newReservation: ReservationInterface) {
 }
 
 export type {
-  Customer,
+  CustomerInterface,
   Reservation,
   Activity,
   ActivityBooking,

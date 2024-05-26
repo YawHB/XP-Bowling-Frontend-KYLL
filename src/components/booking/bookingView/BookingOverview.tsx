@@ -1,73 +1,57 @@
 import { BookingData } from "../OnlineBooking";
-import fetchActivityTypes from "../../services/activityTypeService";
+import { ActivityType } from "../../services/activityTypeService";
 
 interface BookingOverviewProps {
   bookingData: BookingData[];
   removeBooking: (id: number) => void;
+  activityType: ActivityType[];
 }
-
-// interface activityTypeInterface {
-//   id: number;
-//   type: string;
-//   hourPrice: number;
-//   maxCapacity: number;
-// }
+// TODO: implement delete functionality
+// TODO: implement 'antal timer' for bookings
 
 
+export default function BookingOverview({ bookingData, removeBooking, activityType }: BookingOverviewProps) {
+  bookingData.forEach((booking) => {
+    console.log("aktiviteten hhihihihihihihhihihih:          ", booking.activity);
+    console.log("DET FINT!!                        ", booking);
 
-// TODO: implement 'antal timer' for bookings??
+    booking.price = 0;
 
-fetchActivityTypes()
+    const activity = activityType.find((activity) => activity.type === booking.activity);
+    console.log("bibububububububbububbub:          ", activity);
 
+    if (activity) {
+      console.log(activity.hourlyPrice);
+      console.log(booking.duration);
+      console.log(booking.tables);
+      console.log(booking.lanes);
 
-
-export default function BookingOverview({ bookingData, removeBooking }: BookingOverviewProps) {
-
+      booking.lanes
+        ? (booking.price = activity.hourlyPrice * booking.duration! * booking.lanes!)
+        : booking.tables
+        ? (booking.price = activity.hourlyPrice * booking.duration! * booking.tables!)
+        : // booking.price = activity.hourlyPrice * booking.duration! * booking.tables!;
+          console.log("pris:          ", booking.price);
+    }
+  });
   function handleDeleteClicked(id: number) {
     console.log("Delete activity button clicked");
     removeBooking(id);
   }
-
-  console.log(bookingData);
-
-  // function acticityPrice(activityType: activityTypeInterface[]) {
-  //   console.log("activityType: ", activityType);
-
-  //   // console.log("bookingData: ", bookindData);
-    
-    
-  //   //  console.log("hey", activityType);
-  // }
-
-  // function calculateTotalPrice(orderItems: OrderItem[]) {
-  //   return orderItems.reduce((total, item) => {
-  //     const itemPrice = item.stockItem.price || 0;
-  //     return total + itemPrice * item.amountToOrder;
-  //   }, 0);
-  // }
-
-  
-
-  
-  
-  
- 
-
- 
 
   return (
     <div className="bg-blue-500 p-2">
       <div className="">
         <h1 className="text-2xl font-bold">Booking Oversigt</h1>
       </div>
-      {/* <div>
-        <h2 className="text-lg font-bold">Totalpris: {getTotalprice(bookingData[0])}</h2>
-      </div> */}
+      <div className="flex">
+        <p className="font-bold pr-2">Total Pris:</p>
+        <p>{bookingData.reduce((acc, booking) => acc + booking.price!, 0)}</p>
+      </div>
       <table>
         <thead className="flex">
           <tr>
             <th className="self-left">Aktivitet</th>
-            <th></th>
           </tr>
         </thead>
         <tbody className="">
@@ -75,12 +59,16 @@ export default function BookingOverview({ bookingData, removeBooking }: BookingO
             <tr key={booking.id} className=" bg-blue-300 border-4 border-blue-600">
               <td className="p-3 ">
                 <div>
-                  <p className="font-bold text-lg">{booking.activity}</p>
+                  <p className="font-bold text-lg">
+                    {booking.activity == "BOWLING_ADULT" ? "Bowling" : booking.activity == "BOWLING_CHILD" ? "Børne Bowling" : booking.activity == "AIR_HOCKEY" ? "Air-Hockey" : "Restaurant"}
+                  </p>
                 </div>
                 <div className="flex">
                   <p className="font-bold pr-5">Tidspunkt:</p>
+                  <p className="pr-5">Pris: {booking.price}</p>
                   <p className="pr-2">{booking.date}</p>
                   <p>{booking.time}</p>
+                  <p className="px-2">Antal timer: {booking.duration}</p>
                 </div>
                 <div className="flex">
                   {booking.lanes !== undefined ? (

@@ -11,6 +11,8 @@ interface BookingData {
   time: string;
   endTime: string;
   lanes: number;
+  bowlingParticipants?: LaneInput[]; 
+  duration: number;
 }
 
 interface LaneInput {
@@ -20,6 +22,7 @@ interface LaneInput {
 
 export default function BowlingForm({ addBooking }: BowlingFormProps) {
   const [startTime, setStartTime] = useState<string>("08:00");
+  const [duration, setDuration] = useState<number>(1);
   const [playTime, setPlayTime] = useState<number>(1);
   const [endTime, setEndTime] = useState<string>(calculatedEndTime("08:00", 1));
   const [lanes, setLanes] = useState<number>(1);
@@ -48,14 +51,19 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
     return endTime.toTimeString().slice(0, 5);
   }
 
+
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
+
+
     const newBooking: BookingData = {
       activity: "BOWLING_ADULT",
       date: new Date().toISOString().split("T")[0],
       time: startTime,
       endTime: endTime,
-      lanes,
+      lanes: lanes,
+      bowlingParticipants: laneInputs,
+      duration: duration
     };
     addBooking(newBooking);
   }
@@ -66,6 +74,7 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
 
   function handlePlayTimeChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const newPlayTime = Number(event.target.value);
+    setDuration(newPlayTime)
     setPlayTime(newPlayTime);
     setEndTime(calculatedEndTime(startTime, newPlayTime));
   }

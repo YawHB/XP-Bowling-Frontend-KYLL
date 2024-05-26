@@ -11,6 +11,7 @@ interface BookingData {
   time: string;
   endTime: string;
   tables: number;
+  duration: number;
 }
 
 export default function DinnertableForm({ addBooking }: DinnertableFormProps) {
@@ -28,6 +29,7 @@ export default function DinnertableForm({ addBooking }: DinnertableFormProps) {
       time: startTime,
       endTime: endTime,
       tables,
+      duration: 2
     };
     addBooking(newBooking);
 

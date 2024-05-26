@@ -6,15 +6,7 @@ import "./DateForm.css";
 type ValuePiece = Date | null;
 export type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-export default function DateForm({
-  bookingDate,
-  setBookingDate,
-  setFormattedDate,
-}: {
-  bookingDate: Value;
-  setBookingDate: (value: Value) => void;
-  setFormattedDate: (date: Date | null) => void;
-}) {
+export default function DateForm({ bookingDate, setBookingDate, setFormattedDate }: { bookingDate: Value; setBookingDate: (value: Value) => void; setFormattedDate: (date: Date | null) => void }) {
   function checkDate(event: React.FormEvent<HTMLButtonElement>) {
     event.preventDefault();
 
@@ -38,6 +30,14 @@ export default function DateForm({
   }
 
   return (
+    //   <div>
+    //     {/* <DatePicker onChange={setBookingDate} value={bookingDate} /> */}
+    //     <input type="date" onChange={(e) => setBookingDate(e.target.value)} value={bookingDate} />
+    //     <button type="submit" className="bg-black" onClick={checkDate}>
+    //       Bekræft Dato
+    //     </button>
+    //   </div>
+
     <div>
       <DatePicker onChange={setBookingDate} value={bookingDate} />
       <button type="submit" className="bg-black" onClick={checkDate}>
