@@ -11,6 +11,7 @@ interface BookingData {
   time: string;
   endTime: string;
   tables: number;
+  duration: number;
 }
 
 export default function DinnertableForm({ addBooking }: DinnertableFormProps) {
@@ -23,11 +24,12 @@ export default function DinnertableForm({ addBooking }: DinnertableFormProps) {
     event.preventDefault();
 
     const newBooking: BookingData = {
-      activity: "Restaurant",
+      activity: "RESTAURANT",
       date: new Date().toISOString().split("T")[0],
       time: startTime,
       endTime: endTime,
       tables,
+      duration: 2
     };
     addBooking(newBooking);
 
@@ -42,9 +44,7 @@ export default function DinnertableForm({ addBooking }: DinnertableFormProps) {
     return endTime.toTimeString().slice(0, 5);
   }
 
-  function handleTableSelectChange(
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) {
+  function handleTableSelectChange(event: React.ChangeEvent<HTMLSelectElement>) {
     setLanes(Number(event.target.value));
   }
 
@@ -54,28 +54,17 @@ export default function DinnertableForm({ addBooking }: DinnertableFormProps) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="container mx-auto px-4 py-8 max-w-screen-md"
-    >
+    <form onSubmit={handleSubmit} className="container mx-auto px-4 py-8 max-w-screen-md">
       <section className="flex flex-wrap -mx-2">
         <div className="w-full px-2 mb-4">
           <h2 className="text-2xl font-bold">Restaurant borde</h2>
           <p>(OBS. 6. personer pr. bord)</p>
         </div>
         <div className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0">
-          <label
-            htmlFor="tableSelector"
-            className="block mb-2 text-sm font-medium"
-          >
+          <label htmlFor="tableSelector" className="block mb-2 text-sm font-medium">
             Borde
           </label>
-          <select
-            id="tableSelector"
-            onChange={handleTableSelectChange}
-            value={tables}
-            className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md"
-          >
+          <select id="tableSelector" onChange={handleTableSelectChange} value={tables} className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md">
             <option value={1}>1</option>
             <option value={2}>2</option>
             <option value={3}>3</option>
@@ -85,19 +74,11 @@ export default function DinnertableForm({ addBooking }: DinnertableFormProps) {
           </select>
         </div>
 
-        <div
-          title="selectStartTime"
-          className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0"
-        >
+        <div title="selectStartTime" className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0">
           <label htmlFor="startTime" className="block mb-2 text-sm font-medium">
             Start Tid
           </label>
-          <select
-            id="playTimeSelector"
-            onChange={handleStartTimeChange}
-            value={startTime}
-            className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md"
-          >
+          <select id="playTimeSelector" onChange={handleStartTimeChange} value={startTime} className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md">
             <option value={"08:00"}>08:00</option>
             <option value={"09:00"}>09:00</option>
             <option value={"10:00"}>10:00</option>
@@ -114,10 +95,7 @@ export default function DinnertableForm({ addBooking }: DinnertableFormProps) {
           </select>
         </div>
 
-        <button
-          type="submit"
-          className="w-full sm:w-1/4 p-2 mt-4 bg-green-500 text-white rounded-md"
-        >
+        <button type="submit" className="w-full sm:w-1/4 p-2 mt-4 bg-green-500 text-white rounded-md">
           Tilføj
         </button>
       </section>

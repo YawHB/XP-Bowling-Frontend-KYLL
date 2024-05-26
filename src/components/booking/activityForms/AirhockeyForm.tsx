@@ -11,6 +11,7 @@ interface BookingData {
   time: string;
   endTime: string;
   tables: number;
+  duration: number;
 }
 
 export default function AirhockeyForm({ addBooking }: AirhockeyFormProps) {
@@ -18,6 +19,7 @@ export default function AirhockeyForm({ addBooking }: AirhockeyFormProps) {
   const [playTime, setPlayTime] = useState<number>(1);
   const [endTime, setEndTime] = useState<string>(calculatedEndTime("08:00", 1));
   const [tables, setLanes] = useState<number>(1);
+  const [duration, setDuration] = useState<number>(1);
 
   function calculatedEndTime(startTime: string, playTime: number): string {
     const [hours, minuttes] = startTime.split(":").map(Number);
@@ -31,11 +33,12 @@ export default function AirhockeyForm({ addBooking }: AirhockeyFormProps) {
     event.preventDefault();
 
     const newBooking: BookingData = {
-      activity: "Airhockey",
+      activity: "AIR_HOCKEY",
       date: new Date().toISOString().split("T")[0],
       time: startTime,
       endTime: endTime,
       tables: tables,
+      duration: duration,
     };
     addBooking(newBooking);
   }
@@ -48,6 +51,7 @@ export default function AirhockeyForm({ addBooking }: AirhockeyFormProps) {
 
   function handlePlayTimeChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const newPlayTime = Number(event.target.value);
+    setDuration(newPlayTime);
     setPlayTime(newPlayTime);
     setEndTime(calculatedEndTime(startTime, newPlayTime));
   }

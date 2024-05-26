@@ -11,6 +11,7 @@ interface BookingData {
   time: string;
   endTime: string;
   lanes: number;
+  duration: number;
 }
 
 interface LaneInput {
@@ -21,12 +22,13 @@ interface LaneInput {
 export default function KidsBowlingForm({ addBooking }: KidsBowlingFormProps) {
   const [startTime, setStartTime] = useState<string>("08:00");
   const [playTime, setPlayTime] = useState<number>(1);
+  const [duration, setDuration] = useState<number>(1);
   const [endTime, setEndTime] = useState<string>(calculatedEndTime("08:00", 1));
   const [lanes, setLanes] = useState<number>(1);
   const [laneInputs, setLaneInputs] = useState<LaneInput[]>(
     Array.from({ length: lanes }, (_, laneIndex) => ({
       laneNumber: laneIndex + 1,
-      textInputValues: Array(6).fill(""), // Assuming 6 inputs per lane
+      textInputValues: Array(6).fill("") // Assuming 6 inputs per lane
     }))
   );
   const [addNames, setAddNames] = useState<boolean>(false);
@@ -35,7 +37,7 @@ export default function KidsBowlingForm({ addBooking }: KidsBowlingFormProps) {
     setLaneInputs(
       Array.from({ length: lanes }, (_, laneIndex) => ({
         laneNumber: laneIndex + 1,
-        textInputValues: Array(6).fill(""), // Assuming 6 inputs per lane
+        textInputValues: Array(6).fill("") // Assuming 6 inputs per lane
       }))
     );
   }, [lanes]);
@@ -51,11 +53,12 @@ export default function KidsBowlingForm({ addBooking }: KidsBowlingFormProps) {
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     const newBooking: BookingData = {
-      activity: "Børne Bowling",
+      activity: "BOWLING_CHILD",
       date: new Date().toISOString().split("T")[0],
       time: startTime,
       endTime: endTime,
       lanes,
+      duration: duration
     };
     addBooking(newBooking);
   }
@@ -67,6 +70,7 @@ export default function KidsBowlingForm({ addBooking }: KidsBowlingFormProps) {
   function handlePlayTimeChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const newPlayTime = Number(event.target.value);
     setPlayTime(newPlayTime);
+    setDuration(newPlayTime);
     setEndTime(calculatedEndTime(startTime, newPlayTime));
   }
 
@@ -80,21 +84,15 @@ export default function KidsBowlingForm({ addBooking }: KidsBowlingFormProps) {
     setAddNames(event.target.checked);
   }
 
-  const handleInputChange = (
-    laneIndex: number,
-    inputIndex: number,
-    value: string
-  ) => {
+  const handleInputChange = (laneIndex: number, inputIndex: number, value: string) => {
     const updatedLaneInputs = laneInputs.map((lane, lIndex) => {
       if (lIndex === laneIndex) {
-        const updatedTextInputValues = lane.textInputValues.map(
-          (input, iIndex) => {
-            if (iIndex === inputIndex) {
-              return value;
-            }
-            return input;
+        const updatedTextInputValues = lane.textInputValues.map((input, iIndex) => {
+          if (iIndex === inputIndex) {
+            return value;
           }
-        );
+          return input;
+        });
         return { ...lane, textInputValues: updatedTextInputValues };
       }
       return lane;
@@ -107,27 +105,16 @@ export default function KidsBowlingForm({ addBooking }: KidsBowlingFormProps) {
   console.log(laneInputs);
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="container mx-auto px-4 py-8 max-w-screen-md"
-    >
+    <form onSubmit={handleSubmit} className="container mx-auto px-4 py-8 max-w-screen-md">
       <section className="flex flex-wrap -mx-2">
         <div className="w-full px-2 mb-4">
           <h2 className="text-2xl font-bold">Børne Bowling</h2>
         </div>
         <div className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0">
-          <label
-            htmlFor="laneSelector"
-            className="block mb-2 text-sm font-medium"
-          >
+          <label htmlFor="laneSelector" className="block mb-2 text-sm font-medium">
             Baner
           </label>
-          <select
-            id="laneSelector"
-            onChange={handleLaneSelectChange}
-            value={lanes}
-            className="block w-full p-2 border border-gray-300 rounded-md bg-black text-white"
-          >
+          <select id="laneSelector" onChange={handleLaneSelectChange} value={lanes} className="block w-full p-2 border border-gray-300 rounded-md bg-black text-white">
             <option value={1}>1</option>
             <option value={2}>2</option>
             <option value={3}>3</option>
@@ -136,36 +123,20 @@ export default function KidsBowlingForm({ addBooking }: KidsBowlingFormProps) {
         </div>
 
         <div className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0">
-          <label
-            htmlFor="playTimeSelector"
-            className="block mb-2 text-sm font-medium"
-          >
+          <label htmlFor="playTimeSelector" className="block mb-2 text-sm font-medium">
             Timer
           </label>
-          <select
-            id="playTimeSelector"
-            onChange={handlePlayTimeChange}
-            value={playTime}
-            className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md"
-          >
+          <select id="playTimeSelector" onChange={handlePlayTimeChange} value={playTime} className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md">
             <option value={1}>1</option>
             <option value={2}>2</option>
           </select>
         </div>
 
-        <div
-          title="selectStartTime"
-          className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0"
-        >
+        <div title="selectStartTime" className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0">
           <label htmlFor="startTime" className="block mb-2 text-sm font-medium">
             Start Tid
           </label>
-          <select
-            id="startTime"
-            onChange={handleStartTimeChange}
-            value={startTime}
-            className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md"
-          >
+          <select id="startTime" onChange={handleStartTimeChange} value={startTime} className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md">
             <option value={"08:00"}>08:00</option>
             <option value={"09:00"}>09:00</option>
             <option value={"10:00"}>10:00</option>
@@ -197,15 +168,7 @@ export default function KidsBowlingForm({ addBooking }: KidsBowlingFormProps) {
                   <label className="block mb-2 text-sm font-medium">
                     Navn {index + 1} (Bane {lane.laneNumber})
                   </label>
-                  <input
-                    type="text"
-                    className="block w-full p-2 border border-gray-300 rounded-md text-black"
-                    placeholder={`Enter name ${index + 1}`}
-                    value={inputValue}
-                    onChange={(e) =>
-                      handleInputChange(laneIndex, index, e.target.value)
-                    }
-                  />
+                  <input type="text" className="block w-full p-2 border border-gray-300 rounded-md text-black" placeholder={`Enter name ${index + 1}`} value={inputValue} onChange={(e) => handleInputChange(laneIndex, index, e.target.value)} />
                 </div>
               ))}
             </section>
@@ -213,10 +176,7 @@ export default function KidsBowlingForm({ addBooking }: KidsBowlingFormProps) {
         </div>
       )}
 
-      <button
-        type="submit"
-        className="w-full sm:w-1/4 p-2 mt-4 bg-green-500 text-white rounded-md"
-      >
+      <button type="submit" className="w-full sm:w-1/4 p-2 mt-4 bg-green-500 text-white rounded-md">
         Tilføj
       </button>
     </form>

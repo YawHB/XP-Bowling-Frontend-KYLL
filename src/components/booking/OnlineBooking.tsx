@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BookingInputForm from "./bookingView/BookingInputForm";
 import DateForm, { Value } from "./DateForm";
 import CustomerForm from "./CustomerForm";
 import { postReservation } from "../services/reservationServie";
 import { postBooking } from "../services/activityBookingService";
 //import { postBooking } from "../services/activityBookingService";
+import  fetchActivityType  from "../services/activityTypeService";
+import { ActivityType } from "../services/activityTypeService";
+
 
 export interface BookingData {
   id?: number;
@@ -14,7 +17,9 @@ export interface BookingData {
   endTime: string;
   lanes?: number;
   tables?: number;
+  price?: number;
   bowlingParticipants?: LaneInput[];
+  duration?: number;
 }
 
 interface LaneInput {
@@ -65,7 +70,10 @@ export interface OnlineBookingProps {
   bookingDate: Value;
   setBookingDate: (value: Value) => void;
   setFormattedDate: (date: Date | null) => void;
+  activityType: ActivityType[];
 }
+
+
 
 // (2) [{…}, {…}]
 // 0: {activity: 'Bowling', date: '2024-05-23', time: '08:00', endTime: '10:00', lanes: 3, …}
@@ -87,6 +95,19 @@ export default function OnlineBooking() {
   });
   const [bookingDate, setBookingDate] = useState<Value>(new Date());
   const [formattedDate, setFormattedDate] = useState<Date | null>(null);
+  const [ActivityType, setActivityType] = useState<ActivityType[]>([]);
+
+  
+    
+  useEffect(() => {
+    async function getActivityType() {
+      const data = await fetchActivityType();
+      setActivityType(data);
+    }
+    getActivityType();
+  }, []);
+
+
 
   function handleNext() {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % components.length);
@@ -122,8 +143,10 @@ export default function OnlineBooking() {
       return;
     }
 
+    const price = 0;
+    //  bookingData.forEach((activity) => {price+= activity.price})
     const newReservation: ReservationInterface = {
-      totalPrice: 0,
+      totalPrice:price,
       customer: thisCustomer,
       reservationDate: formattedDate,
     };
@@ -205,6 +228,7 @@ export default function OnlineBooking() {
           bookingDate={bookingDate}
           setBookingDate={setBookingDate}
           setFormattedDate={setFormattedDate}
+          activityType={ActivityType}
         />
         <button className="bg-black" onClick={handleNext}>
           Next
