@@ -4,6 +4,7 @@ import DateForm, { Value } from "./DateForm";
 import CustomerForm from "./CustomerForm";
 import { postReservation } from "../services/reservationServie";
 import { postBooking } from "../services/activityBookingService";
+import ExistingBookings from "./ExistingBookings";
 import {
   LaneInput,
   ReservationInterface,
@@ -127,7 +128,7 @@ export default function OnlineBooking() {
             return;
           }
 
-          // NÆSTS STORE PROBLEM: laneBooking.id "findes ikke" pga id kan være null i dens interface! Men id'et ER DER!
+          // NÆSTSE STORE PROBLEM: laneBooking.id "findes ikke" pga id kan være null i dens interface! Men id'et ER DER!
 
           const lanesInputData = activityData.bowlingParticipants[index];
           const paricipantNamesArray = lanesInputData.textInputValues;
@@ -250,6 +251,7 @@ export default function OnlineBooking() {
           Send Booking
         </button>
       </div>
+      <ExistingBookings filterDate={formattedDate} />
     </div>
   );
 }

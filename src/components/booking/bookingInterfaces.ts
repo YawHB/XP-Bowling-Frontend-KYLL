@@ -23,6 +23,16 @@ interface ActivityBookingsInterface {
   reservation: Reservation;
 }
 
+interface ActivitiesBookingEntityInterface {
+  id: number;
+  date: Date;
+  startTime: string;
+  endTime: string;
+  numberParticipants: number;
+  activity: Activity;
+  reservation: Reservation;
+}
+
 //-------------------------------------------------------
 
 interface CustomerInterface {
@@ -44,4 +54,5 @@ export type {
   ActivityBookingsInterface,
   ReservationInterface,
   CustomerInterface,
+  ActivitiesBookingEntityInterface,
 };
