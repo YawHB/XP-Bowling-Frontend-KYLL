@@ -38,22 +38,6 @@ export default function BookingOverview({ bookingData, removeBooking, activityTy
     removeBooking(id);
   }
 
-  // function calculateActivityPrice() {
-  //   bookingData.forEach((booking) => {
-  //     const activity = activityType.find((activity) => activity.type === booking.activity);
-  //     if (activity) {
-  //       booking. activity.hourPr
-  //     }
-  //     return 0;
-  //   }
-  // );
-
-  // const activity = activityType.find((activity) => activity.type === bookingData.);
-  // if (activity) {
-  //   return activity.hourPrice;
-  // }
-  // return 0;
-  // }
 
   return (
     <div className="bg-blue-500 p-2">

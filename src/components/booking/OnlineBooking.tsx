@@ -5,9 +5,8 @@ import CustomerForm from "./CustomerForm";
 import { postReservation } from "../services/reservationServie";
 import { postBooking } from "../services/activityBookingService";
 //import { postBooking } from "../services/activityBookingService";
-import  fetchActivityType  from "../services/activityTypeService";
+import fetchActivityType from "../services/activityTypeService";
 import { ActivityType } from "../services/activityTypeService";
-
 
 export interface BookingData {
   id?: number;
@@ -73,17 +72,13 @@ export interface OnlineBookingProps {
   activityType: ActivityType[];
 }
 
-
-
 // (2) [{…}, {…}]
 // 0: {activity: 'Bowling', date: '2024-05-23', time: '08:00', endTime: '10:00', lanes: 3, …}
 // 1: {activity: 'Børne Bowling', date: '2024-05-23', time: '09:00', endTime: '11:00', lanes: 4, …}
 // length: 2
 // [[Prototype]]: Array(0)
 
-const components = [CustomerForm, DateForm, BookingInputForm] as ((
-  props: OnlineBookingProps
-) => JSX.Element)[];
+const components = [CustomerForm, DateForm, BookingInputForm] as ((props: OnlineBookingProps) => JSX.Element)[];
 
 export default function OnlineBooking() {
   const [bookingData, setBookingData] = useState<BookingData[]>([]);
@@ -91,14 +86,12 @@ export default function OnlineBooking() {
   const [thisCustomer, setThisCustomer] = useState<CustomerInterface>({
     id: 0,
     name: "",
-    phone: "",
+    phone: ""
   });
   const [bookingDate, setBookingDate] = useState<Value>(new Date());
   const [formattedDate, setFormattedDate] = useState<Date | null>(null);
   const [ActivityType, setActivityType] = useState<ActivityType[]>([]);
 
-  
-    
   useEffect(() => {
     async function getActivityType() {
       const data = await fetchActivityType();
@@ -106,8 +99,6 @@ export default function OnlineBooking() {
     }
     getActivityType();
   }, []);
-
-
 
   function handleNext() {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % components.length);
@@ -121,10 +112,7 @@ export default function OnlineBooking() {
   }
 
   function addBooking(newBooking: BookingData) {
-    setBookingData([
-      ...bookingData,
-      { ...newBooking, id: bookingData.length + 1 },
-    ]);
+    setBookingData([...bookingData, { ...newBooking, id: bookingData.length + 1 }]);
   }
 
   async function handleSuperSubmit() {
@@ -143,13 +131,18 @@ export default function OnlineBooking() {
       return;
     }
 
-    const price = 0;
-    //  bookingData.forEach((activity) => {price+= activity.price})
+    let price = 0;
+    bookingData.forEach((activity) => {
+      price += activity.price ?? 0;
+    });
+
     const newReservation: ReservationInterface = {
-      totalPrice:price,
+      totalPrice: price,
       customer: thisCustomer,
-      reservationDate: formattedDate,
+      reservationDate: formattedDate
     };
+    // console.log("newRESERVATION                             ", newReservation);
+    
 
     const reservationData = await postReservation(newReservation);
 
@@ -168,11 +161,7 @@ export default function OnlineBooking() {
     }
   }
 
-  async function createActivityObject(
-    tablesOrLanes: "tables" | "lanes",
-    activityData: BookingData,
-    reservationData: ReservationInterface
-  ) {
+  async function createActivityObject(tablesOrLanes: "tables" | "lanes", activityData: BookingData, reservationData: ReservationInterface) {
     // sets activity amount as number or undefined so it matches the bookindData interface.
     let activityAmount: number | undefined;
 
@@ -193,9 +182,9 @@ export default function OnlineBooking() {
         endTime: activityData.endTime,
         numberParticipants: activityAmount,
         activity: {
-          id: activityData.id!,
+          id: activityData.id!
         },
-        reservation: reservationData,
+        reservation: reservationData
       };
 
       console.log("This is my new activity:");
@@ -214,9 +203,7 @@ export default function OnlineBooking() {
   return (
     <div className="flex w-screen">
       <div>
-        <h1 className="text-4xl self-center font-bold text-pink-300">
-          Book en aktivitet her!!
-        </h1>
+        <h1 className="text-4xl self-center font-bold text-pink-300">Book en aktivitet her!!</h1>
       </div>
       <div>
         <CurrentComponent
