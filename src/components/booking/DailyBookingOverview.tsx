@@ -18,6 +18,7 @@ export interface Booking {
 }
 
 export default function DailyBookingOverview() {
+    const [startDate, setStartDate] = useState(new Date());
     const [bookings, setBookingsForADay] = useState<Booking[]>([]);
     const [selectedDay, setSelectedDay] = useState<string>('');
     const [bowlingAdultBookings, setBowlingAdultBookings] = useState<Booking[]>([]);
@@ -29,8 +30,6 @@ export default function DailyBookingOverview() {
     const [hourlyBowlingChildrenBookings, setHourlyBowlingChildrenBookings] = useState<Array<number>>(Array.from({ length: 13 }, () => 0));
     const [hourlyAirHockeyBookings, setHourlyAirHockeyBookings] = useState<Array<number>>(Array.from({ length: 13 }, () => 0));
     const [hourlyRestaurantBookings, setHourlyRestaurantBookings] = useState<Array<number>>(Array.from({ length: 13 }, () => 0));
-
-    //const [hourlyBookings, setHourlyBookings] = useState<Array<number>>(Array.from({ length: 13 }, () => 0));
 
     useEffect(() => {
         if (selectedDay) {
@@ -50,6 +49,7 @@ export default function DailyBookingOverview() {
                 setHourlyBowlingChildrenBookings(countHourlyBookings(bowlingChildrenBookings || []));
                 setHourlyAirHockeyBookings(countHourlyBookings(airHockeyBookings || []));
                 setHourlyRestaurantBookings(countHourlyBookings(restaurantBookings || []));
+                setStartDate(new Date(selectedDay));
             });
         }
     }, [selectedDay]);
@@ -68,100 +68,29 @@ export default function DailyBookingOverview() {
         return hourlyBookings;
     }
 
-    // useEffect(() => {
-    //     handleShowDay();
-    // }, [selectedDay]);
-
-    // function countHourlyBookings(bookings: Booking[]) {
-    //     const hourlyBookings = Array.from({ length: 13 }, () => 0);
-
-    //     bookings.forEach((booking) => {
-    //         const startHour = Math.max(parseInt(booking.startTime.split(':')[0]), 10);
-    //         const endHour = Math.min(parseInt(booking.endTime.split(':')[0]), 21);
-    //         for (let hour = startHour; hour < endHour; hour++) {
-    //             hourlyBookings[hour - 10]++;
-    //         }
-    //     });
-
-    //     return hourlyBookings;
-    // }
-
-    // function handleShowDay() {
-    //     console.log('Show bookings for day:', selectedDay);
-
-    //     const bookingsByDay = bookings.filter((booking) => {
-    //         const day = booking.reservation.reservationDate.split('-')[1];
-    //         console.log('all the days booked ' + day);
-    //         return day === selectedDay;
-    //     });
-    //     console.log('Bookings by day:', bookingsByDay);
-
-    //const hourlyBookings = Array.from({ length: 12 }, () => 0);
-
-    // Increment the counter for each booking
-    // bookingsByDay.forEach((booking) => {
-    //     const startHour = Math.max(parseInt(booking.startTime.split(':')[0]), 10);
-    //     const endHour = Math.min(parseInt(booking.endTime.split(':')[0]), 21);
-    //     for (let hour = startHour; hour < endHour; hour++) {
-    //         hourlyBookings[hour - 10]++;
-    //     }
-    // });
-
-    //TODO I might need this later
-
-    // const hourlyBowlingAdultBookings = countHourlyBookings(bowlingAdultBookings);
-    // const hourlyBowlingChildrenBookings = countHourlyBookings(bowlingChildrenBookings);
-    // const hourlyAirHockeyBookings = countHourlyBookings(airHockeyBookings);
-    // const hourlyRestaurantBookings = countHourlyBookings(restaurantBookings);
-
-    // console.log('Hourly bookings for each activity:', {
-    //     bowlingAdult: hourlyBowlingAdultBookings,
-    //     bowlingChildren: hourlyBowlingChildrenBookings,
-    //     airHockey: hourlyAirHockeyBookings,
-    //     restaurant: hourlyRestaurantBookings,
-    // });
-
-    // console.log(hourlyBookings);
-    // setHourlyBookings(hourlyBookings);
-
-    // return bookingsByDay;
-    // }
-
-    // function handleDayChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    //     setSelectedDay(event.target.value);
-    // }
-
-    // function handleFilterBookings(date: string) {
-    //     const todaysBookings = bookings.filter((booking) => {
-    //         return booking.reservation.reservationDate === date;
-    //     });
-    //     console.log(' bookings:', bookings);
-
-    //     setTodaysBookings(todaysBookings);
-
-    // }
-
     return (
         <div className="w-screen mx-auto px-4 py-8 max-w-screen-full px-56">
             <div>
-                <div>
-                    <label>
+                <div className="flex items-center">
+                    <label className="block text-sm font-medium text-white mr-4 text-center">
                         Dag
-                        <DatePicker
-                            timeFormat="dd:MM:yyyy"
-                            selected={new Date()}
-                            onChange={(date: Date) => {
-                                const dateStr = date.toISOString().split('T')[0];
-                                //setStartDate(date);
-                                setSelectedDay(dateStr);
-                                //console.log('Selected day:', date.toISOString().split('T')[0]);
+                        <div className="mt-1 relative rounded-md shadow-sm">
+                            <DatePicker
+                                key={selectedDay}
+                                className="focus:ring-indigo-500 focus:border-indigo-500 block w-40 pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+                                timeFormat="dd:MM:yyyy"
+                                selected={startDate}
+                                onChange={(date: Date) => {
+                                    setStartDate(date);
 
-                                //handleFilterBookings(dateStr);
-                            }}
-                        />
+                                    const dateStr = date.toISOString().split('T')[0];
+                                    setSelectedDay(dateStr);
+                                }}
+                            />
+                        </div>
                     </label>
-                    <button className="mx-2">Uge</button>
-                    <button className="mx-2">Måned</button>
+                    <button className="mx-2 bg-blue-500">Uge</button>
+                    <button className="mx-2 bg-blue-500 ">Måned</button>
                 </div>
             </div>
             <h1 className="text-3xl font-semibold">Dagens booking oversigt</h1>
@@ -178,39 +107,30 @@ export default function DailyBookingOverview() {
                 </thead>
                 <tbody>
                     {Array.from({ length: 12 }).map((_, i) => (
-                        <tr key={i}>
+                        <tr key={i} className={i % 2 === 0 ? 'bg-gray-600' : ''}>
                             <td className="border px-4 py-2">{`${i + 10}:00`}</td>
                             <td className="border px-4 py-2">
                                 <div>
-                                    <div>Fuld booket </div>
-                                    <div>Delvis booket </div>
-                                    <div>Ledigr</div>
-
-                                    <div>{`Antal baner booket: ${hourlyBowlingAdultBookings[i]}`}</div>
+                                    <div>{`Booket: ${hourlyBowlingAdultBookings[i]}`}</div>
+                                    <div>{`Ledige: ${Math.abs(hourlyBowlingAdultBookings[i] - 20)} `}</div>
                                 </div>
                             </td>
                             <td className="border px-4 py-2">
                                 <div>
-                                    <div>Fuld booket</div>
-                                    <div>Delvis booket</div>
-                                    <div>Ledig</div>
-                                    <div>{`Antal baner booket: ${hourlyBowlingChildrenBookings[i]}`}</div>
+                                    <div>{`Antal baner booket: ${hourlyBowlingChildrenBookings[i]} `}</div>
+                                    <div>{`Ledige baner: ${Math.abs(hourlyBowlingChildrenBookings[i] - 6)} `}</div>
                                 </div>
                             </td>
                             <td className="border px-4 py-2">
                                 <div>
-                                    <div>Fuld booket</div>
-                                    <div>Delvis booket</div>
-                                    <div>Ledig</div>
                                     <div>{`Antal baner booket: ${hourlyAirHockeyBookings[i]}`}</div>
+                                    <div>{`Ledige baner: ${Math.abs(hourlyAirHockeyBookings[i] - 6)} `}</div>
                                 </div>
                             </td>
                             <td className="border px-4 py-2">
                                 <div>
-                                    <div>Fuld booket</div>
-                                    <div>Delvis booket</div>
-                                    <div>Ledig</div>
-                                    <div>{`Antal baner booket: ${hourlyRestaurantBookings[i]}`}</div>
+                                    <div>{`Antal borde booket: ${hourlyRestaurantBookings[i]}`}</div>
+                                    <div>{`Ledige borde: ${Math.abs(hourlyRestaurantBookings[i] - 20)} `}</div>
                                 </div>
                             </td>
                         </tr>
