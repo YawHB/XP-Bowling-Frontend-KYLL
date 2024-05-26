@@ -2,7 +2,7 @@ import { Booking } from '../../components/booking/DailyBookingOverview';
 
 export const getBookingsForADay = async (date: string) => {
     try {
-        const response = await fetch(`http://localhost:8080/activitybookings/reservation/reservationdate/2024-05-23`);
+        const response = await fetch(`http://localhost:8080/activitybookings/reservation/reservationdate/${date}`);
 
         if (!response.ok) {
             const errorMessage = await response.text();
