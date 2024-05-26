@@ -2,11 +2,19 @@ import { BookingData } from "../OnlineBooking";
 
 interface BookingOverviewProps {
   bookingData: BookingData[];
+  removeBooking: (id: number) => void;
 }
 // TODO: implement delete functionality
 // TODO: implement 'antal timer' for bookings
 
-export default function BookingOverview({ bookingData }: BookingOverviewProps) {
+
+export default function BookingOverview({ bookingData, removeBooking }: BookingOverviewProps) {
+
+  function handleDeleteClicked(id: number) {
+    console.log("Delete activity button clicked");
+    removeBooking(id);
+  }
+
   return (
     <div className="bg-blue-500 p-2">
       <div className="">
@@ -46,7 +54,9 @@ export default function BookingOverview({ bookingData }: BookingOverviewProps) {
                 </div>
               </td>
               <td>
-                <button className="mr-2 bg-red-400">Slet</button>
+                <button className="mr-2 bg-red-400" onClick={() => booking.id && handleDeleteClicked(booking.id)}>
+                  Slet
+                </button>
               </td>
             </tr>
           ))}

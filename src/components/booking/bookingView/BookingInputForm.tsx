@@ -18,6 +18,7 @@ interface BookingInputFormProps {
   addBooking: (newBooking: BookingData) => void;
   bookingData: BookingData[];
   thisCustomer: CustomerInterface | undefined;
+  setBookingData: (bookingData: BookingData[]) => void;
 
 }
 
@@ -26,13 +27,22 @@ interface BookingData {
   activity: string;
   date: string;
   time: string;
+  endTime: string;
   lanes?: number;
   tables?: number;
 }
 
-const forms: FormComponents = { bowling: BowlingForm, kidsBowling: KidsBowlingForm, airHockey: AirhockeyForm, restaurant: DinnertableForm };
+const forms: FormComponents = {
+  bowling: BowlingForm,
+  kidsBowling: KidsBowlingForm,
+  airHockey: AirhockeyForm,
+  restaurant: DinnertableForm,
+};
 
-export default function BookingInputForm({ addBooking, bookingData }: BookingInputFormProps) {
+export default function BookingInputForm({
+  addBooking,
+  bookingData, setBookingData,
+}: BookingInputFormProps) {
   const [currentFormName, setCurrentFormName] = useState<string>("bowling");
 
   function chooseInputForm(formName: string) {
@@ -42,12 +52,18 @@ export default function BookingInputForm({ addBooking, bookingData }: BookingInp
 
   const CurrentForm = forms[currentFormName];
 
+  function removeBooking(id: number) {
+    const newBookingData = bookingData.filter((booking) => booking.id !== id);
+    console.log(newBookingData);
+    setBookingData(newBookingData);
+  }
+
   return (
     <div>
       <BookingSelectActivity chosenForm={chooseInputForm} />
       <h1 className="text-2xl self-center font-semibold">Booking</h1>
       <CurrentForm addBooking={addBooking} />
-      <BookingOverview bookingData={bookingData} />
+      <BookingOverview bookingData={bookingData} removeBooking={removeBooking} />
     </div>
   );
 }
