@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { ActivitiesBookingEntityInterface } from "./bookingInterfaces";
+import { ActivityBookingsInterface } from "./bookingInterfaces";
 
 export default function ExistingBookings({
   filterDate,
@@ -7,22 +7,26 @@ export default function ExistingBookings({
   filterDate: Date | null;
 }) {
   const [existingBookings, setExistingBookings] = useState<
-    ActivitiesBookingEntityInterface[] | null
+    ActivityBookingsInterface[] | null
   >(null);
 
   const [filteredBookings, setFilteredBookings] = useState<
-    ActivitiesBookingEntityInterface[] | null
+    ActivityBookingsInterface[] | null
   >(null);
 
   useEffect(() => {
     fetchActivityBookings();
   }, []);
 
+
+
+
   const filterDataByDate = useCallback(() => {
     if (existingBookings && filterDate) {
       const filtered = existingBookings.filter(
         (booking) =>
-          new Date(booking.reservation.reservationDate).toDateString() === filterDate.toDateString()
+          new Date(booking.reservation.reservationDate).toDateString() ===
+          filterDate.toDateString()
       );
       setFilteredBookings(filtered);
     } else {
@@ -44,10 +48,12 @@ export default function ExistingBookings({
           console.log("FilteredDate");
           console.log(filterDate.toDateString());
           const filtered = data.filter(
-            (booking: ActivitiesBookingEntityInterface) =>
+            (booking: ActivityBookingsInterface) =>
               new Date(booking.reservation.reservationDate).toDateString() ===
               filterDate.toDateString()
           );
+            console.log("filterDate: ", filterDate);
+            console.log(filterDate.toString());
           setFilteredBookings(filtered);
         } else {
           setFilteredBookings(data);
@@ -55,7 +61,7 @@ export default function ExistingBookings({
       });
   }
 
-  console.log("This is the filtered bookings", filteredBookings);
+  // console.log("This is the filtered bookings", filteredBookings);
 
   return <div></div>;
 }
