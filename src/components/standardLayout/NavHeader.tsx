@@ -45,6 +45,11 @@ export default function NavHeader() {
                         Booking Oversigt
                     </NavLink>
                 </li>
+                <li>
+                    <NavLink to="/vagtplan" className="text-white hover:text-gray-300">
+                        Vagtplan
+                    </NavLink>
+                </li>
                 {/* <li>
           <NavLink to="/lagerBestilling" className="text-white hover:text-gray-300">
             Bestil Reservedele

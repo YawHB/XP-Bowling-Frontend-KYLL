@@ -10,6 +10,7 @@ import BarSale from './components/sale/BarSale';
 import StockPage from './components/stock/StockPage';
 import StockOrderPage from './components/stock/StockOrderPage';
 import BookingOverview from './components/booking/DailyBookingOverview';
+import ShiftOverview from './components/shift/ShiftOverviews';
 
 export default function App() {
     return (
@@ -27,7 +28,7 @@ export default function App() {
                 <Route path="/barSale" element={<BarSale />} />
                 <Route path="/lager" element={<StockPage />} />
                 <Route path="/lagerBestilling" element={<StockOrderPage />} />
-                <Route path="/bookingoverview" element={<BookingOverview />} />
+                <Route path="/vagtplan" element={<ShiftOverview />} /> <Route path="/bookingoverview" element={<BookingOverview />} />
             </Routes>
         </Layout>
     );
