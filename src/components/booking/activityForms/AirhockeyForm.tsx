@@ -25,6 +25,7 @@ export default function AirhockeyForm({
   const [endTime, setEndTime] = useState<string>(calculatedEndTime("08:00", 1));
   const [tables, setLanes] = useState<number>(1);
   const [duration, setDuration] = useState<number>(1);
+  const activityId = 3;
 
   function calculatedEndTime(startTime: string, playTime: number): string {
     const [hours, minuttes] = startTime.split(":").map(Number);
@@ -37,7 +38,14 @@ export default function AirhockeyForm({
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
 
-    console.log(bookingsByDate);
+    // Trying to filter by activity ID--------------------------------------------------------------------------------------------------
+    // console.log(bookingsByDate);
+    // function filterByActivityType(bookingsByDate, activityId){
+    //   bookingsByDate.filter((booking) => {
+    //    booking.activity.activityType.id === activityId
+    //   })
+
+    // }
 
     const newBooking: BookingData = {
       activity: "AIR_HOCKEY",
