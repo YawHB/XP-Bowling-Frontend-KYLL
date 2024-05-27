@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
@@ -19,8 +19,6 @@ export interface Booking {
 
 export default function DailyBookingOverview() {
     const [startDate, setStartDate] = useState(new Date());
-    const [bookingsForADay, setBookingsForADay] = useState<Booking[]>([]);
-
     const [selectedDay, setSelectedDay] = useState<string>(new Date().toISOString().split('T')[0]);
 
     const useHourlyBookings = () => useState<number[]>([0, ...Array.from({ length: 12 }, () => 0)]);
@@ -34,7 +32,6 @@ export default function DailyBookingOverview() {
         const fetchBookings = async () => {
             if (selectedDay) {
                 const bookings: Booking[] | undefined = await getBookingsForADay(selectedDay);
-                setBookingsForADay(bookings || []);
 
                 const filteredBowlingAdultBookings = bookings?.filter((booking) => booking.activity.activityType.type === 'BOWLING_ADULT') || [];
                 const filteredBowlingChildrenBookings = bookings?.filter((booking) => booking.activity.activityType.type === 'BOWLING_CHILD') || [];
