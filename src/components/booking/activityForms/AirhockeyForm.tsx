@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { ActivitiesBookingEntityInterface } from "../bookingInterfaces";
 
 interface AirhockeyFormProps {
   addBooking: (newBooking: BookingData) => void;
+  bookingsByDate: ActivitiesBookingEntityInterface[];
 }
 
 interface BookingData {
@@ -14,7 +16,10 @@ interface BookingData {
   duration: number;
 }
 
-export default function AirhockeyForm({ addBooking }: AirhockeyFormProps) {
+export default function AirhockeyForm({
+  addBooking,
+  bookingsByDate,
+}: AirhockeyFormProps) {
   const [startTime, setStartTime] = useState<string>("08:00");
   const [playTime, setPlayTime] = useState<number>(1);
   const [endTime, setEndTime] = useState<string>(calculatedEndTime("08:00", 1));
@@ -31,6 +36,8 @@ export default function AirhockeyForm({ addBooking }: AirhockeyFormProps) {
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
+
+    console.log(bookingsByDate);
 
     const newBooking: BookingData = {
       activity: "AIR_HOCKEY",

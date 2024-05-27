@@ -38,6 +38,7 @@ export interface OnlineBookingProps {
   setBookingDate: (value: Value) => void;
   setFormattedDate: (date: Date | null) => void;
   activityType: ActivityType[];
+  bookingsByDate: ActivityBookingsInterface[];
 }
 
 //  <ExistingBookingsTypescript filterDate={formattedDate} />
@@ -275,6 +276,7 @@ export default function OnlineBooking() {
           setBookingDate={setBookingDate}
           setFormattedDate={setFormattedDate}
           activityType={ActivityType}
+          bookingsByDate={bookingsByDate}
         />
         <button className="bg-black" onClick={handleNext}>
           Next
