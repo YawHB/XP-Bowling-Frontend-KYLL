@@ -8,24 +8,24 @@ async function fetchActivityBookings(): Promise<ActivityBookingsInterface[]> {
 
 function filterBookingsByDate(
   bookings: ActivityBookingsInterface[],
-  filterDate: Date | null
+  formattedDate: Date | null
 ): ActivityBookingsInterface[] {
-  if (!filterDate) {
+  if (!formattedDate) {
     return bookings;
   }
 
   return bookings.filter(
     (booking) =>
       new Date(booking.reservation.reservationDate).toDateString() ===
-      filterDate.toDateString()
+      formattedDate.toDateString()
   );
 }
 
 async function getFilteredBookings(
-  filterDate: Date | null
+  formattedDate: Date | null
 ): Promise<ActivityBookingsInterface[]> {
   const bookings = await fetchActivityBookings();
-  return filterBookingsByDate(bookings, filterDate);
+  return filterBookingsByDate(bookings, formattedDate);
 }
 
 export { getFilteredBookings };

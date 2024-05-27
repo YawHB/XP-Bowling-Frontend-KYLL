@@ -4,7 +4,7 @@ import DateForm, { Value } from "./DateForm";
 import CustomerForm from "./CustomerForm";
 import { postReservation } from "../services/reservationServie";
 import { postBooking } from "../services/activityBookingService";
-//import filterBookingsByDate from "./ExistingBookingsType";
+import { getFilteredBookings } from "./ExistingBookingsTypescript";
 import {
   LaneInput,
   ReservationInterface,
@@ -41,6 +41,7 @@ export interface OnlineBookingProps {
 }
 
 
+
 //  <ExistingBookingsTypescript filterDate={formattedDate} />
 // (2) [{…}, {…}]
 // 0: {activity: 'Bowling', date: '2024-05-23', time: '08:00', endTime: '10:00', lanes: 3, …}
@@ -56,7 +57,7 @@ export default function OnlineBooking() {
   const [thisCustomer, setThisCustomer] = useState<CustomerInterface>({
     id: 0,
     name: "",
-    phone: ""
+    phone: "",
   });
   const [bookingDate, setBookingDate] = useState<Value>(new Date());
   const [formattedDate, setFormattedDate] = useState<Date | null>(null);
@@ -76,6 +77,8 @@ export default function OnlineBooking() {
 
 
 
+  const filteredBookingsData = getFilteredBookings(formattedDate);
+
   function handleReset() {
     setCurrentIndex(0);
     setBookingData([]);
@@ -84,7 +87,10 @@ export default function OnlineBooking() {
   }
 
   function addBooking(newBooking: BookingData) {
-    setBookingData([...bookingData, { ...newBooking, id: bookingData.length + 1 }]);
+    setBookingData([
+      ...bookingData,
+      { ...newBooking, id: bookingData.length + 1 },
+    ]);
   }
 
   async function handleSuperSubmit() {
@@ -111,10 +117,9 @@ export default function OnlineBooking() {
     const newReservation: ReservationInterface = {
       totalPrice: price,
       customer: thisCustomer,
-      reservationDate: formattedDate
+      reservationDate: formattedDate,
     };
     // console.log("newRESERVATION                             ", newReservation);
-    
 
     const reservationData = await postReservation(newReservation);
 
@@ -196,7 +201,11 @@ export default function OnlineBooking() {
   //   postParticipant(newParticipantObject);
   // }
 
-  async function createActivityObject(tablesOrLanes: "tables" | "lanes", activityData: BookingData, reservationData: ReservationInterface) {
+  async function createActivityObject(
+    tablesOrLanes: "tables" | "lanes",
+    activityData: BookingData,
+    reservationData: ReservationInterface
+  ) {
     const activityPostDataArray: ActivityBookingsInterface[] = [];
 
     // sets activity amount as number or undefined so it matches the bookindData interface.
@@ -221,9 +230,9 @@ export default function OnlineBooking() {
         endTime: activityData.endTime,
         numberParticipants: 0,
         activity: {
-          id: activityData.id!
+          id: activityData.id!,
         },
-        reservation: reservationData
+        reservation: reservationData,
       };
       const newActivityData = await sendActivtyToPost(newActivity);
       activityPostDataArray.push(newActivityData);
@@ -240,7 +249,9 @@ export default function OnlineBooking() {
   return (
     <div className="flex w-screen">
       <div>
-        <h1 className="text-4xl self-center font-bold text-pink-300">Book en aktivitet her!!</h1>
+        <h1 className="text-4xl self-center font-bold text-pink-300">
+          Book en aktivitet her!!
+        </h1>
       </div>
       <div>
         <CurrentComponent
@@ -266,7 +277,6 @@ export default function OnlineBooking() {
           Send Booking
         </button>
       </div>
-    
     </div>
   );
 }
