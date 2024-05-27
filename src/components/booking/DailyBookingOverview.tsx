@@ -75,7 +75,7 @@ export default function DailyBookingOverview() {
                         <div className="mt-1 relative rounded-md shadow-sm">
                             <DatePicker
                                 className="focus:ring-indigo-500 focus:border-indigo-500 block w-40 pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
-                                timeFormat="dd:MM:yyyy"
+                                dateFormat={'dd-MM-yyyy'}
                                 selected={startDate}
                                 onChange={(date: Date) => {
                                     setStartDate(date);
