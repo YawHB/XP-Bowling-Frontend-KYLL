@@ -20,30 +20,28 @@ export interface Booking {
 export default function DailyBookingOverview() {
     const [startDate, setStartDate] = useState(new Date());
     const [bookings, setBookingsForADay] = useState<Booking[]>([]);
+
     const [selectedDay, setSelectedDay] = useState<string>('');
     const [bowlingAdultBookings, setBowlingAdultBookings] = useState<Booking[]>([]);
     const [bowlingChildrenBookings, setBowlingChildrenBookings] = useState<Booking[]>([]);
     const [airHockeyBookings, setAirHockeyBookings] = useState<Booking[]>([]);
     const [restaurantBookings, setRestaurantBookings] = useState<Booking[]>([]);
 
-    const [hourlyBowlingAdultBookings, setHourlyBowlingAdultBookings] = useState<Array<number>>(Array.from({ length: 13 }, () => 0));
-    const [hourlyBowlingChildrenBookings, setHourlyBowlingChildrenBookings] = useState<Array<number>>(Array.from({ length: 13 }, () => 0));
-    const [hourlyAirHockeyBookings, setHourlyAirHockeyBookings] = useState<Array<number>>(Array.from({ length: 13 }, () => 0));
-    const [hourlyRestaurantBookings, setHourlyRestaurantBookings] = useState<Array<number>>(Array.from({ length: 13 }, () => 0));
+    const useHourlyBookings = () => useState<number[]>([0, ...Array.from({ length: 12 }, () => 0)]);
+
+    const [hourlyBowlingAdultBookings, setHourlyBowlingAdultBookings] = useHourlyBookings();
+    const [hourlyBowlingChildrenBookings, setHourlyBowlingChildrenBookings] = useHourlyBookings();
+    const [hourlyAirHockeyBookings, setHourlyAirHockeyBookings] = useHourlyBookings();
+    const [hourlyRestaurantBookings, setHourlyRestaurantBookings] = useHourlyBookings();
 
     useEffect(() => {
         if (selectedDay) {
             getBookingsForADay(selectedDay).then((bookings: Booking[] | undefined) => {
                 setBookingsForADay(bookings || []);
-                const bowlingAdultBookings = bookings?.filter((booking) => booking.activity.activityType.type === 'BOWLING_ADULT');
-                const bowlingChildrenBookings = bookings?.filter((booking) => booking.activity.activityType.type === 'BOWLING_CHILD');
-                const airHockeyBookings = bookings?.filter((booking) => booking.activity.activityType.type === 'AIR_HOCKEY');
-                const restaurantBookings = bookings?.filter((booking) => booking.activity.activityType.type === 'RESTAURANT');
-
-                setBowlingAdultBookings(bowlingAdultBookings || []);
-                setBowlingChildrenBookings(bowlingChildrenBookings || []);
-                setAirHockeyBookings(airHockeyBookings || []);
-                setRestaurantBookings(restaurantBookings || []);
+                setBowlingAdultBookings(bookings?.filter((booking) => booking.activity.activityType.type === 'BOWLING_ADULT') || []);
+                setBowlingChildrenBookings(bookings?.filter((booking) => booking.activity.activityType.type === 'BOWLING_CHILD') || []);
+                setAirHockeyBookings(bookings?.filter((booking) => booking.activity.activityType.type === 'AIR_HOCKEY') || []);
+                setRestaurantBookings(bookings?.filter((booking) => booking.activity.activityType.type === 'RESTAURANT') || []);
 
                 setHourlyBowlingAdultBookings(countHourlyBookings(bowlingAdultBookings || []));
                 setHourlyBowlingChildrenBookings(countHourlyBookings(bowlingChildrenBookings || []));
@@ -76,11 +74,12 @@ export default function DailyBookingOverview() {
                         Dag
                         <div className="mt-1 relative rounded-md shadow-sm">
                             <DatePicker
-                                key={selectedDay}
                                 className="focus:ring-indigo-500 focus:border-indigo-500 block w-40 pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
                                 timeFormat="dd:MM:yyyy"
                                 selected={startDate}
                                 onChange={(date: Date) => {
+                                    console.log(date);
+
                                     setStartDate(date);
 
                                     const dateStr = date.toISOString().split('T')[0];
