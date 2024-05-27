@@ -34,6 +34,7 @@ export interface Employee {
 // While select OPERATOR -> employeeRole.Find by roleID
 export default function ShiftOverview() {
     const [shifts, setShifts] = useState<Shift[]>([]);
+    const [filteredShifts, setFilteredShifts] = useState<Shift[]>([]);
     const [employees, setEmployees] = useState<Employee[]>([]);
     const [placeName, setPlaceName] = useState<string>('');
     const [employee, setEmployee] = useState<Employee | undefined>(undefined);
@@ -45,6 +46,7 @@ export default function ShiftOverview() {
     useEffect(() => {
         getAllShiftsApi().then((shifts) => {
             setShifts(shifts || []);
+            setFilteredShifts(shifts || []);
         });
     }, []); // empty dependency array to run only once on mount
 
@@ -76,11 +78,13 @@ export default function ShiftOverview() {
     };
 
     function handleFilterShiftsByDate(date: string) {
-        const filteredShifts = shifts.filter((shift) => shift.date === date);
-        setShifts(filteredShifts);
-        console.log(filteredShifts);
-    }
+        console.log('Shifts:');
+        console.log(shifts);
 
+        const newFilteredShifts = shifts.filter((shift) => shift.date === date);
+        setFilteredShifts(newFilteredShifts);
+        console.log(newFilteredShifts);
+    }
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         console.log('Submit');
@@ -107,8 +111,9 @@ export default function ShiftOverview() {
             console.log('Shift created successfully');
             setPlaceName('');
             getAllShiftsApi().then((shifts) => {
+                setShifts(shifts || []);
                 const filteredShifts = shifts?.filter((shift) => shift.date === localDate);
-                setShifts(filteredShifts || []);
+                setFilteredShifts(filteredShifts || []);
             });
         }
     };
@@ -129,7 +134,7 @@ export default function ShiftOverview() {
                 }}
             />
             {/* Send shifts som prop i Shifts component */}
-            <ShiftTable shifts={shifts} />
+            <ShiftTable shifts={filteredShifts} />
             <h3 className="text-white mb.4"></h3>
             {/* Form med  2 dropdowns */}
             <div className="">
