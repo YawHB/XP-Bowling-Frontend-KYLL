@@ -4,7 +4,7 @@ import DateForm, { Value } from "./DateForm";
 import CustomerForm from "./CustomerForm";
 import { postReservation } from "../services/reservationServie";
 import { postBooking } from "../services/activityBookingService";
-import ExistingBookings from "./ExistingBookings";
+//import filterBookingsByDate from "./ExistingBookingsType";
 import {
   LaneInput,
   ReservationInterface,
@@ -40,6 +40,8 @@ export interface OnlineBookingProps {
   activityType: ActivityType[];
 }
 
+
+//  <ExistingBookingsTypescript filterDate={formattedDate} />
 // (2) [{…}, {…}]
 // 0: {activity: 'Bowling', date: '2024-05-23', time: '08:00', endTime: '10:00', lanes: 3, …}
 // 1: {activity: 'Børne Bowling', date: '2024-05-23', time: '09:00', endTime: '11:00', lanes: 4, …}
@@ -71,6 +73,8 @@ export default function OnlineBooking() {
   function handleNext() {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % components.length);
   }
+
+
 
   function handleReset() {
     setCurrentIndex(0);
@@ -262,7 +266,7 @@ export default function OnlineBooking() {
           Send Booking
         </button>
       </div>
-      <ExistingBookings filterDate={formattedDate} />
+    
     </div>
   );
 }
