@@ -40,7 +40,6 @@ export default function ShiftOverview() {
     const [employee, setEmployee] = useState<Employee | undefined>(undefined);
     const [dataId, setDataId] = useState<string>('');
     const [startDate, setStartDate] = useState(new Date());
-    const [selectedDay, setSelectedDay] = useState('');
     const [localDate, setLocalDate] = useState('');
 
     useEffect(() => {
@@ -127,7 +126,6 @@ export default function ShiftOverview() {
                 selected={startDate}
                 onChange={(date: Date) => {
                     setStartDate(date);
-                    setSelectedDay(date.getDate().toString());
                     const localDate = date.toISOString().split('T')[0];
                     setLocalDate(localDate);
                     handleFilterShiftsByDate(localDate);
