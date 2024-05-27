@@ -2,6 +2,7 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
+import { da } from "date-fns/locale";
 import "./DateForm.css";
 
 type ValuePiece = Date | null;
@@ -12,7 +13,7 @@ export default function DateForm({
 }: {
   setFormattedDate: (date: Date | null) => void;
 }) {
-  const [bookingDate, setBookingDate] = useState<Value>(null);
+  const [bookingDate, setBookingDate] = useState<Value>(new Date());
 
   function checkDate(event: React.FormEvent<HTMLButtonElement>) {
     event.preventDefault();
@@ -41,6 +42,9 @@ export default function DateForm({
       <DatePicker
         selected={convertToDate(bookingDate)}
         onChange={(date) => setBookingDate(date as Date)}
+        className="bg-black text-white"
+        dateFormat={"dd/MM/yyyy"}
+        locale={da}
       />
       <button type="submit" className="bg-black" onClick={checkDate}>
         Bekræft Dato
