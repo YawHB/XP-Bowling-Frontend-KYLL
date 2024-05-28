@@ -13,7 +13,7 @@ const FailMessage = ({ messageString }: FailMessageProps) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: 'colored',
+        theme: 'light',
     });
 };
 

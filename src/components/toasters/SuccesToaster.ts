@@ -13,7 +13,7 @@ const SuccessMessage = ({ messageString }: SuccessMessageProps) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: 'colored',
+        theme: 'light',
     });
 };
 
