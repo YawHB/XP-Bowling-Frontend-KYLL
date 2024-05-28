@@ -91,6 +91,9 @@ export default function StockOrder() {
         };
 
         console.log(order);
+        setTotalPrice(0);
+        setTitle('');
+        setOrderItems([]);
 
         fetch('http://localhost:8080/replacementorders', {
             method: 'POST',
