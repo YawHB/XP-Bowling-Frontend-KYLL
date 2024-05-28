@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SuccessToaster from '../../components/toasters/SuccesToaster';
+//import FailMessage from '../../components/toasters/ErrorToaster';
 interface StockItem {
     name: string;
     price?: number;
@@ -101,8 +102,8 @@ export default function StockOrder() {
             .then((res) => res.json())
             .then((data) => {
                 SuccessToaster({ messageString: 'Bestillingen er modtaget!' });
-                console.log('bestilling oprettet :D', data);
-                console.log(SuccessToaster);
+                //FailMessage({ messageString: 'Der skete en fejl ved bestillingen' });
+                console.log(data);
             });
     }
 

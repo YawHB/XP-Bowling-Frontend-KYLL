@@ -4,6 +4,8 @@ import getAllShiftsApi from '../../api/shift/getAllShiftsApi';
 import getAllEmployeesApi from '../../api/shift/getAllEmployeesApi';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import SuccessMessage from '../../components/toasters/SuccesToaster';
+import FailMessage from '../../components/toasters/ErrorToaster';
 
 export interface Shift {
     id: number;
@@ -106,8 +108,10 @@ export default function ShiftOverview() {
 
         if (!response.ok) {
             console.error('Failed to create shift', await response.text());
+            FailMessage({ messageString: 'Der skete en fejl ved oprettelse af vagt' });
         } else {
             console.log('Shift created successfully');
+            SuccessMessage({ messageString: 'Vagt oprettet!' });
             setPlaceName('');
             getAllShiftsApi().then((shifts) => {
                 setShifts(shifts || []);

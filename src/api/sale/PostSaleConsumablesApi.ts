@@ -1,5 +1,6 @@
 import { Consumable } from '../../components/sale/BarSale';
-//import SuccessToaster from '../../components/toasters/SuccesToaster';
+import SuccessToaster from '../../components/toasters/SuccesToaster';
+import FailToaster from '../../components/toasters/ErrorToaster';
 
 export const postCheckoutItems = async (checkoutItems: Consumable[]) => {
     console.log('checkoutItems:', checkoutItems);
@@ -18,10 +19,11 @@ export const postCheckoutItems = async (checkoutItems: Consumable[]) => {
         if (!response.ok) {
             const errorMessage = await response.text();
             console.error('Error:', errorMessage);
+            FailToaster({ messageString: 'Der skete en fejl ved bestillingen' });
             return;
         }
         const data = await response.json();
-        // SuccessToaster({ messageString: 'Bestillingen er modtaget!' });
+        SuccessToaster({ messageString: 'Bestillingen er modtaget!' });
 
         return data;
     } catch (error) {
