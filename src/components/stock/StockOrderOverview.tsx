@@ -1,65 +1,21 @@
-import { useEffect, useState } from 'react';
-import { replacementOrder } from './StockOrderPage';
+import { OrderItem } from './StockOrderPage';
+import { ReplacementOrder } from './StockOrderPage';
 
-interface OrderItem {
-    replacementOrder: replacementOrder;
-    amountToOrder: number;
-    stockItem: StockItem;
-}
-
-// interface replacementOrder {
-//     id: number;
-//     title: string;
-//     totalPrice: number;
-//     timeDate: string;
-// }
-
-interface StockItem {
+export interface StockItem {
     name: string;
     price: number;
 }
 
 interface StockOrderOverviewProps {
-    replacementOrders: replacementOrder[];
+    replacementOrders: ReplacementOrder[];
+    orderItems: OrderItem[];
 }
 
-export default function StockOrderOverview({ replacementOrders }: StockOrderOverviewProps) {
-    const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
-    // const [replacementOrders, setReplacementOrders] = useState<replacementOrder[]>([]);
-    //   const [orderDate, setOrderDate] = useState<replacementOrder["timeDate"]>("");
-
-    useEffect(() => {
-        fetch('http://localhost:8080/orderitems')
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-                setOrderItems(data);
-            });
-    }, []);
-
-    // useEffect(() => {
-    //     fetch('http://localhost:8080/replacementorders')
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             console.log(data);
-    //             setReplacementOrders(data);
-    //         });
-    // }, []);
-
-    //    function formatDate(dateString: string) {
-    //      const date = new Date(dateString);
-    //      return date.toLocaleString("da-DK", {
-    //        day: "2-digit",
-    //        month: "2-digit",
-    //        year: "numeric",
-    //        hour: "2-digit",
-    //        minute: "2-digit",
-    //      });
-    //    }
-
+export default function StockOrderOverview({ replacementOrders, orderItems }: StockOrderOverviewProps) {
     function formatDate(dateString: string) {
         const date = new Date(dateString);
 
+        date.setHours(date.getHours() + 2);
         const day = date.getDate().toString().padStart(2, '0');
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
         const year = date.getFullYear();

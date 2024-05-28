@@ -1,16 +1,34 @@
 import StockOrder from './StockOrders';
 import StockOrderOverview from './StockOrderOverview';
 import { useEffect, useState } from 'react';
+import { StockItem } from './StockOrderOverview';
 
-export interface replacementOrder {
-    id: number;
+export interface ReplacementOrder {
+    id?: number;
     title: string;
     totalPrice: number;
     timeDate: string;
 }
 
+export interface OrderItem {
+    replacementOrder: ReplacementOrder;
+    amountToOrder: number;
+    stockItem: StockItem;
+}
+
 export default function StockOrderPage() {
-    const [replacementOrders, setReplacementOrders] = useState<replacementOrder[]>([]);
+    const [replacementOrders, setReplacementOrders] = useState<ReplacementOrder[]>([]);
+    const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
+    const [orderUpdate, setOrderUpdate] = useState(0); // Tilføj denne linje
+
+    useEffect(() => {
+        fetch('http://localhost:8080/orderitems')
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                setOrderItems(data);
+            });
+    }, [orderUpdate]);
 
     useEffect(() => {
         fetch('http://localhost:8080/replacementorders')
@@ -19,10 +37,11 @@ export default function StockOrderPage() {
                 console.log(data);
                 setReplacementOrders(data);
             });
-    }, []);
+    }, [orderUpdate]);
 
     const addReplacementOrder = (newOrder: ReplacementOrder) => {
         setReplacementOrders((prevOrders) => [...prevOrders, newOrder]);
+        setOrderUpdate(orderUpdate + 1);
     };
 
     return (
@@ -32,10 +51,10 @@ export default function StockOrderPage() {
 
                 <div className="flex ">
                     <div>
-                        <StockOrderOverview replacementOrders={replacementOrders} />
+                        <StockOrderOverview replacementOrders={replacementOrders} orderItems={orderItems} />
                     </div>
                     <div>
-                        <StockOrder addReplacementOrder={addReplacementOrder} />
+                        <StockOrder addReplacementOrder={addReplacementOrder} orderItems={orderItems} />
                     </div>
                 </div>
             </div>

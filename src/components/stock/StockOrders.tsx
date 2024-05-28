@@ -24,6 +24,7 @@ interface Order {
 
 interface StockOrderProps {
     addReplacementOrder: (newOrder: ReplacementOrder) => void;
+    orderItems: OrderItem[];
 }
 
 export default function StockOrder({ addReplacementOrder }: StockOrderProps) {
