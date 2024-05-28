@@ -1,4 +1,5 @@
 import { Consumable } from '../../components/sale/BarSale';
+//import SuccessToaster from '../../components/toasters/SuccesToaster';
 
 export const postCheckoutItems = async (checkoutItems: Consumable[]) => {
     console.log('checkoutItems:', checkoutItems);
@@ -20,6 +21,8 @@ export const postCheckoutItems = async (checkoutItems: Consumable[]) => {
             return;
         }
         const data = await response.json();
+        // SuccessToaster({ messageString: 'Bestillingen er modtaget!' });
+
         return data;
     } catch (error) {
         console.error('Error:', error, 'Failed to post checkout items');

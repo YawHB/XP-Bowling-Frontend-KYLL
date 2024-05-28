@@ -11,10 +11,13 @@ import StockPage from './components/stock/StockPage';
 import StockOrderPage from './components/stock/StockOrderPage';
 import BookingOverview from './components/booking/DailyBookingOverview';
 import ShiftOverview from './components/shift/ShiftOverviews';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
     return (
         <Layout>
+            <ToastContainer />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/bowlingInfo" element={<BowlingInfo />} />
