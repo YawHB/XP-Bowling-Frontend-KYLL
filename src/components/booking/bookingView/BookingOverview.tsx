@@ -6,8 +6,6 @@ interface BookingOverviewProps {
   removeBooking: (id: number) => void;
   activityType: ActivityType[];
 }
-// TODO: implement delete functionality
-// TODO: implement 'antal timer' for bookings
 
 
 export default function BookingOverview({ bookingData, removeBooking, activityType }: BookingOverviewProps) {

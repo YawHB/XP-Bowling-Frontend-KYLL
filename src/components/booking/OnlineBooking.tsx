@@ -77,7 +77,16 @@ export default function OnlineBooking() {
 
 
 
-  const filteredBookingsData = getFilteredBookings(formattedDate);
+  // async function filteredBookingsData(formattedDate: Date | null) {
+  //   const bookings = await getFilteredBookings(formattedDate);
+  //   return bookings;
+  // }
+  // // const filteredBookingsData = getFilteredBookings(formattedDate);
+  // // console.log("filteredBookingsData", filteredBookingsData);
+
+  // console.log("filteredBookingsData", filteredBookingsData(formattedDate));
+  
+  
 
   function handleReset() {
     setCurrentIndex(0);
