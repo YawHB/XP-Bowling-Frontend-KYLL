@@ -1,10 +1,12 @@
 import { BookingData } from "../OnlineBooking";
 import { ActivityType } from "../../services/activityTypeService";
+// import { ActivitiesBookingEntityInterface } from "../bookingInterfaces";
 
 interface BookingOverviewProps {
   bookingData: BookingData[];
   removeBooking: (id: number) => void;
   activityType: ActivityType[];
+  // bookingsByDate?: ActivitiesBookingEntityInterface[];
 }
 
 

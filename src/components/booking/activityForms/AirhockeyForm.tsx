@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { ActivitiesBookingEntityInterface } from "../bookingInterfaces";
 
 interface AirhockeyFormProps {
   addBooking: (newBooking: BookingData) => void;
+  bookingsByDate: ActivitiesBookingEntityInterface[];
 }
 
 interface BookingData {
@@ -14,12 +16,16 @@ interface BookingData {
   duration: number;
 }
 
-export default function AirhockeyForm({ addBooking }: AirhockeyFormProps) {
+export default function AirhockeyForm({
+  addBooking,
+  bookingsByDate,
+}: AirhockeyFormProps) {
   const [startTime, setStartTime] = useState<string>("08:00");
   const [playTime, setPlayTime] = useState<number>(1);
   const [endTime, setEndTime] = useState<string>(calculatedEndTime("08:00", 1));
   const [tables, setLanes] = useState<number>(1);
   const [duration, setDuration] = useState<number>(1);
+  const activityId = 3;
 
   function calculatedEndTime(startTime: string, playTime: number): string {
     const [hours, minuttes] = startTime.split(":").map(Number);
@@ -31,6 +37,15 @@ export default function AirhockeyForm({ addBooking }: AirhockeyFormProps) {
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
+
+    // Trying to filter by activity ID--------------------------------------------------------------------------------------------------
+    // console.log(bookingsByDate);
+    // function filterByActivityType(bookingsByDate, activityId){
+    //   bookingsByDate.filter((booking) => {
+    //    booking.activity.activityType.id === activityId
+    //   })
+
+    // }
 
     const newBooking: BookingData = {
       activity: "AIR_HOCKEY",

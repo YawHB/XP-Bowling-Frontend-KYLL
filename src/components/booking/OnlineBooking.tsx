@@ -38,9 +38,8 @@ export interface OnlineBookingProps {
   setBookingDate: (value: Value) => void;
   setFormattedDate: (date: Date | null) => void;
   activityType: ActivityType[];
+  bookingsByDate: ActivityBookingsInterface[];
 }
-
-
 
 //  <ExistingBookingsTypescript filterDate={formattedDate} />
 // (2) [{…}, {…}]
@@ -49,7 +48,9 @@ export interface OnlineBookingProps {
 // length: 2
 // [[Prototype]]: Array(0)
 
-const components = [CustomerForm, DateForm, BookingInputForm] as ((props: OnlineBookingProps) => JSX.Element)[];
+const components = [CustomerForm, DateForm, BookingInputForm] as ((
+  props: OnlineBookingProps
+) => JSX.Element)[];
 
 export default function OnlineBooking() {
   const [bookingData, setBookingData] = useState<BookingData[]>([]);
@@ -62,6 +63,9 @@ export default function OnlineBooking() {
   const [bookingDate, setBookingDate] = useState<Value>(new Date());
   const [formattedDate, setFormattedDate] = useState<Date | null>(null);
   const [ActivityType, setActivityType] = useState<ActivityType[]>([]);
+  const [bookingsByDate, setBookingsByDate] = useState<
+    ActivityBookingsInterface[]
+  >([]);
 
   useEffect(() => {
     async function getActivityType() {
@@ -71,23 +75,22 @@ export default function OnlineBooking() {
     getActivityType();
   }, []);
 
+  // en useeffect -- når formatted date bliver sat. kører vi så set booking.
+  useEffect(() => {
+    async function getBookingsByDate() {
+      const filteredBookingsData = await getFilteredBookings(formattedDate);
+      setBookingsByDate(filteredBookingsData);
+    }
+    getBookingsByDate();
+  }, [formattedDate]);
+
+  console.log("dato: ", formattedDate, "filterede bookings: ", bookingsByDate);
+
   function handleNext() {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % components.length);
   }
 
-
-
-  // async function filteredBookingsData(formattedDate: Date | null) {
-  //   const bookings = await getFilteredBookings(formattedDate);
-  //   return bookings;
-  // }
-  // // const filteredBookingsData = getFilteredBookings(formattedDate);
-  // // console.log("filteredBookingsData", filteredBookingsData);
-
-  // console.log("filteredBookingsData", filteredBookingsData(formattedDate));
-  
-  
-
+  //const
   function handleReset() {
     setCurrentIndex(0);
     setBookingData([]);
@@ -273,6 +276,7 @@ export default function OnlineBooking() {
           setBookingDate={setBookingDate}
           setFormattedDate={setFormattedDate}
           activityType={ActivityType}
+          bookingsByDate={bookingsByDate}
         />
         <button className="bg-black" onClick={handleNext}>
           Next

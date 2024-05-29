@@ -7,10 +7,11 @@ import BookingOverview from "./BookingOverview";
 import { useState } from "react";
 import { CustomerInterface } from "../CustomerForm";
 import { ActivityType } from "../../services/activityTypeService";
+import { ActivitiesBookingEntityInterface } from "../bookingInterfaces";
 
 interface FormProps {
   addBooking: (newBooking: BookingData) => void;
- 
+  bookingsByDate: ActivitiesBookingEntityInterface[];
 }
 type FormComponents = {
   [key: string]: React.ComponentType<FormProps>;
@@ -22,6 +23,7 @@ interface BookingInputFormProps {
   thisCustomer: CustomerInterface | undefined;
   setBookingData: (bookingData: BookingData[]) => void;
   activityType: ActivityType[];
+  bookingsByDate: ActivitiesBookingEntityInterface[];
 }
 
 interface BookingData {
@@ -42,7 +44,13 @@ const forms: FormComponents = {
   restaurant: DinnertableForm
 };
 
-export default function BookingInputForm({ addBooking, bookingData, setBookingData, activityType }: BookingInputFormProps) {
+export default function BookingInputForm({
+  addBooking,
+  bookingData,
+  setBookingData,
+  activityType,
+  bookingsByDate,
+}: BookingInputFormProps) {
   const [currentFormName, setCurrentFormName] = useState<string>("bowling");
 
   function chooseInputForm(formName: string) {
@@ -62,8 +70,12 @@ export default function BookingInputForm({ addBooking, bookingData, setBookingDa
     <div>
       <BookingSelectActivity chosenForm={chooseInputForm} />
       <h1 className="text-2xl self-center font-semibold">Booking</h1>
-      <CurrentForm addBooking={addBooking} />
-      <BookingOverview bookingData={bookingData} removeBooking={removeBooking} activityType={activityType} />
+      <CurrentForm addBooking={addBooking} bookingsByDate={bookingsByDate} />
+      <BookingOverview
+        bookingData={bookingData}
+        removeBooking={removeBooking}
+        activityType={activityType}
+      />
     </div>
   );
 }
