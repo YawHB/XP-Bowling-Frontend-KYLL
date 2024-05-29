@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import SuccessToaster from '../../components/toasters/SuccesToaster';
-//import FailMessage from '../../components/toasters/ErrorToaster';
+import FailMessage from '../../components/toasters/ErrorToaster';
 interface StockItem {
     name: string;
     price?: number;
@@ -77,46 +77,54 @@ export default function StockOrder({ addReplacementOrder }: StockOrderProps) {
         }, 0);
     }
 
-    function handleSubmit(e: React.FormEvent) {
-        e.preventDefault();
-        const replacementOrder: ReplacementOrder = {
-            title,
-            totalPrice,
-            timeDate: new Date().toISOString(),
-        };
+    async function handleSubmit(e: React.FormEvent) {
+      e.preventDefault();
+      const replacementOrder: ReplacementOrder = {
+        title,
+        totalPrice,
+        timeDate: new Date().toISOString()
+      };
 
-        const parsedOrderItems = orderItems.map((orderItem) => ({
-            amountToOrder: orderItem.amountToOrder,
-            stockItem: { name: orderItem.stockItem.name },
-        }));
+      const parsedOrderItems = orderItems.map((orderItem) => ({
+        amountToOrder: orderItem.amountToOrder,
+        stockItem: { name: orderItem.stockItem.name }
+      }));
 
-        const order: Order = {
-            replacementOrder,
-            orderItems: parsedOrderItems,
-        };
+      const order: Order = {
+        replacementOrder,
+        orderItems: parsedOrderItems
+      };
 
-        console.log(order);
-        setTotalPrice(0);
-        setTitle('');
-        setOrderItems([]);
+      console.log(order);
+      setTotalPrice(0);
+      setTitle("");
+      setOrderItems([]);
 
-        fetch('http://localhost:8080/replacementorders', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(order),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                SuccessToaster({ messageString: 'Bestillingen er modtaget!' });
-                //FailMessage({ messageString: 'Der skete en fejl ved bestillingen' });
-                console.log(data);
+      try {
+        const response = await fetch("http://localhost:8080/replacementorders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(order)
+        });
 
-                addReplacementOrder(data.replacementOrder);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-                console.log(data);
-            });
+        const data = await response.json();
+
+        SuccessToaster({ messageString: "Bestillingen er modtaget!" });
+        console.log(data);
+
+        addReplacementOrder(data.replacementOrder);
+
+        console.log(data);
+      } catch (error) {
+        console.error("Error:", error);
+        FailMessage({ messageString: "Der skete en fejl ved bestillingen" });
+      }
     }
 
     return (
