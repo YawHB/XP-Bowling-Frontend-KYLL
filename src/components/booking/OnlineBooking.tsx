@@ -6,7 +6,7 @@ import { postReservation } from "../services/reservationServie";
 import { postBooking } from "../services/activityBookingService";
 import { getFilteredBookings } from "./ExistingBookingsTypescript";
 import {
-  LaneInput,
+  BookingData,
   ReservationInterface,
   ActivityBookingsInterface,
   CustomerInterface,
@@ -15,18 +15,7 @@ import {
 import fetchActivityType from "../services/activityTypeService";
 import { ActivityType } from "../services/activityTypeService";
 
-export interface BookingData {
-  id?: number;
-  activity: string;
-  date: string;
-  time: string;
-  endTime: string;
-  lanes?: number;
-  tables?: number;
-  price?: number;
-  bowlingParticipants?: LaneInput[];
-  duration?: number;
-}
+
 
 export interface OnlineBookingProps {
   addBooking: (newBooking: BookingData) => void;

@@ -1,19 +1,13 @@
-import { useState } from "react";
-import { ActivitiesBookingEntityInterface } from "../bookingInterfaces";
+import { useEffect, useState } from "react";
+import {
+  ActivitiesBookingEntityInterface,
+  BookingData,
+} from "../bookingInterfaces";
+import { filterByTime, filterByActivityType } from "../filterBookings";
 
 interface AirhockeyFormProps {
   addBooking: (newBooking: BookingData) => void;
   bookingsByDate: ActivitiesBookingEntityInterface[];
-}
-
-interface BookingData {
-  id?: number;
-  activity: string;
-  date: string;
-  time: string;
-  endTime: string;
-  tables: number;
-  duration: number;
 }
 
 export default function AirhockeyForm({
@@ -25,27 +19,41 @@ export default function AirhockeyForm({
   const [endTime, setEndTime] = useState<string>(calculatedEndTime("08:00", 1));
   const [tables, setLanes] = useState<number>(1);
   const [duration, setDuration] = useState<number>(1);
+  // ---------------------------------------------------------------
+  const [bookingsByType, setBookingsByType] = useState<
+    ActivitiesBookingEntityInterface[]
+  >([]);
+  const [bookingsByHour, setBookingsByHour] = useState<
+    ActivitiesBookingEntityInterface[]
+  >([]);
   const activityId = 3;
 
   function calculatedEndTime(startTime: string, playTime: number): string {
-    const [hours, minuttes] = startTime.split(":").map(Number);
+    const [hours, minutes] = startTime.split(":").map(Number);
     const endTime = new Date();
     endTime.setHours(hours + playTime);
-    endTime.setMinutes(minuttes);
+    endTime.setMinutes(minutes);
     return endTime.toTimeString().slice(0, 5);
   }
 
+  useEffect(() => {
+    const filteredByType = filterByActivityType(bookingsByDate, activityId);
+    setBookingsByType(filteredByType);
+  }, [bookingsByDate]);
+
+  useEffect(() => {
+    const bookingsByTypeAndTime = filterByTime(bookingsByType, startTime);
+    setBookingsByHour(bookingsByTypeAndTime);
+  }, [startTime, endTime, bookingsByType]);
+
+  console.log("Here is the bookings filtered by the hour", bookingsByHour);
+
+  // Step 2: getAllTheActivitesInTheDataBase right!
+  // Step 3: find out what is not taken offer that
+  // Set 4 offer an available id? ----------------------------------------------------------------------------
+
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-
-    // Trying to filter by activity ID--------------------------------------------------------------------------------------------------
-    // console.log(bookingsByDate);
-    // function filterByActivityType(bookingsByDate, activityId){
-    //   bookingsByDate.filter((booking) => {
-    //    booking.activity.activityType.id === activityId
-    //   })
-
-    // }
 
     const newBooking: BookingData = {
       activity: "AIR_HOCKEY",

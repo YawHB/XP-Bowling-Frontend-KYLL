@@ -1,18 +1,13 @@
 import { useState, useEffect } from "react";
+import {
+  ActivitiesBookingEntityInterface,
+  BookingData,
+} from "../bookingInterfaces";
+import { filterByActivityType, filterByTime } from "../filterBookings";
 
 interface BowlingFormProps {
   addBooking: (newBooking: BookingData) => void;
-}
-
-interface BookingData {
-  id?: number;
-  activity: string;
-  date: string;
-  time: string;
-  endTime: string;
-  lanes: number;
-  bowlingParticipants?: LaneInput[]; 
-  duration: number;
+  bookingsByDate: ActivitiesBookingEntityInterface[];
 }
 
 interface LaneInput {
@@ -20,7 +15,10 @@ interface LaneInput {
   textInputValues: string[];
 }
 
-export default function BowlingForm({ addBooking }: BowlingFormProps) {
+export default function BowlingForm({
+  addBooking,
+  bookingsByDate,
+}: BowlingFormProps) {
   const [startTime, setStartTime] = useState<string>("08:00");
   const [duration, setDuration] = useState<number>(1);
   const [playTime, setPlayTime] = useState<number>(1);
@@ -33,6 +31,41 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
     }))
   );
   const [addNames, setAddNames] = useState<boolean>(false);
+
+  // --------------------------------------------------------------------------------------------------------------------------
+
+  const [bookingsByType, setBookingsByType] = useState<
+    ActivitiesBookingEntityInterface[]
+  >([]);
+  const [bookingsByHour, setBookingsByHour] = useState<
+    ActivitiesBookingEntityInterface[]
+  >([]);
+  const activityId = 1;
+
+  useEffect(() => {
+    const filteredByType = filterByActivityType(bookingsByDate, activityId);
+    setBookingsByType(filteredByType);
+  }, [bookingsByDate]);
+
+  useEffect(() => {
+    const bookingsByTypeAndTime = filterByTime(bookingsByType, startTime);
+    setBookingsByHour(bookingsByTypeAndTime);
+  }, [startTime, bookingsByType]);
+
+  console.log("Here is filtered by date: ", bookingsByDate);
+  console.log("Here is filtered by type: ", bookingsByType);
+  console.log("Here is the bookings filtered by the hour", bookingsByHour);
+  //...
+
+  // Løsningen for get time.... min start slut vs. deres start slut.
+  // Step 2: getAllTheActivitesInTheDataBase right!
+  // Step 3: find out what is not taken offer that
+  // Set 4 offer an available id? ----------------------------------------------------------------------------
+
+  // Jeg laver en tøse løsning og går direkte til "ledige" bowlingbaner, og hiver et id fra listen. Jeg burde næsten gemme/modificere den liste i en parrent...
+  // ...så ville jeg kunne fortsætte der ud af, men det er lidt farligt. Start lokalt og kør der udaf, demo vare alt for kort tid anyway.
+
+  // ------------------------------------------------------------------------------------------------------------------------------
 
   useEffect(() => {
     setLaneInputs(
@@ -51,10 +84,8 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
     return endTime.toTimeString().slice(0, 5);
   }
 
-
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-
 
     const newBooking: BookingData = {
       activity: "BOWLING_ADULT",
@@ -63,7 +94,7 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
       endTime: endTime,
       lanes: lanes,
       bowlingParticipants: laneInputs,
-      duration: duration
+      duration: duration,
     };
     addBooking(newBooking);
   }
@@ -74,7 +105,7 @@ export default function BowlingForm({ addBooking }: BowlingFormProps) {
 
   function handlePlayTimeChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const newPlayTime = Number(event.target.value);
-    setDuration(newPlayTime)
+    setDuration(newPlayTime);
     setPlayTime(newPlayTime);
     setEndTime(calculatedEndTime(startTime, newPlayTime));
   }

@@ -1,9 +1,22 @@
+
+interface BookingData {
+  id?: number;
+  activity: string;
+  date: string;
+  time: string;
+  endTime: string;
+  lanes?: number;
+  tables?: number;
+  price?: number;
+  bowlingParticipants?: LaneInput[];
+  duration?: number;
+}
+
+
 interface LaneInput {
   laneNumber: number;
   textInputValues: string[];
 }
-
-//------------------------------------------------------
 
 interface ActivityType {
   id?: number;
@@ -59,6 +72,7 @@ interface ReservationInterface {
 }
 
 export type {
+  BookingData,
   LaneInput,
   Reservation,
   Activity,

@@ -1,4 +1,4 @@
-import { BookingData } from "../OnlineBooking";
+import { BookingData } from "../bookingInterfaces";
 import { ActivityType } from "../../services/activityTypeService";
 // import { ActivitiesBookingEntityInterface } from "../bookingInterfaces";
 

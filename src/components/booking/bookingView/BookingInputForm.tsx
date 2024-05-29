@@ -7,7 +7,10 @@ import BookingOverview from "./BookingOverview";
 import { useState } from "react";
 import { CustomerInterface } from "../CustomerForm";
 import { ActivityType } from "../../services/activityTypeService";
-import { ActivitiesBookingEntityInterface } from "../bookingInterfaces";
+import {
+  ActivitiesBookingEntityInterface,
+  BookingData,
+} from "../bookingInterfaces";
 
 interface FormProps {
   addBooking: (newBooking: BookingData) => void;
@@ -26,22 +29,11 @@ interface BookingInputFormProps {
   bookingsByDate: ActivitiesBookingEntityInterface[];
 }
 
-interface BookingData {
-  id?: number;
-  activity: string;
-  date: string;
-  time: string;
-  endTime: string;
-  lanes?: number;
-  tables?: number;
-  duration?: number;
-}
-
 const forms: FormComponents = {
   bowling: BowlingForm,
   kidsBowling: KidsBowlingForm,
   airHockey: AirhockeyForm,
-  restaurant: DinnertableForm
+  restaurant: DinnertableForm,
 };
 
 export default function BookingInputForm({
