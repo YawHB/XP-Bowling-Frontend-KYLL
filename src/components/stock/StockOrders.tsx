@@ -77,55 +77,123 @@ export default function StockOrder({ addReplacementOrder }: StockOrderProps) {
         }, 0);
     }
 
-    async function handleSubmit(e: React.FormEvent) {
-      e.preventDefault();
-      const replacementOrder: ReplacementOrder = {
-        title,
-        totalPrice,
-        timeDate: new Date().toISOString()
-      };
 
-      const parsedOrderItems = orderItems.map((orderItem) => ({
-        amountToOrder: orderItem.amountToOrder,
-        stockItem: { name: orderItem.stockItem.name }
-      }));
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
 
-      const order: Order = {
-        replacementOrder,
-        orderItems: parsedOrderItems
-      };
+    // Get the current date and time
+    const now = new Date();
 
-      console.log(order);
-      setTotalPrice(0);
-      setTitle("");
-      setOrderItems([]);
+    // Get the timezone offset in minutes and convert it to milliseconds
+    const offsetInMs = now.getTimezoneOffset() * 60 * 1000;
 
-      try {
-        const response = await fetch("http://localhost:8080/replacementorders", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(order)
-        });
+    // Create a new date in the Danish timezone by adding the offset
+    const danishTime = new Date(now.getTime() - offsetInMs);
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+    // Format the date as an ISO string
+    const formattedDate = danishTime.toISOString().slice(0, 19); // Remove milliseconds
 
-        const data = await response.json();
+    const replacementOrder: ReplacementOrder = {
+      title,
+      totalPrice,
+      timeDate: formattedDate
+    };
 
-        SuccessToaster({ messageString: "Bestillingen er modtaget!" });
-        console.log(data);
+    const parsedOrderItems = orderItems.map((orderItem) => ({
+      amountToOrder: orderItem.amountToOrder,
+      stockItem: { name: orderItem.stockItem.name }
+    }));
 
-        addReplacementOrder(data.replacementOrder);
+    const order: Order = {
+      replacementOrder,
+      orderItems: parsedOrderItems
+    };
 
-        console.log(data);
-      } catch (error) {
-        console.error("Error:", error);
-        FailMessage({ messageString: "Der skete en fejl ved bestillingen" });
+    console.log(order);
+    setTotalPrice(0);
+    setTitle("");
+    setOrderItems([]);
+
+    try {
+      const response = await fetch("http://localhost:8080/replacementorders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(order)
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      const data = await response.json();
+
+      SuccessToaster({ messageString: "Bestillingen er modtaget!" });
+      console.log("replacement order data after post                     :", data);
+
+      addReplacementOrder(data.replacementOrder);
+
+      console.log(data);
+    } catch (error) {
+      console.error("Error:", error);
+      FailMessage({ messageString: "Der skete en fejl ved bestillingen" });
     }
+  }
+
+
+
+
+
+    // async function handleSubmit(e: React.FormEvent) {
+    //   e.preventDefault();
+    //   const replacementOrder: ReplacementOrder = {
+    //     title,
+    //     totalPrice,
+    //     timeDate: new Date().toISOString()
+    //   };
+
+    //   const parsedOrderItems = orderItems.map((orderItem) => ({
+    //     amountToOrder: orderItem.amountToOrder,
+    //     stockItem: { name: orderItem.stockItem.name }
+    //   }));
+
+    //   const order: Order = {
+    //     replacementOrder,
+    //     orderItems: parsedOrderItems
+    //   };
+
+    //   console.log(order);
+    //   setTotalPrice(0);
+    //   setTitle("");
+    //   setOrderItems([]);
+
+    //   try {
+    //     const response = await fetch("http://localhost:8080/replacementorders", {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json"
+    //       },
+    //       body: JSON.stringify(order)
+    //     });
+
+    //     if (!response.ok) {
+    //       throw new Error(`HTTP error! status: ${response.status}`);
+    //     }
+
+    //     const data = await response.json();
+
+    //     SuccessToaster({ messageString: "Bestillingen er modtaget!" });
+    //     console.log("replacement order data after post                     :",data);
+
+    //     addReplacementOrder(data.replacementOrder);
+
+    //     console.log(data);
+    //   } catch (error) {
+    //     console.error("Error:", error);
+    //     FailMessage({ messageString: "Der skete en fejl ved bestillingen" });
+    //   }
+    // }
 
     return (
         <form onSubmit={handleSubmit} className="flex w-screen">
