@@ -4,8 +4,19 @@ interface LaneInput {
 }
 
 //------------------------------------------------------
+
+interface ActivityType {
+  id?: number;
+  maxCapacity: number;
+  type: string;
+}
+
 interface Activity {
   id: number;
+  activityType?: ActivityType;
+  activityName?: string;
+  startTime?: string;
+  endTime?: string;
 }
 
 interface Reservation {
@@ -16,6 +27,7 @@ interface Reservation {
 }
 
 interface ActivityBookingsInterface {
+  id?: number;
   startTime: string;
   endTime: string;
   numberParticipants: number;
@@ -25,7 +37,6 @@ interface ActivityBookingsInterface {
 
 interface ActivitiesBookingEntityInterface {
   id: number;
-  date: Date;
   startTime: string;
   endTime: string;
   numberParticipants: number;
