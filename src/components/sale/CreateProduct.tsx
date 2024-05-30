@@ -25,21 +25,42 @@ export function CreateProduct({ onProductCreated }: CreateProductProps) {
     };
 
     return (
-        <>
-            <h3 className="text-lg font-semibold">Opret nyt produkt</h3>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Titel:
-                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-                </label>
-                <label>
-                    Pris:
-                    <input type="number" min={0} value={price} onChange={(e) => setPrice(e.target.value)} />
-                </label>
-                <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">
-                    Opret
-                </button>{' '}
-            </form>
-        </>
+      <>
+        <h3 className="text-lg font-semibold">Opret nyt produkt</h3>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="flex items-center">
+            <label className="w-20" htmlFor="title">
+              Titel:
+            </label>
+            <input id="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="border border-gray-300 rounded-md p-2 flex-1" />
+          </div>
+          <div className="flex items-center">
+            <label className="w-20" htmlFor="price">
+              Pris:
+            </label>
+            <input id="price" type="number" min={0} value={price} onChange={(e) => setPrice(e.target.value)} className="border border-gray-300 rounded-md p-2 flex-1" />
+          </div>
+          <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">
+            Opret
+          </button>
+        </form>
+      </>
+
+      // <>
+      //     <h3 className="text-lg font-semibold">Opret nyt produkt</h3>
+      //     <form onSubmit={handleSubmit}>
+      //         <label>
+      //             Titel:
+      //             <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+      //         </label>
+      //         <label>
+      //             Pris:
+      //             <input type="number" min={0} value={price} onChange={(e) => setPrice(e.target.value)} />
+      //         </label>
+      //         <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">
+      //             Opret
+      //         </button>{' '}
+      //     </form>
+      // </>
     );
 }

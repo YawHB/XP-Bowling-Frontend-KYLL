@@ -43,32 +43,62 @@ export function UpdateProductPrice({ consumables, setConsumablesInBarSale }: { c
     };
 
     return (
-        <>
-            <h3 className="text-lg font-semibold">Opdater produktpris</h3>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Vælg produkt:
-                    {/* Dropdown menu dynamically created according to amount of products */}
-                    <select value={selectedConsumable?.id || ''} onChange={handleSelect}>
-                        <option value=""></option>
-                        {consumables.map((consumable) => (
-                            <option key={consumable.id} value={consumable.id}>
-                                {consumable.title}
-                            </option>
-                        ))}
-                    </select>
-                </label>
-                {/* //Logical AND operator && is used to render the input field only when selectedConsumable is truthy. */}
-                {selectedConsumable && (
-                    <label>
-                        Ny pris:
-                        <input type="number" min={0} value={newPrice} onChange={handlePriceChange} />
-                    </label>
-                )}
-                <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">
-                    Opdater
-                </button>
-            </form>
-        </>
+      <>
+        <h3 className="text-lg font-semibold">Opdater produktpris</h3>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="flex items-center">
+            <label className="w-28" htmlFor="product-select">
+              Vælg produkt:
+            </label>
+            <select id="product-select" value={selectedConsumable?.id || ""} onChange={handleSelect} className="border border-gray-300 rounded-md p-2 flex-1">
+              <option value=""></option>
+              {consumables.map((consumable) => (
+                <option key={consumable.id} value={consumable.id}>
+                  {consumable.title}
+                </option>
+              ))}
+            </select>
+          </div>
+          {selectedConsumable && (
+            <div className="flex items-center">
+              <label className="w-28" htmlFor="new-price">
+                Ny pris:
+              </label>
+              <input id="new-price" type="number" min={0} value={newPrice} onChange={handlePriceChange} className="border border-gray-300 rounded-md p-2 flex-1" />
+            </div>
+          )}
+          <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">
+            Opdater
+          </button>
+        </form>
+      </>
+
+      // <>
+      //     <h3 className="text-lg font-semibold">Opdater produktpris</h3>
+      //     <form onSubmit={handleSubmit}>
+      //         <label>
+      //             Vælg produkt:
+      //             {/* Dropdown menu dynamically created according to amount of products */}
+      //             <select value={selectedConsumable?.id || ''} onChange={handleSelect}>
+      //                 <option value=""></option>
+      //                 {consumables.map((consumable) => (
+      //                     <option key={consumable.id} value={consumable.id}>
+      //                         {consumable.title}
+      //                     </option>
+      //                 ))}
+      //             </select>
+      //         </label>
+      //         {/* //Logical AND operator && is used to render the input field only when selectedConsumable is truthy. */}
+      //         {selectedConsumable && (
+      //             <label>
+      //                 Ny pris:
+      //                 <input type="number" min={0} value={newPrice} onChange={handlePriceChange} />
+      //             </label>
+      //         )}
+      //         <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">
+      //             Opdater
+      //         </button>
+      //     </form>
+      // </>
     );
 }

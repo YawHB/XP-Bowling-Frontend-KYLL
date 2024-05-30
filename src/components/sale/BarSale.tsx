@@ -64,52 +64,56 @@ export default function BarSale() {
         setConsumables(consumables.map((consumable) => ({ ...consumable, amount: 0 }))); // Reset the amount of each consumable to 0
     };
     return (
-        <div className="w-screen flex flex-wrap">
-            <div className="w-full md:w-1/2 p-4">
-                <div className="container mx-auto px-4 py-8">
-                    <h1 className="font-bold text-white-500">Barsalg</h1>
-                    <table className="table-auto bg-blue-400">
-                        <thead>
-                            <tr>
-                                <th className="px-4 py-2">Vare</th>
-                                <th className="px-4 py-2">Pris</th>
-                                <th className="px-4 py-2">Antal</th>
-                                <th className="px-4 py-2"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {consumables.map((consumable) => (
-                                <tr key={consumable.id}>
-                                    <td>{consumable.title}</td>
-                                    <td>{consumable.price}</td>
-                                    <td>{consumable.amount},0 kr</td>
-                                    <td>
-                                        <button onClick={() => handleAddOne(consumable.id)}>+</button>
-                                        <button onClick={() => handleSubtractOne(consumable.id)}>-</button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit" onClick={handleCheckout}>
-                        Bekræft
-                    </button>
-                    <CheckoutSummary items={checkoutItems} />
-                </div>
-                <div className="w-full md:w-1/2 p-4">
-                    <div className="flex flex-col items-start px-4 py-8">
-                        <CreateProduct
-                            onProductCreated={() => {
-                                getAllConsumables().then((data: Consumable[] | undefined) => {
-                                    const consumablesWithQuantity = (data || []).map((consumable: Consumable) => ({ ...consumable, amount: 0 }));
-                                    setConsumables(consumablesWithQuantity);
-                                });
-                            }}
-                        />
-                        <UpdateProductPrice consumables={consumables} setConsumablesInBarSale={setConsumables} />
-                    </div>
-                </div>
-            </div>
+      <div className="w-screen flex flex-wrap flex-row">
+        <div className="w-full md:w-1/3 p-4">
+          <div className="container mx-auto px-4 py-8">
+            <h1 className="w-full text-3xl font-bold md:w-1/2 text-pink-300 mb-4">Barsalg</h1>
+            <table className="table-auto bg-blue-400">
+              <thead>
+                <tr>
+                  <th className="px-4 py-2">Vare</th>
+                  <th className="px-4 py-2">Pris</th>
+                  <th className="px-4 py-2">Antal</th>
+                  <th className="px-4 py-2"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {consumables.map((consumable) => (
+                  <tr key={consumable.id}>
+                    <td>{consumable.title}</td>
+                    <td>{consumable.price}</td>
+                    <td>{consumable.amount},00 kr</td>
+                    <td>
+                      <button onClick={() => handleAddOne(consumable.id)}>+</button>
+                      <button onClick={() => handleSubtractOne(consumable.id)}>-</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit" onClick={handleCheckout}>
+              Bekræft
+            </button>
+            <CheckoutSummary items={checkoutItems} />
+          </div>
         </div>
+        <div className="w-full md:w-1/3 p-4">
+          <div className="flex flex-col items-start px-4 py-8">
+            <CreateProduct
+              onProductCreated={() => {
+                getAllConsumables().then((data: Consumable[] | undefined) => {
+                  const consumablesWithQuantity = (data || []).map((consumable: Consumable) => ({ ...consumable, amount: 0 }));
+                  setConsumables(consumablesWithQuantity);
+                });
+              }}
+            />
+          </div>
+        </div>
+        <div className="w-full md:w-1/3 p-4">
+          <div className="flex flex-col items-start px-4 py-8">
+            <UpdateProductPrice consumables={consumables} setConsumablesInBarSale={setConsumables} />
+          </div>
+        </div>
+      </div>
     );
 }
