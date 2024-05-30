@@ -8,9 +8,13 @@ import createActivityObject from "../helperFunctions/createActivityData";
 
 interface DinnertableFormProps {
   addBooking: (newBooking: BookingData) => void;
+  formattedDate: Date;
 }
 
-export default function DinnertableForm({ addBooking }: DinnertableFormProps) {
+export default function DinnertableForm({
+  addBooking,
+  formattedDate,
+}: DinnertableFormProps) {
   const [startTime, setStartTime] = useState<string>("08:00");
   const [tables, setLanes] = useState<number>(1);
   const dinnerTime: number = 2;
@@ -39,7 +43,7 @@ export default function DinnertableForm({ addBooking }: DinnertableFormProps) {
   function createBookingData(activityDataArray: AcitivtyMicroData[]) {
     const newBooking: BookingData = {
       activity: "RESTAURANT",
-      date: new Date().toISOString().split("T")[0],
+      date: formattedDate.toISOString().split("T")[0],
       time: startTime,
       endTime: endTime,
       tables: tables,

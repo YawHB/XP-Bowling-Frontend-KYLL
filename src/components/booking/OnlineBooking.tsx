@@ -11,7 +11,6 @@ import {
   ActivityBookingsInterface,
   CustomerInterface,
 } from "./bookingInterfaces";
-//import { postBooking } from "../services/activityBookingService";
 import fetchActivityType from "../services/activityTypeService";
 import { ActivityType } from "../services/activityTypeService";
 
@@ -26,14 +25,9 @@ export interface OnlineBookingProps {
   setFormattedDate: (date: Date | null) => void;
   activityType: ActivityType[];
   bookingsByDate: ActivityBookingsInterface[];
+  formattedDAte: Date | null;
 }
 
-//  <ExistingBookingsTypescript filterDate={formattedDate} />
-// (2) [{…}, {…}]
-// 0: {activity: 'Bowling', date: '2024-05-23', time: '08:00', endTime: '10:00', lanes: 3, …}
-// 1: {activity: 'Børne Bowling', date: '2024-05-23', time: '09:00', endTime: '11:00', lanes: 4, …}
-// length: 2
-// [[Prototype]]: Array(0)
 
 const components = [CustomerForm, DateForm, BookingInputForm] as ((
   props: OnlineBookingProps
@@ -263,6 +257,7 @@ export default function OnlineBooking() {
           setFormattedDate={setFormattedDate}
           activityType={ActivityType}
           bookingsByDate={bookingsByDate}
+          formattedDate={formattedDate}
         />
         <button className="bg-black" onClick={handleNext}>
           Next

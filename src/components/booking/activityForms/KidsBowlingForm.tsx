@@ -8,6 +8,7 @@ import createActivityObject from "../helperFunctions/createActivityData";
 
 interface KidsBowlingFormProps {
   addBooking: (newBooking: BookingData) => void;
+  formattedDate: Date;
 }
 
 interface LaneInput {
@@ -15,7 +16,7 @@ interface LaneInput {
   textInputValues: string[];
 }
 
-export default function KidsBowlingForm({ addBooking }: KidsBowlingFormProps) {
+export default function KidsBowlingForm({ addBooking, formattedDate }: KidsBowlingFormProps) {
   const [startTime, setStartTime] = useState<string>("08:00");
   const [playTime, setPlayTime] = useState<number>(1);
   const [duration, setDuration] = useState<number>(1);
@@ -70,7 +71,7 @@ export default function KidsBowlingForm({ addBooking }: KidsBowlingFormProps) {
   function createBookingData(activityDataArray: AcitivtyMicroData[]) {
     const newBooking: BookingData = {
       activity: "BOWLING_CHILD",
-      date: new Date().toISOString().split("T")[0],
+      date: formattedDate.toISOString().split("T")[0],
       time: startTime,
       endTime: endTime,
       lanes: lanes,

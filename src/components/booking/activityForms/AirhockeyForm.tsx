@@ -11,11 +11,13 @@ import createActivityObject from "../helperFunctions/createActivityData";
 interface AirhockeyFormProps {
   addBooking: (newBooking: BookingData) => void;
   bookingsByDate: ActivitiesBookingEntityInterface[];
+  formattedDate: Date;
 }
 
 export default function AirhockeyForm({
   addBooking,
   bookingsByDate,
+  formattedDate,
 }: AirhockeyFormProps) {
   const [startTime, setStartTime] = useState<string>("08:00");
   const [playTime, setPlayTime] = useState<number>(1);
@@ -79,7 +81,7 @@ export default function AirhockeyForm({
   function createBookingData(activityDataArray: AcitivtyMicroData[]) {
     const newBooking: BookingData = {
       activity: "AIR_HOCKEY",
-      date: new Date().toISOString().split("T")[0],
+      date: formattedDate.toISOString().split("T")[0],
       time: startTime,
       endTime: endTime,
       tables: tables,

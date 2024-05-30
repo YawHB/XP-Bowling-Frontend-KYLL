@@ -11,6 +11,7 @@ import createActivityObject from "../helperFunctions/createActivityData";
 interface BowlingFormProps {
   addBooking: (newBooking: BookingData) => void;
   bookingsByDate: ActivitiesBookingEntityInterface[];
+  formattedDate: Date;
 }
 
 interface LaneInput {
@@ -21,6 +22,7 @@ interface LaneInput {
 export default function BowlingForm({
   addBooking,
   bookingsByDate,
+  formattedDate,
 }: BowlingFormProps) {
   const [startTime, setStartTime] = useState<string>("08:00");
   const [duration, setDuration] = useState<number>(1);
@@ -34,6 +36,8 @@ export default function BowlingForm({
     }))
   );
   const [addNames, setAddNames] = useState<boolean>(false);
+
+  // console.log(formattedDate);
 
   // --------------------------------------------------------------------------------------------------------------------------
 
@@ -114,7 +118,7 @@ export default function BowlingForm({
   function createBookingData(activityDataArray: AcitivtyMicroData[]) {
     const newBooking: BookingData = {
       activity: "BOWLING_ADULT",
-      date: new Date().toISOString().split("T")[0],
+      date: formattedDate.toISOString().split("T")[0],
       time: startTime,
       endTime: endTime,
       lanes: lanes,
