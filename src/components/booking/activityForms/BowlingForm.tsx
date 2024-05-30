@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import {
+  AcitivtyMicroData,
   ActivitiesBookingEntityInterface,
   BookingData,
+  PreBookingDataInterface,
 } from "../bookingInterfaces";
 import { filterByActivityType, filterByTime } from "../filterBookings";
+import createActivityObject from "../helperFunctions/createActivityData";
 
 interface BowlingFormProps {
   addBooking: (newBooking: BookingData) => void;
@@ -52,12 +55,15 @@ export default function BowlingForm({
     setBookingsByHour(bookingsByTypeAndTime);
   }, [startTime, bookingsByType]);
 
-  console.log("Here is filtered by date: ", bookingsByDate);
-  console.log("Here is filtered by type: ", bookingsByType);
-  console.log("Here is the bookings filtered by the hour", bookingsByHour);
+  // -------------------------------------- booking filter
+  // console.log("Here is filtered by date: ", bookingsByDate);
+  // console.log("Here is filtered by type: ", bookingsByType);
+  // console.log("Here is the bookings filtered by the hour", bookingsByHour);
+
   //...
 
   // Løsningen for get time.... min start slut vs. deres start slut.
+
   // Step 2: getAllTheActivitesInTheDataBase right!
   // Step 3: find out what is not taken offer that
   // Set 4 offer an available id? ----------------------------------------------------------------------------
@@ -87,6 +93,25 @@ export default function BowlingForm({
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
 
+    const newBookingMetaData: PreBookingDataInterface = {
+      activity: "BOWLING_ADULT",
+      time: startTime,
+      endTime: endTime,
+      lanes: lanes,
+      bowlingParticipants: laneInputs,
+      duration: duration,
+    };
+
+    const activityDataArray = createActivityObject(newBookingMetaData);
+    if (activityDataArray === undefined) {
+      console.log("Activities Data Array was undefined!");
+      return;
+    }
+
+    createBookingData(activityDataArray);
+  }
+
+  function createBookingData(activityDataArray: AcitivtyMicroData[]) {
     const newBooking: BookingData = {
       activity: "BOWLING_ADULT",
       date: new Date().toISOString().split("T")[0],
@@ -95,7 +120,11 @@ export default function BowlingForm({
       lanes: lanes,
       bowlingParticipants: laneInputs,
       duration: duration,
+      activitiesData: activityDataArray,
     };
+
+    console.log("This is new booking DATA: ", newBooking);
+
     addBooking(newBooking);
   }
 
@@ -143,8 +172,9 @@ export default function BowlingForm({
     setLaneInputs(updatedLaneInputs);
   };
 
-  console.log("This is laneInputs:");
-  console.log(laneInputs);
+  // ---------------------------------------- lane inputs
+  // console.log("This is laneInputs:");
+  // console.log(laneInputs);
 
   return (
     <form

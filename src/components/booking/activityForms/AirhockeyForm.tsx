@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import {
   ActivitiesBookingEntityInterface,
   BookingData,
+  AcitivtyMicroData,
+  PreBookingDataInterface,
 } from "../bookingInterfaces";
 import { filterByTime, filterByActivityType } from "../filterBookings";
+import createActivityObject from "../helperFunctions/createActivityData";
 
 interface AirhockeyFormProps {
   addBooking: (newBooking: BookingData) => void;
@@ -46,7 +49,7 @@ export default function AirhockeyForm({
     setBookingsByHour(bookingsByTypeAndTime);
   }, [startTime, endTime, bookingsByType]);
 
-  console.log("Here is the bookings filtered by the hour", bookingsByHour);
+  // console.log("Here is the bookings filtered by the hour", bookingsByHour);
 
   // Step 2: getAllTheActivitesInTheDataBase right!
   // Step 3: find out what is not taken offer that
@@ -55,6 +58,25 @@ export default function AirhockeyForm({
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
 
+    const newBookingMetaData: PreBookingDataInterface = {
+      activity: "AIR_HOCKEY",
+      time: startTime,
+      endTime: endTime,
+      tables: tables,
+      duration: duration,
+    };
+
+    const activityDataArray = createActivityObject(newBookingMetaData);
+    if (activityDataArray === undefined) {
+      console.log("Activities Data Array was undefined!");
+      return;
+    }
+
+    createBookingData(activityDataArray);
+  }
+
+
+  function createBookingData(activityDataArray: AcitivtyMicroData[]) {
     const newBooking: BookingData = {
       activity: "AIR_HOCKEY",
       date: new Date().toISOString().split("T")[0],
@@ -62,10 +84,15 @@ export default function AirhockeyForm({
       endTime: endTime,
       tables: tables,
       duration: duration,
+      activitiesData: activityDataArray,
     };
+
+    console.log("This is new booking DATA: ", newBooking);
+
     addBooking(newBooking);
   }
 
+  
   function handleTableSelectChange(
     event: React.ChangeEvent<HTMLSelectElement>
   ) {

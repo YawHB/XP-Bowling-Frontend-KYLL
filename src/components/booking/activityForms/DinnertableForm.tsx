@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { BookingData } from "../bookingInterfaces";
+import {
+  BookingData,
+  PreBookingDataInterface,
+  AcitivtyMicroData,
+} from "../bookingInterfaces";
+import createActivityObject from "../helperFunctions/createActivityData";
 
 interface DinnertableFormProps {
   addBooking: (newBooking: BookingData) => void;
@@ -14,17 +19,37 @@ export default function DinnertableForm({ addBooking }: DinnertableFormProps) {
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
 
+    const newBookingMetaData: PreBookingDataInterface = {
+      activity: "RESTAURANT",
+      time: startTime,
+      endTime: endTime,
+      tables: tables,
+      duration: 2,
+    };
+
+    const activityDataArray = createActivityObject(newBookingMetaData);
+    if (activityDataArray === undefined) {
+      console.log("Activities Data Array was undefined!");
+      return;
+    }
+
+    createBookingData(activityDataArray);
+  }
+
+  function createBookingData(activityDataArray: AcitivtyMicroData[]) {
     const newBooking: BookingData = {
       activity: "RESTAURANT",
       date: new Date().toISOString().split("T")[0],
       time: startTime,
       endTime: endTime,
-      tables,
+      tables: tables,
       duration: 2,
+      activitiesData: activityDataArray,
     };
-    addBooking(newBooking);
 
-    // handle form submission
+    console.log("This is new booking DATA: ", newBooking);
+
+    addBooking(newBooking);
   }
 
   function calculatedEndTime(dinnerTime: number): string {

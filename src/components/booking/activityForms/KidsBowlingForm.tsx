@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { BookingData } from "../bookingInterfaces";
+import {
+  BookingData,
+  PreBookingDataInterface,
+  AcitivtyMicroData,
+} from "../bookingInterfaces";
+import createActivityObject from "../helperFunctions/createActivityData";
 
 interface KidsBowlingFormProps {
   addBooking: (newBooking: BookingData) => void;
@@ -43,15 +48,39 @@ export default function KidsBowlingForm({ addBooking }: KidsBowlingFormProps) {
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
+
+    const newBookingMetaData: PreBookingDataInterface = {
+      activity: "BOWLING_CHILD",
+      time: startTime,
+      endTime: endTime,
+      lanes: lanes,
+      bowlingParticipants: laneInputs,
+      duration: duration,
+    };
+
+    const activityDataArray = createActivityObject(newBookingMetaData);
+    if (activityDataArray === undefined) {
+      console.log("Activities Data Array was undefined!");
+      return;
+    }
+
+    createBookingData(activityDataArray);
+  }
+
+  function createBookingData(activityDataArray: AcitivtyMicroData[]) {
     const newBooking: BookingData = {
       activity: "BOWLING_CHILD",
       date: new Date().toISOString().split("T")[0],
       time: startTime,
       endTime: endTime,
       lanes: lanes,
-      duration: duration,
       bowlingParticipants: laneInputs,
+      duration: duration,
+      activitiesData: activityDataArray,
     };
+
+    console.log("This is new booking DATA: ", newBooking);
+
     addBooking(newBooking);
   }
 
@@ -99,8 +128,8 @@ export default function KidsBowlingForm({ addBooking }: KidsBowlingFormProps) {
     setLaneInputs(updatedLaneInputs);
   };
 
-  console.log("This is laneInputs:");
-  console.log(laneInputs);
+  // console.log("This is laneInputs:");
+  // console.log(laneInputs);
 
   return (
     <form

@@ -1,4 +1,4 @@
-const bowlingLanes = [
+const bowlingLanesArray = [
   { activity_typeid: 1, id: 1, activity_name: "Bowlingbane 1" },
   { activity_type_id: 1, id: 2, activity_name: "Bowlingbane 2" },
   { activity_type_id: 1, id: 3, activity_name: "Bowlingbane 3" },
@@ -21,14 +21,14 @@ const bowlingLanes = [
   { activity_type_id: 1, id: 20, activity_name: "Bowlingbane 20" },
 ];
 
-const kidsBowlingLanes = [
+const kidsBowlingLanesArray = [
   { activity_type_id: 2, id: 21, activity_name: "Bowlingbane 21" },
   { activity_type_id: 2, id: 22, activity_name: "Bowlingbane 22" },
   { activity_type_id: 2, id: 23, activity_name: "Bowlingbane 23" },
   { activity_type_id: 2, id: 24, activity_name: "Bowlingbane 24" },
 ];
 
-const airhockyTables = [
+const airhockyTablesArray = [
   { activity_type_id: 3, id: 25, activity_name: "Airhockeybord 1" },
   { activity_type_id: 3, id: 26, activity_name: "Airhockeybord 2" },
   { activity_type_id: 3, id: 27, activity_name: "Airhockeybord 3" },
@@ -37,7 +37,7 @@ const airhockyTables = [
   { activity_type_id: 3, id: 30, activity_name: "Airhockeybord 6" },
 ];
 
-const dinnerTables = [
+const dinnerTablesArray = [
   { activity_type_id: 4, id: 31, activity_name: "Bord 1" },
   { activity_type_id: 4, id: 32, activity_name: "Bord 2" },
   { activity_type_id: 4, id: 33, activity_name: "Bord 3" },
@@ -90,4 +90,9 @@ const dinnerTables = [
   { activity_type_id: 4, id: 80, activity_name: "Bord 59" },
 ];
 
-export { bowlingLanes, kidsBowlingLanes, airhockyTables, dinnerTables };
+export {
+  bowlingLanesArray,
+  kidsBowlingLanesArray,
+  airhockyTablesArray,
+  dinnerTablesArray,
+};

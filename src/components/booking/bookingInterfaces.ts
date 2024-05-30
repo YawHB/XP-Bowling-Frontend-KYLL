@@ -1,4 +1,3 @@
-
 interface BookingData {
   id?: number;
   activity: string;
@@ -10,8 +9,19 @@ interface BookingData {
   price?: number;
   bowlingParticipants?: LaneInput[];
   duration?: number;
+  activitiesData?: AcitivtyMicroData[];
 }
 
+interface PreBookingDataInterface {
+  id?: number;
+  activity: string;
+  time: string;
+  endTime: string;
+  lanes?: number;
+  tables?: number;
+  bowlingParticipants?: LaneInput[];
+  duration?: number;
+}
 
 interface LaneInput {
   laneNumber: number;
@@ -37,6 +47,15 @@ interface Reservation {
   totalPrice: number;
   customer: CustomerInterface;
   reservationDate: Date;
+}
+
+// The data where the activity.id is assigned.
+interface AcitivtyMicroData {
+  id?: number;
+  startTime: string;
+  endTime: string;
+  numberParticipants: number;
+  activity: Activity;
 }
 
 interface ActivityBookingsInterface {
@@ -72,6 +91,8 @@ interface ReservationInterface {
 }
 
 export type {
+  PreBookingDataInterface,
+  AcitivtyMicroData,
   BookingData,
   LaneInput,
   Reservation,
