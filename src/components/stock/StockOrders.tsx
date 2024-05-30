@@ -137,8 +137,8 @@ export default function StockOrder({ addReplacementOrder }: StockOrderProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex w-screen">
-      <div className="mx-auto px-4 py-8">
+    <form onSubmit={handleSubmit} className="">
+      <div className="mx-auto px-4">
         <h1 className="text-4xl self-center font-bold text-pink-300">Bestil Reservedele</h1>
         <div className="my-4">
           <label htmlFor="title" className="block">

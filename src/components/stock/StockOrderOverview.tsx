@@ -22,7 +22,8 @@ export default function StockOrderOverview({ replacementOrders, orderItems }: St
   const sortedReplacementOrders = [...replacementOrders].sort((a, b) => new Date(b.timeDate).getTime() - new Date(a.timeDate).getTime());
 
   return (
-    <div className="overscroll-contain">
+    <div className="">
+      <h1 className=" text-4xl self-center font-bold text-pink-300">Se Bestillinger</h1>
       {sortedReplacementOrders.map((replacementOrder) => (
         <div className="border-2 border-white p-2 my-4" key={replacementOrder.id}>
           <h2 className="font-bold text-lg">{replacementOrder.title}</h2>

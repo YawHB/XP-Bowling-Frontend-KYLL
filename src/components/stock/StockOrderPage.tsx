@@ -45,19 +45,17 @@ export default function StockOrderPage() {
     };
 
     return (
-        <div className="flex w-screen">
-            <div className=" mx-auto px-4 py-8">
-                <h1 className="text-4xl self-center font-bold text-pink-300">Se Bestillinger</h1>
-
-                <div className="flex ">
-                    <div>
-                        <StockOrderOverview replacementOrders={replacementOrders} orderItems={orderItems} />
-                    </div>
-                    <div>
-                        <StockOrder addReplacementOrder={addReplacementOrder} orderItems={orderItems} />
-                    </div>
-                </div>
+      <div className="flex w-screen ">
+        <div className=" px-4 py-8">
+          <div className="flex ">
+            <div className=''>
+              <StockOrderOverview replacementOrders={replacementOrders} orderItems={orderItems} />
             </div>
+            <div className=''>
+              <StockOrder addReplacementOrder={addReplacementOrder} orderItems={orderItems} />
+            </div>
+          </div>
         </div>
+      </div>
     );
 }
