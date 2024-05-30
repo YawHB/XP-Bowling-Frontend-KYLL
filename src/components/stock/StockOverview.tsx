@@ -13,7 +13,7 @@ export default function StockOverview() {
     fetch("http://localhost:8080/stockitems")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setStockItems(data);
       });
   }, []);

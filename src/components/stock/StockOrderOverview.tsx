@@ -40,7 +40,7 @@ export default function StockOrderOverview({ replacementOrders, orderItems }: St
             <tbody>
               {orderItems
                 .filter((orderItem) => orderItem.replacementOrder.id === replacementOrder.id)
-                .map((orderItem) => {
+                .map((orderItem, index) => {
                   return (
                     <tr key={orderItem.stockItem.name}>
                       <td className="border px-4 py-2">{orderItem.stockItem.name}</td>

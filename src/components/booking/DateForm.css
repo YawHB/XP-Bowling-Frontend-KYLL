@@ -1,0 +1,33 @@
+/* DatePickerStyles.css */
+
+.react-date-picker {
+  @apply w-full;
+    color: red;
+}
+
+.react-date-picker__wrapper {
+  @apply p-2 border border-gray-300 rounded-lg shadow-sm;
+    color: red;
+}
+
+.react-date-picker__inputGroup {
+  @apply flex items-center;
+    color: red;
+}
+
+.react-date-picker__clear-button,
+.react-date-picker__calendar-button {
+  @apply hidden;
+  color: red;
+}
+
+.react-date-picker__inputGroup__input {
+  @apply w-full text-center;
+  /* Add important to ensure width is applied */
+  width: 100% !important;
+  color: red;
+}
+
+.react-date-picker__calendar {
+  @apply mt-2 bg-white border border-gray-300 rounded-lg shadow-lg;
+}
