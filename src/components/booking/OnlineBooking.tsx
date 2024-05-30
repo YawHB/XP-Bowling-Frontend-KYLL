@@ -13,6 +13,7 @@ import {
 } from "./bookingInterfaces";
 import fetchActivityType from "../services/activityTypeService";
 import { ActivityType } from "../services/activityTypeService";
+import SuccessMessage from "../toasters/SuccesToaster";
 
 export interface OnlineBookingProps {
   addBooking: (newBooking: BookingData) => void;
@@ -25,9 +26,8 @@ export interface OnlineBookingProps {
   setFormattedDate: (date: Date | null) => void;
   activityType: ActivityType[];
   bookingsByDate: ActivityBookingsInterface[];
-  formattedDAte: Date | null;
+  formattedDate: Date | null;
 }
-
 
 const components = [CustomerForm, DateForm, BookingInputForm] as ((
   props: OnlineBookingProps
@@ -112,7 +112,6 @@ export default function OnlineBooking() {
       customer: thisCustomer,
       reservationDate: formattedDate,
     };
-    // console.log("newRESERVATION                             ", newReservation);
 
     const reservationData = await postReservation(newReservation);
 
@@ -124,15 +123,10 @@ export default function OnlineBooking() {
         activityData,
         reservationData
       );
-      //   const laneBookingsArray = await createObjectsActivityPost(
 
-      // if (activityData.lanes != null) {
-      //   console.log("We have lanes!");
-      // const laneBookingsArray = await createObjectsActivityPost(
-      //   "lanes",
-      //   activityData,
-      //   reservationData
-      // );
+      console.log(laneBookingsArray);
+
+      //   const laneBookingsArray = await createObjectsActivityPost(
 
       //   if (!laneBookingsArray) {
       //     console.log(
@@ -152,8 +146,6 @@ export default function OnlineBooking() {
       //       return;
       //     }
 
-      //   // NÆSTSE STORE PROBLEM: laneBooking.id "findes ikke" pga id kan være null i dens interface! Men id'et ER DER!
-
       //   const lanesInputData = activityData.bowlingParticipants[index];
       //   const paricipantNamesArray = lanesInputData.textInputValues;
 
@@ -169,17 +161,11 @@ export default function OnlineBooking() {
       //     });
       //   }
       // });
-
-      //we have to send the lanes ID AND thelaneBookingsArray tied to the ACTIVITY DATA? which means we have to do it in the loop.
-      // prepateaActivityParticipantsForPosting(laneBookingsArray, activityData);
-      console.log(laneBookingsArray);
-
-      //--------------------------------------------------------------------------------------------------
-      // } else if (activityData.tables != null) {
-      //   console.log("We have tables");
-      //   createObjectsActivityPost("tables", activityData, reservationData);
-      // }
     }
+
+    // All boookings completed:
+
+    SuccessMessage({ messageString: "Du har oprettet en ny booking!" });
   }
 
   // interface activityBooking {

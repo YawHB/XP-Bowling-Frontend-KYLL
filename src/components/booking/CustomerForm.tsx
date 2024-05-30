@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { postCustomer } from "../services/customerService";
-
+import SuccessMessage from "../toasters/SuccesToaster";
 
 export interface CustomerInterface {
   id?: number;
@@ -8,7 +8,11 @@ export interface CustomerInterface {
   phone: string;
 }
 
-export default function CustomerForm({ setThisCustomer }: { setThisCustomer: (customer: CustomerInterface) => void }){
+export default function CustomerForm({
+  setThisCustomer,
+}: {
+  setThisCustomer: (customer: CustomerInterface) => void;
+}) {
   const [customerIsExisting, setCusomerIsExisting] = useState<boolean>(false);
   const [customerPhone, setCustomerPhone] = useState<string>("");
   const [customersList, setCustomersList] = useState<CustomerInterface[]>([]);
@@ -33,7 +37,9 @@ export default function CustomerForm({ setThisCustomer }: { setThisCustomer: (cu
   // Checks if the phone input maches the customer data
   function searchForNumber(event: FormEvent<HTMLInputElement>) {
     const inputNumber = (event.target as HTMLInputElement).value;
-    const matchingCustomer = customersList.find((customer) => inputNumber === customer.phone);
+    const matchingCustomer = customersList.find(
+      (customer) => inputNumber === customer.phone
+    );
     if (!matchingCustomer) {
       setCusomerIsExisting(false);
       // console.log(customerIsExisting);
@@ -57,7 +63,6 @@ export default function CustomerForm({ setThisCustomer }: { setThisCustomer: (cu
     setCustomerLastName(lastname);
   }
 
-
   function confirmUser(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setActiveCustomer();
@@ -77,6 +82,7 @@ export default function CustomerForm({ setThisCustomer }: { setThisCustomer: (cu
       console.log("this is the customer: ", postResponse);
 
       setThisCustomer(postResponse);
+      SuccessMessage({ messageString: "Du er nu oprettet som kunde" });
     }
 
     // console.log("Test SubmitBookingHandler!");
