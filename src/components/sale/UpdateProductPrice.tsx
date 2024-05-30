@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-
-//import { getAllConsumables } from '../../api/sale/getAllConsumablesApi';
 import { putConsumablePrice } from '../../api/sale/putConsumablePriceApi';
+import SuccessMessage from '../toasters/SuccesToaster';
 
 interface Consumable {
     id: number;
@@ -40,6 +39,7 @@ export function UpdateProductPrice({ consumables, setConsumablesInBarSale }: { c
         }
         setSelectedConsumable(null);
         setNewPrice('');
+        SuccessMessage({ messageString: 'Prisen er opdateret!' });
     };
 
     return (
@@ -62,7 +62,7 @@ export function UpdateProductPrice({ consumables, setConsumablesInBarSale }: { c
                 {selectedConsumable && (
                     <label>
                         Ny pris:
-                        <input type="number" value={newPrice} onChange={handlePriceChange} />
+                        <input type="number" min={0} value={newPrice} onChange={handlePriceChange} />
                     </label>
                 )}
                 <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">
