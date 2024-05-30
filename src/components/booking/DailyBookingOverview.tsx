@@ -94,7 +94,7 @@ export default function DailyBookingOverview() {
             </button>
           </div>
         </div>
-        <h1 className="text-3xl font-semibold">Dagens booking oversigt</h1>
+        <h1 className="text-3xl font-bold mb-4 text-pink-300">Dagens booking oversigt</h1>
 
         <table className=" w-full table-auto border-pink-300 my-4 ">
           <thead>

@@ -122,10 +122,12 @@ export default function ShiftOverview() {
     };
 
     return (
-      <div className="w-screen px-4">
-        <h1 className="mb-4">ShiftOverview</h1>
-        <h3 className="mb.4 text-white">Vælg dato: Kalender</h3>
+      <div className="w-screen mx-auto px-4 py-8 max-w-screen-full px-56 ">
+     
+        <h1 className="text-3xl font-bold mb-4 text-pink-300">Vagtplan</h1>
+        <h3 className="mb.4 text-white text-lg font-bold">Vælg dato: </h3>
         <DatePicker
+          className="ml-0 mr-8 mb-6"
           dateFormat={"dd-MM-yyyy"}
           selected={startDate}
           onChange={(date: Date) => {
@@ -145,7 +147,7 @@ export default function ShiftOverview() {
               {" "}
               Jobfunktion: &nbsp;
               <select className="border-white border" onChange={handlePlaceNameSelect} value={placeName}>
-                <option value=""></option>
+                <option value="">Vælg</option>
                 <option value="RECEPTIONIST" data-id="Reception1">
                   Reception 1
                 </option>
@@ -183,7 +185,7 @@ export default function ShiftOverview() {
             </label>
             <div className="py-1.5">
               <button
-                className="text-md font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300"
+                className="w-40 text-lg font-bold text-white whitespace-nowrap bg-green-700 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300"
                 type="submit"
               >
                 Tilføj vagt
