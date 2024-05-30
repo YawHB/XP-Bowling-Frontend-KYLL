@@ -13,7 +13,7 @@ export const getBookingsForADay = async (date: string) => {
         }
         const bookings: Booking[] = await response.json();
         console.log(`Bookings for ${date}: `);
-        console.log(bookings);
+        console.table(bookings);
 
         console.log('--------------------');
 
