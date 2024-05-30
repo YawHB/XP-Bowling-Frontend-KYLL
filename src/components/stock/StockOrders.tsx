@@ -144,16 +144,38 @@ export default function StockOrder({ addReplacementOrder }: StockOrderProps) {
           <label htmlFor="title" className="block">
             Titel på bestilling
           </label>
-          <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} required />
+          <input className="mx-0" type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} required />
         </div>
         <div>
-          <label htmlFor="totalPrice" className="block">
-            Total Pris
+          <label htmlFor="totalPrice" className="block font-bold">
+            Total Pris: {totalPrice} kr.
           </label>
-          <input type="number" id="totalPrice" value={totalPrice} readOnly />
         </div>
 
-        <div className="my-4">
+        <div className="my-4 my-4 flex items-center">
+          <label htmlFor="stockItem" className="mr-2">
+            Reservedel
+          </label>
+          <select id="stockItem" value={selectedStockItem} onChange={(e) => setSelectedStockItem(e.target.value)} className="mr-4">
+            <option value="">Vælg vare</option>
+            {stockItems.map((stockItem, idx) => (
+              <option key={idx} value={stockItem.name}>
+                {stockItem.name}
+              </option>
+            ))}
+          </select>
+
+          <label htmlFor="amountToOrder" className="mr-2">
+            Antal
+          </label>
+          <input type="number" id="amountToOrder" value={amountToOrder} onChange={(e) => setAmountToOrder(parseInt(e.target.value))} className="mr-4" />
+
+          <button className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" type="button" onClick={addOrderItem}>
+            Tilføj
+          </button>
+        </div>
+
+        {/* <div className="my-4">
           <label htmlFor="stockItem">Reservedel</label>
           <select id="stockItem" value={selectedStockItem} onChange={(e) => setSelectedStockItem(e.target.value)}>
             <option value="">Vælg vare</option>
@@ -165,23 +187,49 @@ export default function StockOrder({ addReplacementOrder }: StockOrderProps) {
           </select>
           <label htmlFor="amountToOrder">Antal</label>
           <input type="number" id="amountToOrder" value={amountToOrder} onChange={(e) => setAmountToOrder(parseInt(e.target.value))} />
-          <button type="button" onClick={addOrderItem}>
+          <button className=" bg-green-300 hover:bg-green-500" type="button" onClick={addOrderItem}>
             Tilføj vare
           </button>
-        </div>
+        </div> */}
 
-        {orderItems.map((orderItem, index) => (
+        <ol className=" my-4">
+          {orderItems.map((orderItem, index) => (
+            <li key={index} className="my-4 flex items-center">
+              <button className="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded" type="button" onClick={() => removeOrderItem(index)}>
+                Fjern
+              </button>
+              <p className="mx-4 text-lg">
+                {orderItem.stockItem.name} - Antal: {orderItem.amountToOrder}
+              </p>
+            </li>
+          ))}
+        </ol>
+
+        {/* {orderItems.map((orderItem, index) => (
+          <div key={index} className="my-4 flex items-center">
+            <button className="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 " type="button" onClick={() => removeOrderItem(index)}>
+              Fjern vare
+            </button>
+            <p className="ml-4 text-lg">
+              {orderItem.stockItem.name} - Antal: {orderItem.amountToOrder}
+            </p>
+          </div>
+        ))} */}
+
+        {/* {orderItems.map((orderItem, index) => (
           <div key={index} className="my-4">
             <p>
               {orderItem.stockItem.name} - Antal: {orderItem.amountToOrder}
             </p>
-            <button type="button" onClick={() => removeOrderItem(index)}>
+            <button className="mb-3 mt-2 bg-red-400 hover:bg-red-500" type="button" onClick={() => removeOrderItem(index)}>
               Fjern vare
             </button>
           </div>
-        ))}
+        ))} */}
 
-        <button type="submit">Send bestilling</button>
+        <button className="bg-green-400 hover:bg-green-600 mt-8 " type="submit">
+          Send bestilling
+        </button>
       </div>
     </form>
   );
