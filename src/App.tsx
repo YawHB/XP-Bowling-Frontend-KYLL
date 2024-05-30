@@ -24,9 +24,6 @@ export default function App() {
                 <Route path="/airHockeyInfo" element={<AirhockeyInfo />} />
                 <Route path="/restaurant" element={<RestaurantInfo />} />
                 <Route path="/booking" element={<Booking />} />
-                {/* <Route path="about" element={<About />} />
-      <Route path="services" element={<Services />} />
-      <Route path="contact" element={<Contact />} /> */}
                 <Route path="/barInfo" element={<BarInfo />} />
                 <Route path="/barSale" element={<BarSale />} />
                 <Route path="/lager" element={<StockPage />} />
