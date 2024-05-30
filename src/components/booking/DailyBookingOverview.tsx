@@ -55,7 +55,7 @@ export default function DailyBookingOverview() {
         bookings.forEach((booking) => {
             const startHour = Math.max(parseInt(booking.startTime.split(':')[0]), 10);
             const endHour = Math.min(parseInt(booking.endTime.split(':')[0]), 21);
-            for (let hour = startHour; hour < endHour; hour++) {
+            for (let hour = startHour; hour <= endHour; hour++) {
                 hourlyBookings[hour - 10]++;
             }
         });
