@@ -51,7 +51,7 @@ export default function StockOrderPage() {
             <div className=''>
               <StockOrderOverview replacementOrders={replacementOrders} orderItems={orderItems} />
             </div>
-            <div className=''>
+            <div className='ml-10'>
               <StockOrder addReplacementOrder={addReplacementOrder} orderItems={orderItems} />
             </div>
           </div>

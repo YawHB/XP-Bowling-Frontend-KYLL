@@ -185,7 +185,7 @@ export default function ShiftOverview() {
             </label>
             <div className="py-1.5">
               <button
-                className="w-40 text-lg font-bold text-white whitespace-nowrap bg-green-700 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300"
+                className="w-40 text-lg font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300"
                 type="submit"
               >
                 Tilføj vagt

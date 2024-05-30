@@ -8,7 +8,7 @@ export default function BowlingInfo() {
           <h1 className="w-full text-3xl font-bold md:w-1/2 text-pink-300">Bowling</h1>
           <Link to={`/booking`} className="w-full md:w-1/2 md:pl-4 flex justify-center">
             <button
-              className="text-lg font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300"
+              className="w-44 text-lg font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300"
               id="startSale"
             >
               Book Bowling

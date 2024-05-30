@@ -17,7 +17,7 @@ export default function StockPage() {
                 Bestil Reservedele
               </button>
             </Link>
-            <div className="flex-grow">
+            <div className="flex-grow ">
               <p>Her kan du se en oversigt over vores lagerbeholdning. Du kan også bestille reservedele, ved tryk på knappen til højre.</p>
               <div className=" flex justify-center items-center mt-8">
                 <StockOverview />
