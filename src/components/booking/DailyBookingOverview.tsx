@@ -67,11 +67,11 @@ export default function DailyBookingOverview() {
       <div className="w-screen mx-auto px-4 py-8 max-w-screen-full px-56">
         <div>
           <div className="flex items-center">
-            <label className="block text-sm font-medium text-white mr-4 text-center">
-              Dag
-              <div className="mt-1 relative rounded-md shadow-sm">
+            <label>
+              <p className="text-xl font-bold">Vælg dato:</p>
+              <div className="mx-0 relative rounded-md shadow-sm">
                 <DatePicker
-                  className="focus:ring-indigo-500 focus:border-indigo-500 block w-40 pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+                  className="ml-0 mr-8 mb-6"
                   dateFormat={"dd-MM-yyyy"}
                   selected={startDate}
                   onChange={(date: Date) => {
@@ -83,13 +83,20 @@ export default function DailyBookingOverview() {
                 />
               </div>
             </label>
-            <button className="mx-2 bg-blue-500">Uge</button>
-            <button className="mx-2 bg-blue-500 ">Måned</button>
+            <button className="w-22 text-lg font-bold text-white whitespace-nowrap bg-green-700 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300">
+              Dag
+            </button>
+            <button className="w-22 text-lg font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300 ml-2">
+              Uge
+            </button>
+            <button className="w-22 text-lg font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300 ml-2">
+              Måned
+            </button>
           </div>
         </div>
         <h1 className="text-3xl font-semibold">Dagens booking oversigt</h1>
 
-        <table className=" w-full table-auto border-pink-300 my-4">
+        <table className=" w-full table-auto border-pink-300 my-4 ">
           <thead>
             <tr className=" border-pink-300">
               <th className="border px-4 py-2 sm:border-4 border-pink-300">Tid</th>
@@ -101,7 +108,7 @@ export default function DailyBookingOverview() {
           </thead>
           <tbody>
             {Array.from({ length: 12 }).map((_, i) => (
-              <tr key={i} className={i % 2 === 0 ? "bg-gray-600" : "  border-pink-300"}>
+              <tr key={i} className={i % 2 === 0 ? "bg-gray-600" : "bg-gray-600/50  border-pink-300"}>
                 <td className="border border-2 border-pink-300 px-4 py-2">{`${i + 10}:00`}</td>
                 <td className="border px-4 py-2 border-2 border-pink-300">
                   <div>
