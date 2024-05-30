@@ -81,17 +81,13 @@ export default function StockOrder({ addReplacementOrder }: StockOrderProps) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    // Get the current date and time
+    // Set the time to Danish time
     const now = new Date();
-
-    // Get the timezone offset in minutes and convert it to milliseconds
     const offsetInMs = now.getTimezoneOffset() * 60 * 1000;
-
-    // Create a new date in the Danish timezone by adding the offset
     const danishTime = new Date(now.getTime() - offsetInMs);
 
-    // Format the date as an ISO string
-    const formattedDate = danishTime.toISOString().slice(0, 19); // Remove milliseconds
+    // Sets to ISO and removes milliseconds
+    const formattedDate = danishTime.toISOString().slice(0, 19); 
 
     const replacementOrder: ReplacementOrder = {
       title,
