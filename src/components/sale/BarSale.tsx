@@ -82,7 +82,7 @@ export default function BarSale() {
                                 <tr key={consumable.id}>
                                     <td>{consumable.title}</td>
                                     <td>{consumable.price}</td>
-                                    <td>{consumable.amount}</td>
+                                    <td>{consumable.amount},00 kr</td>
                                     <td>
                                         <button onClick={() => handleAddOne(consumable.id)}>+</button>
                                         <button onClick={() => handleSubtractOne(consumable.id)}>-</button>
@@ -98,8 +98,15 @@ export default function BarSale() {
                 </div>
                 <div className="w-full md:w-1/2 p-4">
                     <div className="flex flex-col items-start px-4 py-8">
-                        <CreateProduct />
-                        <UpdateProductPrice setConsumablesInBarSale={setConsumables} />
+                        <CreateProduct
+                            onProductCreated={() => {
+                                getAllConsumables().then((data: Consumable[] | undefined) => {
+                                    const consumablesWithQuantity = (data || []).map((consumable: Consumable) => ({ ...consumable, amount: 0 }));
+                                    setConsumables(consumablesWithQuantity);
+                                });
+                            }}
+                        />
+                        <UpdateProductPrice consumables={consumables} setConsumablesInBarSale={setConsumables} />
                     </div>
                 </div>
             </div>
