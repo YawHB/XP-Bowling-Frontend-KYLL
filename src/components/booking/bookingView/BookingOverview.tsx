@@ -13,6 +13,9 @@ interface BookingOverviewProps {
 
 
 export default function BookingOverview({ bookingData, removeBooking, activityType }: BookingOverviewProps) {
+ 
+ console.log("BookingOverview: ", bookingData);
+ 
   bookingData.forEach((booking) => {
     console.log("aktiviteten hhihihihihihihhihihih:          ", booking.activity);
     console.log("DET FINT!!                        ", booking);
@@ -25,8 +28,8 @@ export default function BookingOverview({ bookingData, removeBooking, activityTy
     if (activity) {
       console.log(activity.hourlyPrice);
       console.log(booking.duration);
-      console.log(booking.tables);
-      console.log(booking.lanes);
+      // console.log(booking.tables);
+      // console.log(booking.lanes);
 
       booking.lanes
         ? (booking.price = activity.hourlyPrice * booking.duration! * booking.lanes!)

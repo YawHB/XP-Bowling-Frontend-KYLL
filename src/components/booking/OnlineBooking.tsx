@@ -15,8 +15,6 @@ import {
 import fetchActivityType from "../services/activityTypeService";
 import { ActivityType } from "../services/activityTypeService";
 
-
-
 export interface OnlineBookingProps {
   addBooking: (newBooking: BookingData) => void;
   bookingData: BookingData[];
@@ -73,7 +71,7 @@ export default function OnlineBooking() {
     getBookingsByDate();
   }, [formattedDate]);
 
-  console.log("dato: ", formattedDate, "filterede bookings: ", bookingsByDate);
+  // console.log("dato: ", formattedDate, "filterede bookings: ", bookingsByDate);
 
   function handleNext() {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % components.length);
@@ -128,58 +126,65 @@ export default function OnlineBooking() {
     console.log(reservationData);
 
     for (const activityData of bookingData) {
-      if (activityData.lanes != null) {
-        console.log("We have lanes!");
-        const laneBookingsArray = await createActivityObject(
-          "lanes",
-          activityData,
-          reservationData
-        );
+      const laneBookingsArray = await createObjectsActivityPost(
+        activityData,
+        reservationData
+      );
+      //   const laneBookingsArray = await createObjectsActivityPost(
 
-        if (!laneBookingsArray) {
-          console.log(
-            "laneBookingsArray ot acitivityData.bowlingParticiapnts are null"
-          );
-          return;
-        }
-        // ----------------------------------- where we will make activity participants ----------------
-        console.log("this is the activity data");
-        console.log(activityData);
+      // if (activityData.lanes != null) {
+      //   console.log("We have lanes!");
+      // const laneBookingsArray = await createObjectsActivityPost(
+      //   "lanes",
+      //   activityData,
+      //   reservationData
+      // );
 
-        laneBookingsArray.forEach((laneBooking, index) => {
-          if (!laneBookingsArray || !activityData.bowlingParticipants) {
-            console.log(
-              "laneBookingsArray ot acitivityData.bowlingParticiapnts are null"
-            );
-            return;
-          }
+      //   if (!laneBookingsArray) {
+      //     console.log(
+      //       "laneBookingsArray ot acitivityData.bowlingParticiapnts are null"
+      //     );
+      //     return;
+      //   }
+      //   // ----------------------------------- where we will make activity participants ----------------
+      //   console.log("this is the activity data");
+      //   console.log(activityData);
 
-          // NÆSTSE STORE PROBLEM: laneBooking.id "findes ikke" pga id kan være null i dens interface! Men id'et ER DER!
+      //   laneBookingsArray.forEach((laneBooking, index) => {
+      //     if (!laneBookingsArray || !activityData.bowlingParticipants) {
+      //       console.log(
+      //         "laneBookingsArray ot acitivityData.bowlingParticiapnts are null"
+      //       );
+      //       return;
+      //     }
 
-          const lanesInputData = activityData.bowlingParticipants[index];
-          const paricipantNamesArray = lanesInputData.textInputValues;
+      //   // NÆSTSE STORE PROBLEM: laneBooking.id "findes ikke" pga id kan være null i dens interface! Men id'et ER DER!
 
-          console.log("Participants:", paricipantNamesArray);
-          console.log("ActivityBooking:", laneBooking);
+      //   const lanesInputData = activityData.bowlingParticipants[index];
+      //   const paricipantNamesArray = lanesInputData.textInputValues;
 
-          if (paricipantNamesArray) {
-            console.log("Lane input index", index);
-            console.log("Participants:", paricipantNamesArray);
-            paricipantNamesArray.forEach((participant) => {
-              console.log("This is a participant", participant);
-              //prepareActivityParticipantsForPosting(laneBooking, participant);
-            });
-          }
-        });
-        //we have to send the lanes ID AND thelaneBookingsArray tied to the ACTIVITY DATA? which means we have to do it in the loop.
-        // prepateaActivityParticipantsForPosting(laneBookingsArray, activityData);
-        console.log(laneBookingsArray);
+      //   // console.log("Participants:", paricipantNamesArray);
+      //   // console.log("ActivityBooking:", laneBooking);
 
-        //--------------------------------------------------------------------------------------------------
-      } else if (activityData.tables != null) {
-        console.log("We have tables");
-        createActivityObject("tables", activityData, reservationData);
-      }
+      //   if (paricipantNamesArray) {
+      //     console.log("Lane input index", index);
+      //     console.log("Participants:", paricipantNamesArray);
+      //     paricipantNamesArray.forEach((participant) => {
+      //       console.log("This is a participant", participant);
+      //       //prepareActivityParticipantsForPosting(laneBooking, participant);
+      //     });
+      //   }
+      // });
+
+      //we have to send the lanes ID AND thelaneBookingsArray tied to the ACTIVITY DATA? which means we have to do it in the loop.
+      // prepateaActivityParticipantsForPosting(laneBookingsArray, activityData);
+      console.log(laneBookingsArray);
+
+      //--------------------------------------------------------------------------------------------------
+      // } else if (activityData.tables != null) {
+      //   console.log("We have tables");
+      //   createObjectsActivityPost("tables", activityData, reservationData);
+      // }
     }
   }
 
@@ -202,36 +207,28 @@ export default function OnlineBooking() {
   //   postParticipant(newParticipantObject);
   // }
 
-  async function createActivityObject(
-    tablesOrLanes: "tables" | "lanes",
-    activityData: BookingData,
+  async function createObjectsActivityPost(
+    bookingDataActivity: BookingData,
     reservationData: ReservationInterface
   ) {
+    console.log("Create Activity Object - all the data: ", bookingDataActivity);
+
     const activityPostDataArray: ActivityBookingsInterface[] = [];
 
-    // sets activity amount as number or undefined so it matches the bookindData interface.
-    let activityAmount: number | undefined;
-
-    // checks if the activity incluces lanes or tables, sets activityAmount equal to the given type
-    if (tablesOrLanes === "lanes") {
-      activityAmount = activityData.lanes;
-    } else if (tablesOrLanes === "tables") {
-      activityAmount = activityData.tables;
-    }
-
-    if (activityAmount === undefined) {
-      console.error(`No valid ${tablesOrLanes} found in activityData`);
+    if (bookingDataActivity.activitiesData === undefined) {
+      console.error(`No valid ${bookingDataActivity} found`);
       return;
     }
 
     // sets an activity object and posts it for every lane selected on the activity booking
-    for (let i = 0; i < activityAmount; i++) {
+    for (const dataForActivityBooking of bookingDataActivity.activitiesData) {
+      // her bliver id indsat men ID'et er fælles for alle i loopet!
       const newActivity: ActivityBookingsInterface = {
-        startTime: activityData.time,
-        endTime: activityData.endTime,
-        numberParticipants: 0,
+        startTime: dataForActivityBooking.startTime,
+        endTime: dataForActivityBooking.endTime,
+        numberParticipants: dataForActivityBooking.numberParticipants,
         activity: {
-          id: activityData.id!,
+          id: dataForActivityBooking.activity.id,
         },
         reservation: reservationData,
       };
