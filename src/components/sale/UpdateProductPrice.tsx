@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import { getAllConsumables } from '../../api/sale/getAllConsumablesApi';
+//import { getAllConsumables } from '../../api/sale/getAllConsumablesApi';
 import { putConsumablePrice } from '../../api/sale/putConsumablePriceApi';
 
 interface Consumable {
@@ -12,14 +12,13 @@ interface Consumable {
 
 //setConsumablesInBarSale is the useState function from BarSale.tsx that updates the list of consumables in the bar sale
 // React.Dispatch is just a type that represents a function that updates the state of a React component
-export function UpdateProductPrice({ setConsumablesInBarSale }: { setConsumablesInBarSale: React.Dispatch<React.SetStateAction<Consumable[]>> }) {
-    const [consumables, setConsumables] = useState<Consumable[]>([]);
+export function UpdateProductPrice({ consumables, setConsumablesInBarSale }: { consumables: Consumable[]; setConsumablesInBarSale: React.Dispatch<React.SetStateAction<Consumable[]>> }) {
     const [selectedConsumable, setSelectedConsumable] = useState<Consumable | null>(null);
     const [newPrice, setNewPrice] = useState('');
 
-    useEffect(() => {
-        getAllConsumables().then((consumables: Consumable[] | undefined) => setConsumables(consumables || []));
-    }, []);
+    // useEffect(() => {
+    //     getAllConsumables().then((consumables: Consumable[] | undefined) => setConsumables(consumables || []));
+    // }, []);
 
     const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selected = consumables.find((consumable) => consumable.id === Number(event.target.value));

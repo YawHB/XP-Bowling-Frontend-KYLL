@@ -6,19 +6,22 @@ interface Consumable {
     price: number;
 }
 
-export function CreateProduct() {
+interface CreateProductProps {
+    onProductCreated: () => void;
+}
+
+export function CreateProduct({ onProductCreated }: CreateProductProps) {
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState('');
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        //Titel and price are updated in the state when the input fields change. Price is converted to a number because it is a string by default.
         const newProduct: Consumable = { title, price: Number(price) };
         console.log(`Creating product with title: ${newProduct.title} and price: ${newProduct.price}`);
-        //postNewConsumable creates a new consumable on the server
-        postNewConsumable(newProduct);
+        await postNewConsumable(newProduct);
         setTitle('');
         setPrice('');
+        onProductCreated();
     };
 
     return (
@@ -33,7 +36,7 @@ export function CreateProduct() {
                     Pris:
                     <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
                 </label>
-                <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit" onClick={handleSubmit}>
+                <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">
                     Opret
                 </button>{' '}
             </form>
