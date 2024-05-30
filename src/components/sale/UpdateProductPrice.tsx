@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-
-import { getAllConsumables } from '../../api/sale/getAllConsumablesApi';
+import React, { useState } from 'react';
 import { putConsumablePrice } from '../../api/sale/putConsumablePriceApi';
+import SuccessMessage from '../toasters/SuccesToaster';
 
 interface Consumable {
     id: number;
@@ -12,14 +11,13 @@ interface Consumable {
 
 //setConsumablesInBarSale is the useState function from BarSale.tsx that updates the list of consumables in the bar sale
 // React.Dispatch is just a type that represents a function that updates the state of a React component
-export function UpdateProductPrice({ setConsumablesInBarSale }: { setConsumablesInBarSale: React.Dispatch<React.SetStateAction<Consumable[]>> }) {
-    const [consumables, setConsumables] = useState<Consumable[]>([]);
+export function UpdateProductPrice({ consumables, setConsumablesInBarSale }: { consumables: Consumable[]; setConsumablesInBarSale: React.Dispatch<React.SetStateAction<Consumable[]>> }) {
     const [selectedConsumable, setSelectedConsumable] = useState<Consumable | null>(null);
     const [newPrice, setNewPrice] = useState('');
 
-    useEffect(() => {
-        getAllConsumables().then((consumables: Consumable[] | undefined) => setConsumables(consumables || []));
-    }, []);
+    // useEffect(() => {
+    //     getAllConsumables().then((consumables: Consumable[] | undefined) => setConsumables(consumables || []));
+    // }, []);
 
     const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selected = consumables.find((consumable) => consumable.id === Number(event.target.value));
@@ -41,6 +39,7 @@ export function UpdateProductPrice({ setConsumablesInBarSale }: { setConsumables
         }
         setSelectedConsumable(null);
         setNewPrice('');
+        SuccessMessage({ messageString: 'Prisen er opdateret!' });
     };
 
     return (
@@ -63,7 +62,7 @@ export function UpdateProductPrice({ setConsumablesInBarSale }: { setConsumables
                 {selectedConsumable && (
                     <label>
                         Ny pris:
-                        <input type="number" value={newPrice} onChange={handlePriceChange} />
+                        <input type="number" min={0} value={newPrice} onChange={handlePriceChange} />
                     </label>
                 )}
                 <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">

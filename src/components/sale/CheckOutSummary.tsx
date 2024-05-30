@@ -13,7 +13,7 @@ export const CheckoutSummary = ({ items }: CheckoutSummaryProps) => {
                 </p>
             ))}
             -------------------------
-            {<h3 className="h-3">Totalpris: {totalPrice} kr</h3>}
+            {items.length > 0 && <h3 className="h-3">Totalpris: {totalPrice},0 kr</h3>}
         </div>
     );
 };

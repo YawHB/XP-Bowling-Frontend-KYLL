@@ -4,6 +4,8 @@ import getAllShiftsApi from '../../api/shift/getAllShiftsApi';
 import getAllEmployeesApi from '../../api/shift/getAllEmployeesApi';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import SuccessMessage from '../../components/toasters/SuccesToaster';
+import FailMessage from '../../components/toasters/ErrorToaster';
 
 export interface Shift {
     id: number;
@@ -34,17 +36,18 @@ export interface Employee {
 // While select OPERATOR -> employeeRole.Find by roleID
 export default function ShiftOverview() {
     const [shifts, setShifts] = useState<Shift[]>([]);
+    const [filteredShifts, setFilteredShifts] = useState<Shift[]>([]);
     const [employees, setEmployees] = useState<Employee[]>([]);
     const [placeName, setPlaceName] = useState<string>('');
     const [employee, setEmployee] = useState<Employee | undefined>(undefined);
     const [dataId, setDataId] = useState<string>('');
     const [startDate, setStartDate] = useState(new Date());
-    const [selectedDay, setSelectedDay] = useState('');
     const [localDate, setLocalDate] = useState('');
 
     useEffect(() => {
         getAllShiftsApi().then((shifts) => {
             setShifts(shifts || []);
+            setFilteredShifts(shifts || []);
         });
     }, []); // empty dependency array to run only once on mount
 
@@ -76,11 +79,13 @@ export default function ShiftOverview() {
     };
 
     function handleFilterShiftsByDate(date: string) {
-        const filteredShifts = shifts.filter((shift) => shift.date === date);
-        setShifts(filteredShifts);
-        console.log(filteredShifts);
-    }
+        console.log('Shifts:');
+        console.log(shifts);
 
+        const newFilteredShifts = shifts.filter((shift) => shift.date === date);
+        setFilteredShifts(newFilteredShifts);
+        console.log(newFilteredShifts);
+    }
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         console.log('Submit');
@@ -103,12 +108,15 @@ export default function ShiftOverview() {
 
         if (!response.ok) {
             console.error('Failed to create shift', await response.text());
+            FailMessage({ messageString: 'Der skete en fejl ved oprettelse af vagt' });
         } else {
             console.log('Shift created successfully');
+            SuccessMessage({ messageString: 'Vagt oprettet!' });
             setPlaceName('');
             getAllShiftsApi().then((shifts) => {
+                setShifts(shifts || []);
                 const filteredShifts = shifts?.filter((shift) => shift.date === localDate);
-                setShifts(filteredShifts || []);
+                setFilteredShifts(filteredShifts || []);
             });
         }
     };
@@ -122,14 +130,13 @@ export default function ShiftOverview() {
                 selected={startDate}
                 onChange={(date: Date) => {
                     setStartDate(date);
-                    setSelectedDay(date.getDate().toString());
                     const localDate = date.toISOString().split('T')[0];
                     setLocalDate(localDate);
                     handleFilterShiftsByDate(localDate);
                 }}
             />
             {/* Send shifts som prop i Shifts component */}
-            <ShiftTable shifts={shifts} />
+            <ShiftTable shifts={filteredShifts} />
             <h3 className="text-white mb.4"></h3>
             {/* Form med  2 dropdowns */}
             <div className="">
