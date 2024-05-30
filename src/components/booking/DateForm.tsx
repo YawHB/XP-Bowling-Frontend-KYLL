@@ -22,7 +22,7 @@ export default function DateForm({
     setFormattedDate(date);
 
     if (date) {
-      console.log(date.toISOString()); // or any other format you need
+      console.log(date.toISOString()); 
     } else {
       console.log("No valid date selected");
     }
