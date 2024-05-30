@@ -34,7 +34,7 @@ export function CreateProduct({ onProductCreated }: CreateProductProps) {
                 </label>
                 <label>
                     Pris:
-                    <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+                    <input type="number" min={0} value={price} onChange={(e) => setPrice(e.target.value)} />
                 </label>
                 <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">
                     Opret

@@ -82,7 +82,7 @@ export default function BarSale() {
                                 <tr key={consumable.id}>
                                     <td>{consumable.title}</td>
                                     <td>{consumable.price}</td>
-                                    <td>{consumable.amount}</td>
+                                    <td>{consumable.amount},00 kr</td>
                                     <td>
                                         <button onClick={() => handleAddOne(consumable.id)}>+</button>
                                         <button onClick={() => handleSubtractOne(consumable.id)}>-</button>
