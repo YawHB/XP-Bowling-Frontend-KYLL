@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   ActivitiesBookingEntityInterface,
   BookingData,
   AcitivtyMicroData,
   PreBookingDataInterface,
 } from "../bookingInterfaces";
-import { filterByTime, filterByActivityType } from "../filterBookings";
 import createActivityObject from "../helperFunctions/createActivityData";
 
 interface AirhockeyFormProps {
@@ -16,7 +15,6 @@ interface AirhockeyFormProps {
 
 export default function AirhockeyForm({
   addBooking,
-  bookingsByDate,
   formattedDate,
 }: AirhockeyFormProps) {
   const [startTime, setStartTime] = useState<string>("08:00");
@@ -25,13 +23,6 @@ export default function AirhockeyForm({
   const [tables, setLanes] = useState<number>(1);
   const [duration, setDuration] = useState<number>(1);
   // ---------------------------------------------------------------
-  const [bookingsByType, setBookingsByType] = useState<
-    ActivitiesBookingEntityInterface[]
-  >([]);
-  const [bookingsByHour, setBookingsByHour] = useState<
-    ActivitiesBookingEntityInterface[]
-  >([]);
-  const activityId = 3;
 
   function calculatedEndTime(startTime: string, playTime: number): string {
     const [hours, minutes] = startTime.split(":").map(Number);
@@ -40,16 +31,6 @@ export default function AirhockeyForm({
     endTime.setMinutes(minutes);
     return endTime.toTimeString().slice(0, 5);
   }
-
-  useEffect(() => {
-    const filteredByType = filterByActivityType(bookingsByDate, activityId);
-    setBookingsByType(filteredByType);
-  }, [bookingsByDate]);
-
-  useEffect(() => {
-    const bookingsByTypeAndTime = filterByTime(bookingsByType, startTime);
-    setBookingsByHour(bookingsByTypeAndTime);
-  }, [startTime, endTime, bookingsByType]);
 
   // console.log("Here is the bookings filtered by the hour", bookingsByHour);
 
@@ -176,8 +157,7 @@ export default function AirhockeyForm({
             value={startTime}
             className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md text-black"
           >
-            <option value={"08:00"}>08:00</option>
-            <option value={"09:00"}>09:00</option>
+
             <option value={"10:00"}>10:00</option>
             <option value={"11:00"}>11:00</option>
             <option value={"12:00"}>12:00</option>

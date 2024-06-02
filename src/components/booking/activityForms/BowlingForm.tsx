@@ -5,7 +5,6 @@ import {
   BookingData,
   PreBookingDataInterface,
 } from "../bookingInterfaces";
-import { filterByActivityType, filterByTime } from "../filterBookings";
 import createActivityObject from "../helperFunctions/createActivityData";
 
 interface BowlingFormProps {
@@ -21,7 +20,6 @@ interface LaneInput {
 
 export default function BowlingForm({
   addBooking,
-  bookingsByDate,
   formattedDate,
 }: BowlingFormProps) {
   const [startTime, setStartTime] = useState<string>("08:00");
@@ -40,24 +38,6 @@ export default function BowlingForm({
   // console.log(formattedDate);
 
   // --------------------------------------------------------------------------------------------------------------------------
-
-  const [bookingsByType, setBookingsByType] = useState<
-    ActivitiesBookingEntityInterface[]
-  >([]);
-  const [bookingsByHour, setBookingsByHour] = useState<
-    ActivitiesBookingEntityInterface[]
-  >([]);
-  const activityId = 1;
-
-  useEffect(() => {
-    const filteredByType = filterByActivityType(bookingsByDate, activityId);
-    setBookingsByType(filteredByType);
-  }, [bookingsByDate]);
-
-  useEffect(() => {
-    const bookingsByTypeAndTime = filterByTime(bookingsByType, startTime);
-    setBookingsByHour(bookingsByTypeAndTime);
-  }, [startTime, bookingsByType]);
 
   // -------------------------------------- booking filter
   // console.log("Here is filtered by date: ", bookingsByDate);
