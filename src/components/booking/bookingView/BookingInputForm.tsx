@@ -61,20 +61,18 @@ export default function BookingInputForm({
     setBookingData(newBookingData);
   }
 
-  return (
-    <div>
-      <BookingSelectActivity chosenForm={chooseInputForm} />
-      <h1 className="text-2xl self-center font-semibold">Booking</h1>
-      <CurrentForm
-        addBooking={addBooking}
-        bookingsByDate={bookingsByDate}
-        formattedDate={formattedDate}
-      />
-      <BookingOverview
-        bookingData={bookingData}
-        removeBooking={removeBooking}
-        activityType={activityType}
-      />
-    </div>
-  );
+ return (
+   <div className="flex">
+     <div className="w-1/2 flex  flex-col">
+       <BookingSelectActivity chosenForm={chooseInputForm} />
+       <h1 className="text-2xl font-semibold">Booking</h1>
+       <CurrentForm addBooking={addBooking} bookingsByDate={bookingsByDate} formattedDate={formattedDate} />
+     </div>
+     <div className="w-1/2 ml-4 w-full">
+       <BookingOverview bookingData={bookingData} removeBooking={removeBooking} activityType={activityType} />
+     </div>
+   </div>
+ );
+
+
 }

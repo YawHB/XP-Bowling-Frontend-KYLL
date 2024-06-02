@@ -170,12 +170,13 @@ export default function StockOrder({ addReplacementOrder }: StockOrderProps) {
           </label>
           <input type="number" id="amountToOrder" value={amountToOrder} onChange={(e) => setAmountToOrder(parseInt(e.target.value))} className="mr-4" />
 
-          <button className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" type="button" onClick={addOrderItem}>
+          <button
+            className="justify-center ml-0 text-lg w-48 font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300" type="button"
+            onClick={addOrderItem}
+          >
             Tilføj
           </button>
         </div>
-
-     
 
         <ol className=" my-4">
           {orderItems.map((orderItem, index) => (
@@ -190,8 +191,10 @@ export default function StockOrder({ addReplacementOrder }: StockOrderProps) {
           ))}
         </ol>
 
-
-        <button className="bg-green-400 hover:bg-green-600 mt-8 w-44 " type="submit">
+        <button
+          className="justify-center ml-0 text-lg w-48 font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300"
+          type="submit"
+        >
           Send bestilling
         </button>
       </div>

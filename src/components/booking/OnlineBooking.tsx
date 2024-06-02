@@ -125,42 +125,6 @@ export default function OnlineBooking() {
       );
 
       console.log(laneBookingsArray);
-
-      //   const laneBookingsArray = await createObjectsActivityPost(
-
-      //   if (!laneBookingsArray) {
-      //     console.log(
-      //       "laneBookingsArray ot acitivityData.bowlingParticiapnts are null"
-      //     );
-      //     return;
-      //   }
-      //   // ----------------------------------- where we will make activity participants ----------------
-      //   console.log("this is the activity data");
-      //   console.log(activityData);
-
-      //   laneBookingsArray.forEach((laneBooking, index) => {
-      //     if (!laneBookingsArray || !activityData.bowlingParticipants) {
-      //       console.log(
-      //         "laneBookingsArray ot acitivityData.bowlingParticiapnts are null"
-      //       );
-      //       return;
-      //     }
-
-      //   const lanesInputData = activityData.bowlingParticipants[index];
-      //   const paricipantNamesArray = lanesInputData.textInputValues;
-
-      //   // console.log("Participants:", paricipantNamesArray);
-      //   // console.log("ActivityBooking:", laneBooking);
-
-      //   if (paricipantNamesArray) {
-      //     console.log("Lane input index", index);
-      //     console.log("Participants:", paricipantNamesArray);
-      //     paricipantNamesArray.forEach((participant) => {
-      //       console.log("This is a participant", participant);
-      //       //prepareActivityParticipantsForPosting(laneBooking, participant);
-      //     });
-      //   }
-      // });
     }
 
     // All boookings completed:
@@ -168,24 +132,7 @@ export default function OnlineBooking() {
     SuccessMessage({ messageString: "Du har oprettet en ny booking!" });
   }
 
-  // interface activityBooking {
-  //   id: number;
-  // }
 
-  // interface activityParticipants {
-  //   name: string;
-  //   activityBooking: activityBooking;
-  // }
-
-  // function prepareActivityParticipantsForPosting( laneBooking: ActivityBookingsInterface, textInput: participant) {
-  //   const newParticipantObject: participant {
-  //     activity:{
-  //       id: laneBooking.id,
-  //     },
-  //     name: textInput
-  //   };
-  //   postParticipant(newParticipantObject);
-  // }
 
   async function createObjectsActivityPost(
     bookingDataActivity: BookingData,
@@ -224,39 +171,51 @@ export default function OnlineBooking() {
 
   const CurrentComponent = components[currentIndex];
 
-  return (
-    <div className="flex w-screen">
-      <div>
-        <h1 className="text-4xl self-center font-bold text-pink-300">
-          Book en aktivitet her!!
-        </h1>
-      </div>
-      <div>
-        <CurrentComponent
-          addBooking={addBooking}
-          bookingData={bookingData}
-          setBookingData={setBookingData}
-          thisCustomer={thisCustomer}
-          setThisCustomer={setThisCustomer}
-          bookingDate={bookingDate}
-          setBookingDate={setBookingDate}
-          setFormattedDate={setFormattedDate}
-          activityType={ActivityType}
-          bookingsByDate={bookingsByDate}
-          formattedDate={formattedDate}
-        />
-        <button className="bg-black" onClick={handleNext}>
-          Next
-        </button>
-        <button className="bg-black" onClick={handleReset}>
-          Reset
-        </button>
-      </div>
-      <div>
-        <button className="bg-black" onClick={handleSuperSubmit}>
-          Send Booking
-        </button>
-      </div>
+
+return (
+  <div className="flex flex-col w-screen items-center mt-4 min-h-screen p-4 space-y-4">
+    <div>
+      <h1 className="text-4xl font-bold text-pink-300">Book en aktivitet her</h1>
     </div>
-  );
+    <div>
+      <CurrentComponent
+        addBooking={addBooking}
+        bookingData={bookingData}
+        setBookingData={setBookingData}
+        thisCustomer={thisCustomer}
+        setThisCustomer={setThisCustomer}
+        bookingDate={bookingDate}
+        setBookingDate={setBookingDate}
+        setFormattedDate={setFormattedDate}
+        activityType={ActivityType}
+        bookingsByDate={bookingsByDate}
+        formattedDate={formattedDate}
+      />
+    </div>
+    <div className="flex space-x-4">
+      <button
+        className="w-32 text-lg font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300"
+        onClick={handleNext}
+      >
+        Næste
+      </button>
+      <button
+        className="w-32 text-lg font-bold text-white whitespace-nowrap bg-red-500 hover:bg-red-600 active:bg-red-700 focus:outline-none focus:ring focus:ring-red-300 border-2 border-yellow-300"
+        onClick={handleReset}
+      >
+        Ryd
+      </button>
+    </div>
+    <div>
+      <button
+        className="w-40 mt-24 p-2 text-lg font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300"
+        onClick={handleSuperSubmit}
+      >
+        Send Booking
+      </button>
+    </div>
+  </div>
+);
+
+
 }

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 export default function NavHeader() {
     return (
         <nav className="h-20 bg-green-500">
-            <ul className="flex justify-around p-4">
+            <ul className="flex justify-evenly p-4">
                 <li>
                     <NavLink to="/" className="text-white hover:text-gray-300 ">
                         Hjem
