@@ -15,7 +15,7 @@ import {
 interface FormProps {
   addBooking: (newBooking: BookingData) => void;
   bookingsByDate: ActivitiesBookingEntityInterface[];
-  formattedDate: Date | null;
+  formattedDate: Date;
 }
 type FormComponents = {
   [key: string]: React.ComponentType<FormProps>;
@@ -28,7 +28,7 @@ interface BookingInputFormProps {
   setBookingData: (bookingData: BookingData[]) => void;
   activityType: ActivityType[];
   bookingsByDate: ActivitiesBookingEntityInterface[];
-  formattedDate: Date | null;
+  formattedDate: Date;
 }
 
 const forms: FormComponents = {
