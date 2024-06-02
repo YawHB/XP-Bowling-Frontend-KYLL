@@ -40,10 +40,11 @@ export default function DateForm({
 return (
   <div className=" flex items-center justify-center">
     <div className="space-y-4  p-8 rounded-lg shadow-lg">
-      <DatePicker selected={convertToDate(bookingDate)} onChange={(date) => setBookingDate(date as Date)} className="bg-black text-white" dateFormat={"dd/MM/yyyy"} locale={da} />
+      <div className="text-white text-lg font-bold">Vælg en dato:</div>
+      <DatePicker selected={convertToDate(bookingDate)} onChange={(date) => setBookingDate(date as Date)} className="ml-0 bg-black text-white" dateFormat={"dd/MM/yyyy"} locale={da} />
       <button
         type="submit"
-        className="w-36 text-lg font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300"
+        className=" w-36 text-lg font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300"
         onClick={checkDate}
       >
         Bekræft Dato

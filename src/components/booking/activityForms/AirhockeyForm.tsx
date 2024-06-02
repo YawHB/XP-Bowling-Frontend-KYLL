@@ -149,7 +149,7 @@ export default function AirhockeyForm({
         <div className="w-full px-2 mb-4">
           <button
             type="submit"
-            className="w-36 mt-4 p-2 text-lg font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300"
+            className="w-32 mt-4 p-2 text-lg font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300"
           >
             Tilføj
           </button>

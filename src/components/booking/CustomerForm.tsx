@@ -86,6 +86,7 @@ export default function CustomerForm({ setThisCustomer }: { setThisCustomer: (cu
   return (
     <div className="flex items-center justify-center">
       <form onSubmit={confirmUser} className="space-y-4 mb-8 p-8 rounded-lg shadow-lg">
+        <div className="text-white text-lg font-bold">Indtast dine kundeoplysninger:</div>
         <div className="flex flex-col">
           <label htmlFor="phonenumber" className="text-white">
             Telefon nr
