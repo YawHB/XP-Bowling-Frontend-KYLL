@@ -133,27 +133,16 @@ export default function KidsBowlingForm({ addBooking, formattedDate }: KidsBowli
   // console.log(laneInputs);
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="container mx-auto px-4 py-8 max-w-screen-md"
-    >
+    <form onSubmit={handleSubmit} className="container mx-auto pr-4 py-8 max-w-screen-md">
       <section className="flex flex-wrap -mx-2">
         <div className="w-full px-2 mb-4">
           <h2 className="text-2xl font-bold">Børne Bowling</h2>
         </div>
         <div className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0">
-          <label
-            htmlFor="laneSelector"
-            className="block mb-2 text-sm font-medium"
-          >
+          <label htmlFor="laneSelector" className="block mb-2 text-xl font-medium">
             Baner
           </label>
-          <select
-            id="laneSelector"
-            onChange={handleLaneSelectChange}
-            value={lanes}
-            className="block w-full p-2 border border-gray-300 rounded-md bg-black text-white"
-          >
+          <select id="laneSelector" onChange={handleLaneSelectChange} value={lanes} className="m-0 block w-full p-2 border border-gray-300 rounded-md bg-black text-white">
             <option value={1}>1</option>
             <option value={2}>2</option>
             <option value={3}>3</option>
@@ -162,36 +151,20 @@ export default function KidsBowlingForm({ addBooking, formattedDate }: KidsBowli
         </div>
 
         <div className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0">
-          <label
-            htmlFor="playTimeSelector"
-            className="block mb-2 text-sm font-medium"
-          >
+          <label htmlFor="playTimeSelector" className="block mb-2 text-xl font-medium">
             Timer
           </label>
-          <select
-            id="playTimeSelector"
-            onChange={handlePlayTimeChange}
-            value={playTime}
-            className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md"
-          >
+          <select id="playTimeSelector" onChange={handlePlayTimeChange} value={playTime} className="m-0 bg-black text-white block w-full p-2 border border-gray-300 rounded-md">
             <option value={1}>1</option>
             <option value={2}>2</option>
           </select>
         </div>
 
-        <div
-          title="selectStartTime"
-          className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0"
-        >
-          <label htmlFor="startTime" className="block mb-2 text-sm font-medium">
+        <div title="selectStartTime" className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0">
+          <label htmlFor="startTime" className="block mb-2 text-xl font-medium">
             Start Tid
           </label>
-          <select
-            id="startTime"
-            onChange={handleStartTimeChange}
-            value={startTime}
-            className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md"
-          >
+          <select id="startTime" onChange={handleStartTimeChange} value={startTime} className="m-0 bg-black text-white block w-full p-2 border border-gray-300 rounded-md">
             <option value={"10:00"}>10:00</option>
             <option value={"11:00"}>11:00</option>
             <option value={"12:00"}>12:00</option>
@@ -207,8 +180,8 @@ export default function KidsBowlingForm({ addBooking, formattedDate }: KidsBowli
         </div>
 
         <div className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0">
-          <label className="block mb-2 text-sm font-medium">Tilføj navne</label>
-          <input type="checkbox" onChange={handleCheckboxChange} />
+          <label className="block mb-2 text-xl font-medium">Tilføj navne</label>
+          <input type="checkbox" onChange={handleCheckboxChange} className="m-0"/>
         </div>
       </section>
 
@@ -226,9 +199,7 @@ export default function KidsBowlingForm({ addBooking, formattedDate }: KidsBowli
                     className="block w-full p-2 border border-gray-300 rounded-md text-black"
                     placeholder={`Enter name ${index + 1}`}
                     value={inputValue}
-                    onChange={(e) =>
-                      handleInputChange(laneIndex, index, e.target.value)
-                    }
+                    onChange={(e) => handleInputChange(laneIndex, index, e.target.value)}
                   />
                 </div>
               ))}
@@ -239,7 +210,7 @@ export default function KidsBowlingForm({ addBooking, formattedDate }: KidsBowli
 
       <button
         type="submit"
-        className="w-full sm:w-1/4 p-2 mt-4 bg-green-500 text-white rounded-md"
+        className="w-36 mt-4 p-2 text-lg font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300"
       >
         Tilføj
       </button>
