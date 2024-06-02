@@ -173,7 +173,7 @@ export default function OnlineBooking() {
 
 
 return (
-  <div className="flex flex-col w-screen items-center mt-4 min-h-screen p-4 space-y-4">
+  <div className="flex flex-col w-screen mt-4 min-h-screen p-4 space-y-4">
     <div>
       <h1 className="text-4xl font-bold text-pink-300">Book en aktivitet her</h1>
     </div>

@@ -65,7 +65,7 @@ export default function BookingInputForm({
    <div className="flex">
      <div className="w-1/2 flex  flex-col">
        <BookingSelectActivity chosenForm={chooseInputForm} />
-       <h1 className="text-2xl font-semibold">Booking</h1>
+      
        <CurrentForm addBooking={addBooking} bookingsByDate={bookingsByDate} formattedDate={formattedDate} />
      </div>
      <div className="w-1/2 ml-4 w-full">

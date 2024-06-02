@@ -49,6 +49,8 @@ export default function AirhockeyForm({
   useEffect(() => {
     const bookingsByTypeAndTime = filterByTime(bookingsByType, startTime);
     setBookingsByHour(bookingsByTypeAndTime);
+
+    
   }, [startTime, endTime, bookingsByType]);
 
   // console.log("Here is the bookings filtered by the hour", bookingsByHour);

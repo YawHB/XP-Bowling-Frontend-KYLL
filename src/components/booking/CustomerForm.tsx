@@ -84,33 +84,80 @@ export default function CustomerForm({ setThisCustomer }: { setThisCustomer: (cu
   }
 
   return (
-    <form onSubmit={confirmUser} className="space-y-4 mb-8">
-      <div className="flex flex-col">
-        <label htmlFor="phonenumber">Telefon nr</label>
-        <input type="text" id="phonenumber" onInput={searchForNumber} value={customerPhone} className="w-32 bg-black text-white mx-0" placeholder="Telefon nr" required />
-      </div>
+    <div className="flex items-center justify-center">
+      <form onSubmit={confirmUser} className="space-y-4 mb-8 p-8 rounded-lg shadow-lg">
+        <div className="flex flex-col">
+          <label htmlFor="phonenumber" className="text-white">
+            Telefon nr
+          </label>
+          <input type="text" id="phonenumber" onInput={searchForNumber} value={customerPhone} className="w-32 bg-black text-white mx-0" placeholder="Telefon nr" required />
+        </div>
 
-      <div className="grid grid-cols-2 ">
-        <div>
-          <label htmlFor="customerFirstname">Fornavn</label>
-          <input type="text" id="customerFirstname" onChange={(e) => setCustomerFirstName(e.target.value)} value={customerFirstName} className="bg-black text-white ml-0" placeholder="Fornavn" required />
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="customerFirstname" className="text-white">
+              Fornavn
+            </label>
+            <input
+              type="text"
+              id="customerFirstname"
+              onChange={(e) => setCustomerFirstName(e.target.value)}
+              value={customerFirstName}
+              className="bg-black text-white ml-0"
+              placeholder="Fornavn"
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="customerLastname" className="text-white">
+              Efternavn
+            </label>
+            <input type="text" id="customerLastname" onChange={(e) => setCustomerLastName(e.target.value)} value={customerLastName} className="bg-black text-white ml-0" placeholder="Efternavn" />
+          </div>
         </div>
-        <div>
-          <label htmlFor="customerLastname">Efternavn</label>
-          <input type="text" id="customerLastname" onChange={(e) => setCustomerLastName(e.target.value)} value={customerLastName} className="bg-black text-white ml-0" placeholder="Efternavn" />
-        </div>
-      </div>
+
         <div className="flex items-center justify-between">
-    <div className="flex space-x-4">
-      <button
-        className="w-52 text-lg font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300"
-        type="submit"
-      >
-        Bekræft Oplysninger
-      </button>
+          <div className="flex space-x-4">
+            <button
+              className="w-52 text-lg font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300"
+              type="submit"
+            >
+              Bekræft Oplysninger
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
-    </div>
-    </form>
   );
+
+  // return (
+  //   <form onSubmit={confirmUser} className="space-y-4 mb-8">
+  //     <div className="flex flex-col">
+  //       <label htmlFor="phonenumber">Telefon nr</label>
+  //       <input type="text" id="phonenumber" onInput={searchForNumber} value={customerPhone} className="w-32 bg-black text-white mx-0" placeholder="Telefon nr" required />
+  //     </div>
+
+  //     <div className="grid grid-cols-2 ">
+  //       <div>
+  //         <label htmlFor="customerFirstname">Fornavn</label>
+  //         <input type="text" id="customerFirstname" onChange={(e) => setCustomerFirstName(e.target.value)} value={customerFirstName} className="bg-black text-white ml-0" placeholder="Fornavn" required />
+  //       </div>
+  //       <div>
+  //         <label htmlFor="customerLastname">Efternavn</label>
+  //         <input type="text" id="customerLastname" onChange={(e) => setCustomerLastName(e.target.value)} value={customerLastName} className="bg-black text-white ml-0" placeholder="Efternavn" />
+  //       </div>
+  //     </div>
+  //       <div className="flex items-center justify-between">
+  //   <div className="flex space-x-4">
+  //     <button
+  //       className="w-52 text-lg font-bold text-white whitespace-nowrap bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300 border-2 border-yellow-300"
+  //       type="submit"
+  //     >
+  //       Bekræft Oplysninger
+  //     </button>
+  //   </div>
+  //   </div>
+  //   </form>
+  // );
 
 }

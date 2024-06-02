@@ -9,11 +9,9 @@ interface BookingOverviewProps {
   // bookingsByDate?: ActivitiesBookingEntityInterface[];
 }
 
-
 export default function BookingOverview({ bookingData, removeBooking, activityType }: BookingOverviewProps) {
- 
- console.log("BookingOverview: ", bookingData);
- 
+  console.log("BookingOverview: ", bookingData);
+
   bookingData.forEach((booking) => {
     console.log("aktiviteten hhihihihihihihhihihih:          ", booking.activity);
     console.log("DET FINT!!                        ", booking);
@@ -41,29 +39,28 @@ export default function BookingOverview({ bookingData, removeBooking, activityTy
     console.log("Delete activity button clicked");
     removeBooking(id);
   }
-
   return (
-    <div className="bg-blue-500 p-2">
-      <div className="">
+    <div className="w-full bg-blue-500 p-2 flex flex-col items-center">
+      <div className="text-center mb-4">
         <h1 className="text-2xl font-bold">Booking Oversigt</h1>
       </div>
-      <div className="flex">
+      <div className="flex mb-4">
         <p className="font-bold pr-2">Total Pris:</p>
         <p>{bookingData.reduce((acc, booking) => acc + booking.price!, 0)}</p>
       </div>
-      <table>
+      <table className="w-full">
         <thead className="flex">
           <tr>
             <th className="self-left">Aktivitet</th>
           </tr>
         </thead>
-        <tbody className="">
+        <tbody>
           {bookingData.map((booking) => (
-            <tr key={booking.id} className=" bg-blue-300 border-4 border-blue-600">
-              <td className="p-3 ">
+            <tr key={booking.id} className="bg-blue-300 border-4 border-blue-600">
+              <td className="p-3">
                 <div>
                   <p className="font-bold text-lg">
-                    {booking.activity == "BOWLING_ADULT" ? "Bowling" : booking.activity == "BOWLING_CHILD" ? "Børne Bowling" : booking.activity == "AIR_HOCKEY" ? "Air-Hockey" : "Restaurant"}
+                    {booking.activity === "BOWLING_ADULT" ? "Bowling" : booking.activity === "BOWLING_CHILD" ? "Børne Bowling" : booking.activity === "AIR_HOCKEY" ? "Air-Hockey" : "Restaurant"}
                   </p>
                 </div>
                 <div className="flex">
@@ -88,7 +85,7 @@ export default function BookingOverview({ bookingData, removeBooking, activityTy
                 </div>
               </td>
               <td>
-                <button className="mr-2 bg-red-400" onClick={() => booking.id && handleDeleteClicked(booking.id)}>
+                <button className="mr-2 bg-red-400 hover:bg-red-500 border-2 border-yellow-300" onClick={() => booking.id && handleDeleteClicked(booking.id)}>
                   Slet
                 </button>
               </td>
