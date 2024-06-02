@@ -18,7 +18,6 @@ export default function createActivityObject(
   let activityAmount: number | undefined;
   let releventActivitiesList;
 
-
   console.log("createActivityObject");
 
   // checks the type of the activity. Sets activity amount to lanes or tables and relevntActivites to the hardcoded list of actvities
@@ -45,8 +44,15 @@ export default function createActivityObject(
 
   // Loops for every lane or table - makes a new activity object
   for (let i = 0; i < activityAmount; i++) {
-    // Each of the objects needs unique ID from the list of activities!
-    const availableActivityObject = releventActivitiesList[i];
+    let availableActivityObject;
+
+    // "checks for bowling lessons"
+    if (activityData.activity === "BOWLING_ADULT") {
+        availableActivityObject = releventActivitiesList[i + 14];
+    } else {
+      // Each of the objects needs unique ID from the list of activities!
+      availableActivityObject = releventActivitiesList[i];
+    }
 
     // we need a micro-data interface.
     const newActivity: AcitivtyMicroData = {

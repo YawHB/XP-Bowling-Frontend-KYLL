@@ -240,8 +240,6 @@ export default function BowlingForm({
             value={startTime}
             className="bg-black text-white block w-full p-2 border border-gray-300 rounded-md"
           >
-            <option value={"08:00"}>08:00</option>
-            <option value={"09:00"}>09:00</option>
             <option value={"10:00"}>10:00</option>
             <option value={"11:00"}>11:00</option>
             <option value={"12:00"}>12:00</option>
