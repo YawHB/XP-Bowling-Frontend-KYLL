@@ -1,9 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  BookingData,
-  PreBookingDataInterface,
-  AcitivtyMicroData,
-} from "../bookingInterfaces";
+import { BookingData, PreBookingDataInterface, AcitivtyMicroData } from "../bookingInterfaces";
 import createActivityObject from "../helperFunctions/createActivityData";
 
 interface KidsBowlingFormProps {
@@ -17,10 +13,10 @@ interface LaneInput {
 }
 
 export default function KidsBowlingForm({ addBooking, formattedDate }: KidsBowlingFormProps) {
-  const [startTime, setStartTime] = useState<string>("08:00");
+  const [startTime, setStartTime] = useState<string>("10:00");
   const [playTime, setPlayTime] = useState<number>(1);
   const [duration, setDuration] = useState<number>(1);
-  const [endTime, setEndTime] = useState<string>(calculatedEndTime("08:00", 1));
+  const [endTime, setEndTime] = useState<string>(calculatedEndTime("10:00", 1));
   const [lanes, setLanes] = useState<number>(1);
   const [laneInputs, setLaneInputs] = useState<LaneInput[]>(
     Array.from({ length: lanes }, (_, laneIndex) => ({
@@ -106,21 +102,15 @@ export default function KidsBowlingForm({ addBooking, formattedDate }: KidsBowli
     setAddNames(event.target.checked);
   }
 
-  const handleInputChange = (
-    laneIndex: number,
-    inputIndex: number,
-    value: string
-  ) => {
+  const handleInputChange = (laneIndex: number, inputIndex: number, value: string) => {
     const updatedLaneInputs = laneInputs.map((lane, lIndex) => {
       if (lIndex === laneIndex) {
-        const updatedTextInputValues = lane.textInputValues.map(
-          (input, iIndex) => {
-            if (iIndex === inputIndex) {
-              return value;
-            }
-            return input;
+        const updatedTextInputValues = lane.textInputValues.map((input, iIndex) => {
+          if (iIndex === inputIndex) {
+            return value;
           }
-        );
+          return input;
+        });
         return { ...lane, textInputValues: updatedTextInputValues };
       }
       return lane;

@@ -22,10 +22,10 @@ export default function BowlingForm({
   addBooking,
   formattedDate,
 }: BowlingFormProps) {
-  const [startTime, setStartTime] = useState<string>("08:00");
+  const [startTime, setStartTime] = useState<string>("10:00");
   const [duration, setDuration] = useState<number>(1);
   const [playTime, setPlayTime] = useState<number>(1);
-  const [endTime, setEndTime] = useState<string>(calculatedEndTime("08:00", 1));
+  const [endTime, setEndTime] = useState<string>(calculatedEndTime("10:00", 1));
   const [lanes, setLanes] = useState<number>(1);
   const [laneInputs, setLaneInputs] = useState<LaneInput[]>(
     Array.from({ length: lanes }, (_, laneIndex) => ({

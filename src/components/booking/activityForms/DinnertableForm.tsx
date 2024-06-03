@@ -15,7 +15,7 @@ export default function DinnertableForm({
   addBooking,
   formattedDate,
 }: DinnertableFormProps) {
-  const [startTime, setStartTime] = useState<string>("08:00");
+  const [startTime, setStartTime] = useState<string>("10:00");
   const [tables, setLanes] = useState<number>(1);
   const dinnerTime: number = 2;
   const [endTime, setEndTime] = useState<string>(calculatedEndTime(2));

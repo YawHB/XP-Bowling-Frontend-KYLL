@@ -17,9 +17,9 @@ export default function AirhockeyForm({
   addBooking,
   formattedDate,
 }: AirhockeyFormProps) {
-  const [startTime, setStartTime] = useState<string>("08:00");
+  const [startTime, setStartTime] = useState<string>("10:00");
   const [playTime, setPlayTime] = useState<number>(1);
-  const [endTime, setEndTime] = useState<string>(calculatedEndTime("08:00", 1));
+  const [endTime, setEndTime] = useState<string>(calculatedEndTime("10:00", 1));
   const [tables, setLanes] = useState<number>(1);
   const [duration, setDuration] = useState<number>(1);
   // ---------------------------------------------------------------
