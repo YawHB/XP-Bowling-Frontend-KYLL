@@ -224,7 +224,7 @@ export default function BowlingForm({
                   </label>
                   <input
                     type="text"
-                    className="block w-full p-2 border border-gray-300 rounded-md text-black"
+                    className="block w-full p-2 border border-gray-300 rounded-md bg-black text-white"
                     placeholder={`Enter name ${index + 1}`}
                     value={inputValue}
                     onChange={(e) => handleInputChange(laneIndex, index, e.target.value)}

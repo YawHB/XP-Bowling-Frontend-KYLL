@@ -181,7 +181,7 @@ export default function KidsBowlingForm({ addBooking, formattedDate }: KidsBowli
 
         <div className="w-full sm:w-1/4 px-2 mb-4 sm:mb-0">
           <label className="block mb-2 text-xl font-medium">Tilføj navne</label>
-          <input type="checkbox" onChange={handleCheckboxChange} className="m-0"/>
+          <input type="checkbox" onChange={handleCheckboxChange} className="m-0" />
         </div>
       </section>
 
@@ -196,7 +196,7 @@ export default function KidsBowlingForm({ addBooking, formattedDate }: KidsBowli
                   </label>
                   <input
                     type="text"
-                    className="block w-full p-2 border border-gray-300 rounded-md text-black"
+                    className="block w-full p-2 border border-gray-300 rounded-md bg-black text-white"
                     placeholder={`Enter name ${index + 1}`}
                     value={inputValue}
                     onChange={(e) => handleInputChange(laneIndex, index, e.target.value)}
