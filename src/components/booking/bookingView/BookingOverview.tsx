@@ -13,13 +13,13 @@ export default function BookingOverview({ bookingData, removeBooking, activityTy
   console.log("BookingOverview: ", bookingData);
 
   bookingData.forEach((booking) => {
-    console.log("aktiviteten hhihihihihihihhihihih:          ", booking.activity);
-    console.log("DET FINT!!                        ", booking);
+    // console.log("aktiviteten hhihihihihihihhihihih:          ", booking.activity);
+    // console.log("DET FINT!!                        ", booking);
 
     booking.price = 0;
 
     const activity = activityType.find((activity) => activity.type === booking.activity);
-    console.log("bibububububububbububbub:          ", activity);
+    // console.log("bibububububububbububbub:          ", activity);
 
     if (activity) {
       console.log(activity.hourlyPrice);
@@ -39,6 +39,12 @@ export default function BookingOverview({ bookingData, removeBooking, activityTy
     console.log("Delete activity button clicked");
     removeBooking(id);
   }
+
+    function formatDate(dateString: string): string {
+      const [year, month, day] = dateString.split("-");
+      return `${day}-${month}-${year}`;
+    } 
+
   return (
     <div className="w-full bg-blue-500 p-2 flex flex-col items-center">
       <div className="text-center mb-4">
@@ -66,8 +72,8 @@ export default function BookingOverview({ bookingData, removeBooking, activityTy
                 <div className="flex">
                   <p className="font-bold pr-5">Tidspunkt:</p>
                   <p className="pr-5">Pris: {booking.price}</p>
-                  <p className="pr-2">{booking.date}</p>
-                  <p>{booking.time}</p>
+                  <p className="pr-2">{formatDate(booking.date)}</p>
+                  <p> {booking.time}</p>
                   <p className="px-2">Antal timer: {booking.duration}</p>
                 </div>
                 <div className="flex">
