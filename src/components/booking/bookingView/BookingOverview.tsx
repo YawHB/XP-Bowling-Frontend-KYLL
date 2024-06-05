@@ -71,7 +71,7 @@ export default function BookingOverview({ bookingData, removeBooking, activityTy
                 </div>
                 <div className="flex">
                   <p className="font-bold pr-5">Tidspunkt:</p>
-                  <p className="pr-5">Pris: {booking.price}</p>
+                  <p className="pr-5">Pris: {booking.price} kr.</p>
                   <p className="pr-2">{formatDate(booking.date)}</p>
                   <p> {booking.time}</p>
                   <p className="px-2">Antal timer: {booking.duration}</p>
